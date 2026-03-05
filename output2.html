@@ -20,6 +20,8 @@
   --text:     #e8edf7;
   --text-dim: #8a97b4;
   --text-faint:#4a5872;
+  --th-text:  #a0aec8;
+  --th-bg:    rgba(255,255,255,0.03);
   --pos:      #34d399;
   --neg:      #f87171;
   --accent:   #4f86f7;
@@ -28,6 +30,28 @@
   --mono:     'JetBrains Mono', monospace;
   --serif:    'Instrument Serif', serif;
   --sans:     'Syne', sans-serif;
+  --knob-x:   3px;
+}
+
+[data-theme="light"] {
+  --bg:       #f4f6fb;
+  --bg2:      #eaecf4;
+  --bg3:      #e2e6f0;
+  --surface:  #ffffff;
+  --surface2: #f0f3fa;
+  --border:   rgba(0,0,0,0.08);
+  --border2:  rgba(0,0,0,0.13);
+  --text:     #111827;
+  --text-dim: #4a5872;
+  --text-faint:#8a97b4;
+  --th-text:  #374151;
+  --th-bg:    #eef1f8;
+  --pos:      #059669;
+  --neg:      #dc2626;
+  --accent:   #2563eb;
+  --accent2:  #3b82f6;
+  --gold:     #d97706;
+  --knob-x:   23px;
 }
 
 html { font-size: 14px; }
@@ -37,6 +61,54 @@ body {
   font-family: var(--mono);
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background 0.25s, color 0.25s;
+}
+
+/* ── Theme Toggle ── */
+.toggle-wrap {
+  position: fixed;
+  top: 22px;
+  right: 28px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.toggle-wrap.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.toggle-label {
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+.toggle-track {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--border);
+  border: 1px solid var(--border2);
+  position: relative;
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+.toggle-knob {
+  position: absolute;
+  top: 4px;
+  left: var(--knob-x, 3px);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: left 0.25s cubic-bezier(.4,0,.2,1);
 }
 
 /* ── Layout ── */
@@ -66,7 +138,7 @@ body {
 }
 .hero-wordmark {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -74,7 +146,7 @@ body {
 }
 .hero-title {
   font-family: var(--serif);
-  font-size: clamp(38px, 5vw, 64px);
+  font-size: clamp(32px, 4vw, 52px);
   font-weight: 400;
   font-style: italic;
   letter-spacing: -0.02em;
@@ -96,7 +168,7 @@ body {
 }
 .hero-val {
   font-family: var(--mono);
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(22px, 3vw, 32px);
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--text);
@@ -213,23 +285,34 @@ body {
 }
 .fund-table th {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-faint);
-  padding: 8px 12px;
+  color: var(--th-text);
+  background: var(--th-bg);
+  padding: 10px 12px;
   text-align: right;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border2);
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 .fund-table th:first-child,
 .fund-table th:nth-child(2) { text-align: left; }
-.fund-table th:hover { color: var(--text-dim); }
+.fund-table th:hover { color: var(--text); background: var(--surface2); }
 .fund-table th.sort-asc::after  { content: ' ↑'; color: var(--accent); }
 .fund-table th.sort-desc::after { content: ' ↓'; color: var(--accent); }
+tfoot .total-row td {
+  border-top: 2px solid var(--border2);
+  border-bottom: none;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: var(--th-bg);
+}
 .fund-row td {
   padding: 10px 12px;
   border-bottom: 1px solid var(--border);
@@ -428,20 +511,24 @@ body {
 }
 .data-table th {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-faint);
-  padding: 8px 12px;
+  color: var(--th-text);
+  background: var(--th-bg);
+  padding: 10px 12px;
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border2);
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 .data-table th:not(:first-child) { text-align: right; }
-.data-table th:hover { color: var(--text-dim); }
+.data-table th:hover { color: var(--text); background: var(--surface2); }
 .data-table td {
   padding: 10px 12px;
   border-bottom: 1px solid var(--border);
@@ -510,8 +597,8 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg2); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-/* ── Noise overlay ── */
-body::before {
+/* ── Noise overlay (dark mode only) ── */
+body:not([data-theme="light"])::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -523,22 +610,30 @@ body::before {
 </style>
 </head>
 <body>
+<div class="toggle-wrap" onclick="toggleTheme()">
+  <span class="toggle-label">dark</span>
+  <div class="toggle-track"><div class="toggle-knob"></div></div>
+  <span class="toggle-label">light</span>
+</div>
 <div class="page">
 
   <!-- ── HERO ── -->
   <header class="hero">
     <div class="hero-brand">
-      <div class="hero-wordmark">Capital View &nbsp;·&nbsp; Portfolio Intelligence</div>
-      <div class="hero-title">Your Portfolio</div>
-      <div class="hero-date">As of 2026-03-02 &nbsp;·&nbsp; Benchmark: Nifty 50</div>
+      <div class="hero-wordmark">Portfolio Intelligence</div>
+      <div style="height:6px"></div>
+      <div class="hero-title">Capital View</div>
+      <div class="hero-date">As of 2026-03-04 &nbsp;·&nbsp; Benchmark: Nifty 50</div>
     </div>
     <div class="hero-kpis">
-      <div class="hero-val">₹7,435,698</div>
+      <div class="hero-val">₹7,381,564</div>
       <div class="hero-sub">
-        <span class="hero-gain">+1,078,698</span>
-        <span class="hero-day">+23,215 (0.31%) today</span>
+        <span class="hero-gain">+919,564</span>
+        <span class="neg" style="font-size:inherit">-158,300</span>
+        <span class="neg" style="font-size:inherit">(-2.10%)</span>
+        <span class="hero-day">today</span>
       </div>
-      <div class="hero-bench">25 funds · 20 profitable · Since 2016</div>
+      <div class="hero-bench">24 funds · 18 profitable · Since 2016</div>
     </div>
   </header>
 
@@ -547,11 +642,11 @@ body::before {
     <div class="stat-item">
       <div class="stat-label">CAGR</div>
       <div class="stat-val">15.3%</div>
-      <div class="stat-sub">vs 13.3% Nifty 50</div>
+      <div class="stat-sub">vs 13.2% Nifty 50</div>
     </div>
     <div class="stat-item">
       <div class="stat-label">Alpha</div>
-      <div class="stat-val pos">1.9%</div>
+      <div class="stat-val pos">2.1%</div>
       <div class="stat-sub">vs benchmark</div>
     </div>
     <div class="stat-item">
@@ -571,8 +666,8 @@ body::before {
     </div>
     <div class="stat-item">
       <div class="stat-label">Worst Year</div>
-      <div class="stat-val">2022</div>
-      <div class="stat-sub neg">7.5% XIRR</div>
+      <div class="stat-val">2026</div>
+      <div class="stat-sub neg">3.7% XIRR</div>
     </div>
     <div class="stat-item">
       <div class="stat-label">Beat Bench</div>
@@ -585,9 +680,7 @@ body::before {
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
     <button class="tab-btn" onclick="switchTab('holdings',this)">Holdings</button>
-    <button class="tab-btn" onclick="switchTab('analytics',this)">Analytics</button>
     <button class="tab-btn" onclick="switchTab('risk',this)">Risk · Peak</button>
-    <button class="tab-btn" onclick="switchTab('returns',this)">Returns</button>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -599,7 +692,7 @@ body::before {
     <div class="sparkline-wrap">
       <div class="spark-header">
         <span class="spark-label">Portfolio Value — Last 30 Days</span>
-        <span style="font-size:11px;color:var(--text-faint)">₹7,435,698</span>
+        <span style="font-size:11px;color:var(--text-faint)">₹7,381,564</span>
       </div>
       
         <div class="sparkline-container" id="spark-container">
@@ -610,47 +703,54 @@ body::before {
                 <stop offset="100%" stop-color="#4f86f7" stop-opacity="0"/>
               </linearGradient>
             </defs>
-            <polygon points="0,100 0.00,100.00 4.00,59.71 8.00,51.57 12.00,48.20 16.00,25.83 20.00,99.93 24.00,41.94 28.00,19.40 32.00,45.69 36.00,50.35 40.00,17.81 44.00,14.05 48.00,9.00 52.00,20.71 56.00,46.48 60.00,40.08 64.00,39.28 68.00,29.33 72.00,43.52 76.00,25.30 80.00,8.85 84.00,13.00 88.00,0.45 92.00,5.15 96.00,4.67 100.00,0.00 100,100" fill="url(#sparkGrad)"/>
-            <polyline points="0.00,100.00 4.00,59.71 8.00,51.57 12.00,48.20 16.00,25.83 20.00,99.93 24.00,41.94 28.00,19.40 32.00,45.69 36.00,50.35 40.00,17.81 44.00,14.05 48.00,9.00 52.00,20.71 56.00,46.48 60.00,40.08 64.00,39.28 68.00,29.33 72.00,43.52 76.00,25.30 80.00,8.85 84.00,13.00 88.00,0.45 92.00,5.15 96.00,4.67 100.00,0.00" fill="none" stroke="#4f86f7" stroke-width="1.8" vector-effect="non-scaling-stroke"/>
+            <polygon points="0,100 0.00,59.75 3.85,51.60 7.69,48.24 11.54,25.85 15.38,100.00 19.23,41.97 23.08,19.42 26.92,45.72 30.77,50.38 34.62,17.83 38.46,14.06 42.31,9.01 46.15,20.72 50.00,46.51 53.85,40.11 57.69,39.31 61.54,29.35 65.38,43.55 69.23,25.31 73.08,8.85 76.92,13.00 80.77,0.45 84.62,5.15 88.46,4.67 92.31,0.00 96.15,0.00 100.00,15.53 100,100" fill="url(#sparkGrad)"/>
+            <polyline points="0.00,59.75 3.85,51.60 7.69,48.24 11.54,25.85 15.38,100.00 19.23,41.97 23.08,19.42 26.92,45.72 30.77,50.38 34.62,17.83 38.46,14.06 42.31,9.01 46.15,20.72 50.00,46.51 53.85,40.11 57.69,39.31 61.54,29.35 65.38,43.55 69.23,25.31 73.08,8.85 76.92,13.00 80.77,0.45 84.62,5.15 88.46,4.67 92.31,0.00 96.15,0.00 100.00,15.53" fill="none" stroke="#4f86f7" stroke-width="1.8" vector-effect="non-scaling-stroke"/>
           </svg>
           <canvas id="spark-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
           <div id="spark-tooltip" style="display:none;position:absolute;background:#1a2540;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px 12px;font-size:11px;pointer-events:none;white-space:nowrap;z-index:10;transform:translateY(-50%)">
             <div id="spark-tt-date" style="color:#8a97b4;margin-bottom:3px;font-size:10px;letter-spacing:0.05em"></div>
             <div id="spark-tt-val" style="font-size:16px;font-weight:500;letter-spacing:-0.02em;color:#e8edf7"></div>
             <div id="spark-tt-chg" style="font-size:11px;margin-top:3px"></div>
+            <div id="spark-tt-txn" style="font-size:11px;margin-top:2px;color:#fbbf24;display:none"></div>
           </div>
+        </div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:16px;font-size:10px;color:var(--text-faint);letter-spacing:0.06em">
+          <span style="display:flex;align-items:center;gap:5px">
+            <svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="rgba(251,191,36,0.25)" stroke="#fbbf24" stroke-width="1.5"/></svg>
+            Capital inflow — bubble size proportional to amount
+          </span>
         </div>
     </div>
 
-    <!-- Daily return bars + allocation bar -->
+    <!-- Daily returns + Allocation -->
     <div class="two-col">
       <div class="analytics-panel">
         <div class="analytics-panel-title">Daily Returns — Last 22 Sessions</div>
-        <div class="daily-bar-wrap"><div class="day-bar-wrap"><div class="day-bar" style="height:46px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-01-30</div><div class="tt-chg" style="color:#f87171">₹-233,137</div><div class="tt-pct" style="color:#f87171">-3.10%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:50px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-02</div><div class="tt-chg" style="color:#f87171">₹-258,204</div><div class="tt-pct" style="color:#f87171">-3.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:44px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-03</div><div class="tt-chg" style="color:#34d399">+₹202,082</div><div class="tt-pct" style="color:#34d399">+2.90%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:16px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-04</div><div class="tt-chg" style="color:#34d399">+₹78,514</div><div class="tt-pct" style="color:#34d399">+1.10%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:22px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-05</div><div class="tt-chg" style="color:#f87171">₹-111,586</div><div class="tt-pct" style="color:#f87171">-1.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-06</div><div class="tt-chg" style="color:#f87171">₹-16,227</div><div class="tt-pct" style="color:#f87171">-0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:24px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-09</div><div class="tt-chg" style="color:#34d399">+₹113,355</div><div class="tt-pct" style="color:#34d399">+1.60%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-10</div><div class="tt-chg" style="color:#34d399">+₹13,105</div><div class="tt-pct" style="color:#34d399">+0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-11</div><div class="tt-chg" style="color:#34d399">+₹17,595</div><div class="tt-pct" style="color:#34d399">+0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:9px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-12</div><div class="tt-chg" style="color:#f87171">₹-40,786</div><div class="tt-pct" style="color:#f87171">-0.60%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:22px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-13</div><div class="tt-chg" style="color:#f87171">₹-109,784</div><div class="tt-pct" style="color:#f87171">-1.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:4px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-16</div><div class="tt-chg" style="color:#34d399">+₹22,289</div><div class="tt-pct" style="color:#34d399">+0.30%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:2px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-17</div><div class="tt-chg" style="color:#f87171">₹-7,232</div><div class="tt-pct" style="color:#f87171">-0.10%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:8px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-18</div><div class="tt-chg" style="color:#34d399">+₹34,673</div><div class="tt-pct" style="color:#34d399">+0.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:12px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-19</div><div class="tt-chg" style="color:#f87171">₹-59,419</div><div class="tt-pct" style="color:#f87171">-0.80%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:14px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-20</div><div class="tt-chg" style="color:#34d399">+₹63,482</div><div class="tt-pct" style="color:#34d399">+0.90%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:12px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-23</div><div class="tt-chg" style="color:#34d399">+₹57,327</div><div class="tt-pct" style="color:#34d399">+0.80%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:4px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-24</div><div class="tt-chg" style="color:#f87171">₹-24,461</div><div class="tt-pct" style="color:#f87171">-0.30%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:8px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-25</div><div class="tt-chg" style="color:#34d399">+₹38,714</div><div class="tt-pct" style="color:#34d399">+0.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-26</div><div class="tt-chg" style="color:#f87171">₹-16,370</div><div class="tt-pct" style="color:#f87171">-0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:8px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-27</div><div class="tt-chg" style="color:#f87171">₹-38,322</div><div class="tt-pct" style="color:#f87171">-0.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-03-02</div><div class="tt-chg" style="color:#34d399">+₹16,262</div><div class="tt-pct" style="color:#34d399">+0.20%</div></div></div></div>
+        <div class="daily-bar-wrap"><div class="day-bar-wrap"><div class="day-bar" style="height:44px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-03</div><div class="tt-chg" style="color:#34d399">+₹202,082</div><div class="tt-pct" style="color:#34d399">+2.90%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:16px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-04</div><div class="tt-chg" style="color:#34d399">+₹78,514</div><div class="tt-pct" style="color:#34d399">+1.10%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:22px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-05</div><div class="tt-chg" style="color:#f87171">₹-111,586</div><div class="tt-pct" style="color:#f87171">-1.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-06</div><div class="tt-chg" style="color:#f87171">₹-16,227</div><div class="tt-pct" style="color:#f87171">-0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:24px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-09</div><div class="tt-chg" style="color:#34d399">+₹113,355</div><div class="tt-pct" style="color:#34d399">+1.60%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-10</div><div class="tt-chg" style="color:#34d399">+₹13,105</div><div class="tt-pct" style="color:#34d399">+0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-11</div><div class="tt-chg" style="color:#34d399">+₹17,595</div><div class="tt-pct" style="color:#34d399">+0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:9px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-12</div><div class="tt-chg" style="color:#f87171">₹-40,786</div><div class="tt-pct" style="color:#f87171">-0.60%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:22px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-13</div><div class="tt-chg" style="color:#f87171">₹-109,784</div><div class="tt-pct" style="color:#f87171">-1.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:4px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-16</div><div class="tt-chg" style="color:#34d399">+₹22,289</div><div class="tt-pct" style="color:#34d399">+0.30%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:2px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-17</div><div class="tt-chg" style="color:#f87171">₹-7,232</div><div class="tt-pct" style="color:#f87171">-0.10%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:8px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-18</div><div class="tt-chg" style="color:#34d399">+₹34,673</div><div class="tt-pct" style="color:#34d399">+0.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:12px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-19</div><div class="tt-chg" style="color:#f87171">₹-59,419</div><div class="tt-pct" style="color:#f87171">-0.80%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:14px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-20</div><div class="tt-chg" style="color:#34d399">+₹63,482</div><div class="tt-pct" style="color:#34d399">+0.90%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:12px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-23</div><div class="tt-chg" style="color:#34d399">+₹57,327</div><div class="tt-pct" style="color:#34d399">+0.80%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:4px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-24</div><div class="tt-chg" style="color:#f87171">₹-24,461</div><div class="tt-pct" style="color:#f87171">-0.30%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:8px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-25</div><div class="tt-chg" style="color:#34d399">+₹38,714</div><div class="tt-pct" style="color:#34d399">+0.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-26</div><div class="tt-chg" style="color:#f87171">₹-16,370</div><div class="tt-pct" style="color:#f87171">-0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:8px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-02-27</div><div class="tt-chg" style="color:#f87171">₹-38,322</div><div class="tt-pct" style="color:#f87171">-0.50%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:3px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-03-02</div><div class="tt-chg" style="color:#34d399">+₹16,262</div><div class="tt-pct" style="color:#34d399">+0.20%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:0px;background:#34d399"></div><div class="day-bar-tooltip"><div class="tt-date">2026-03-03</div><div class="tt-chg" style="color:#34d399">+₹0</div><div class="tt-pct" style="color:#34d399">+0.00%</div></div></div><div class="day-bar-wrap"><div class="day-bar" style="height:32px;background:#f87171"></div><div class="day-bar-tooltip"><div class="tt-date">2026-03-04</div><div class="tt-chg" style="color:#f87171">₹-159,072</div><div class="tt-pct" style="color:#f87171">-2.10%</div></div></div></div>
       </div>
       <div class="analytics-panel">
         <div class="analytics-panel-title">Segment Allocation</div>
-        <div class="alloc-bar" style="margin-bottom:12px"><div class="seg-bar-chunk" style="width:21.5%;background:#4f86f7" title="Equity: UltraLarge 21.5%"></div><div class="seg-bar-chunk" style="width:16.8%;background:#fbbf24" title="Commo: Gold/Silver 16.8%"></div><div class="seg-bar-chunk" style="width:10.4%;background:#38bdf8" title="Equity: Flexi/Multi 10.4%"></div><div class="seg-bar-chunk" style="width:8.5%;background:#94a3b8" title="Equity: Liquid 8.5%"></div><div class="seg-bar-chunk" style="width:7.9%;background:#a78bfa" title="Equity: Value 7.9%"></div><div class="seg-bar-chunk" style="width:7.5%;background:#34d399" title="Equity: Midcap 7.5%"></div><div class="seg-bar-chunk" style="width:7.4%;background:#60a5fa" title="Equity: Hybrid 7.4%"></div><div class="seg-bar-chunk" style="width:6.5%;background:#6ee7b7" title="Equity: Smallcap 6.5%"></div><div class="seg-bar-chunk" style="width:5.0%;background:#f472b6" title="Equity: US 5.0%"></div><div class="seg-bar-chunk" style="width:4.5%;background:#c4b5fd" title="Equity: Momentum 4.5%"></div><div class="seg-bar-chunk" style="width:4.0%;background:#7fb3ff" title="Equity: Largecap 4.0%"></div></div>
+        <div class="alloc-bar" style="margin-bottom:12px"><div class="seg-bar-chunk" style="width:21.7%;background:#4f86f7" title="Equity: UltraLarge 21.7%"></div><div class="seg-bar-chunk" style="width:16.2%;background:#fbbf24" title="Commo: Gold/Silver 16.2%"></div><div class="seg-bar-chunk" style="width:10.5%;background:#38bdf8" title="Equity: Flexi/Multi 10.5%"></div><div class="seg-bar-chunk" style="width:8.6%;background:#94a3b8" title="Equity: Liquid 8.6%"></div><div class="seg-bar-chunk" style="width:7.9%;background:#a78bfa" title="Equity: Value 7.9%"></div><div class="seg-bar-chunk" style="width:7.6%;background:#60a5fa" title="Equity: Hybrid 7.6%"></div><div class="seg-bar-chunk" style="width:7.5%;background:#34d399" title="Equity: Midcap 7.5%"></div><div class="seg-bar-chunk" style="width:6.4%;background:#6ee7b7" title="Equity: Smallcap 6.4%"></div><div class="seg-bar-chunk" style="width:5.0%;background:#f472b6" title="Equity: US 5.0%"></div><div class="seg-bar-chunk" style="width:4.5%;background:#c4b5fd" title="Equity: Momentum 4.5%"></div><div class="seg-bar-chunk" style="width:4.0%;background:#7fb3ff" title="Equity: Largecap 4.0%"></div></div>
         <div class="seg-legend">
         <div class="seg-legend-item">
           <span class="seg-dot" style="background:#4f86f7"></span>
           <span class="seg-lname">UltraLarge</span>
-          <span class="seg-lpct">21.5%</span>
+          <span class="seg-lpct">21.7%</span>
         </div>
         <div class="seg-legend-item">
           <span class="seg-dot" style="background:#fbbf24"></span>
           <span class="seg-lname">Gold / Silver</span>
-          <span class="seg-lpct">16.8%</span>
+          <span class="seg-lpct">16.2%</span>
         </div>
         <div class="seg-legend-item">
           <span class="seg-dot" style="background:#38bdf8"></span>
           <span class="seg-lname">Flexi / Multi</span>
-          <span class="seg-lpct">10.4%</span>
+          <span class="seg-lpct">10.5%</span>
         </div>
         <div class="seg-legend-item">
           <span class="seg-dot" style="background:#94a3b8"></span>
           <span class="seg-lname">Liquid</span>
-          <span class="seg-lpct">8.5%</span>
+          <span class="seg-lpct">8.6%</span>
         </div>
         <div class="seg-legend-item">
           <span class="seg-dot" style="background:#a78bfa"></span>
@@ -658,19 +758,19 @@ body::before {
           <span class="seg-lpct">7.9%</span>
         </div>
         <div class="seg-legend-item">
+          <span class="seg-dot" style="background:#60a5fa"></span>
+          <span class="seg-lname">Hybrid</span>
+          <span class="seg-lpct">7.6%</span>
+        </div>
+        <div class="seg-legend-item">
           <span class="seg-dot" style="background:#34d399"></span>
           <span class="seg-lname">Midcap</span>
           <span class="seg-lpct">7.5%</span>
         </div>
         <div class="seg-legend-item">
-          <span class="seg-dot" style="background:#60a5fa"></span>
-          <span class="seg-lname">Hybrid</span>
-          <span class="seg-lpct">7.4%</span>
-        </div>
-        <div class="seg-legend-item">
           <span class="seg-dot" style="background:#6ee7b7"></span>
           <span class="seg-lname">Smallcap</span>
-          <span class="seg-lpct">6.5%</span>
+          <span class="seg-lpct">6.4%</span>
         </div>
         <div class="seg-legend-item">
           <span class="seg-dot" style="background:#f472b6"></span>
@@ -690,44 +790,20 @@ body::before {
       </div>
     </div>
 
-    <!-- Yearly XIRR + quick analytics -->
+    <!-- Perf + Risk metrics side by side (4×2 each) -->
     <div class="two-col">
       <div class="analytics-panel">
-        <div class="analytics-panel-title">Yearly Discrete XIRR</div>
-        <div class="xirr-chart">
-            <div class="xirr-bar-col">
-              <div class="xirr-val">8%</div>
-              <div class="xirr-bar" style="height:25px;background:#4f86f7;border:2px solid #fff" title="2022: 7.5%"></div>
-              <div class="xirr-yr">2022</div>
-            </div>
-            <div class="xirr-bar-col">
-              <div class="xirr-val">24%</div>
-              <div class="xirr-bar" style="height:80px;background:#4f86f7;border:2px solid #fff" title="2023: 23.6%"></div>
-              <div class="xirr-yr">2023</div>
-            </div>
-            <div class="xirr-bar-col">
-              <div class="xirr-val">9%</div>
-              <div class="xirr-bar" style="height:29px;background:#4f86f7;" title="2024: 8.7%"></div>
-              <div class="xirr-yr">2024</div>
-            </div>
-            <div class="xirr-bar-col">
-              <div class="xirr-val">15%</div>
-              <div class="xirr-bar" style="height:49px;background:#4f86f7;" title="2025: 14.6%"></div>
-              <div class="xirr-yr">2025</div>
-            </div>
-            <div class="xirr-bar-col">
-              <div class="xirr-val">9%</div>
-              <div class="xirr-bar" style="height:29px;background:#4f86f7;" title="2026: 8.6%"></div>
-              <div class="xirr-yr">2026</div>
-            </div></div>
-      </div>
-      <div class="analytics-panel">
-        <div class="analytics-panel-title">Performance Scorecard &nbsp;<span class="bench-label">vs Nifty 50</span></div>
+        <div class="analytics-panel-title">Performance &nbsp;<span class="bench-label">vs Nifty 50</span></div>
         <div class="metrics-grid">
         <div class="metric-card">
           <div class="metric-label">CAGR</div>
           <div class="metric-port better">15.3%</div>
-          <span class="metric-bench">13.3%</span>
+          <span class="metric-bench">13.2%</span>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Win Ratio</div>
+          <div class="metric-port ">47.0%</div>
+          
         </div>
         <div class="metric-card">
           <div class="metric-label">Best 1Y</div>
@@ -738,337 +814,6 @@ body::before {
           <div class="metric-label">Worst 1Y</div>
           <div class="metric-port better">-29.6%</div>
           <span class="metric-bench">-31.0%</span>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Win Ratio</div>
-          <div class="metric-port ">47.0%</div>
-          
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Beat Benchmark</div>
-          <div class="metric-port ">96.2%</div>
-          
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Positive Months</div>
-          <div class="metric-port better">63%</div>
-          <span class="metric-bench">57%</span>
-        </div></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       TAB: HOLDINGS
-  ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="holdings">
-
-    <div class="section-header" style="margin-bottom:16px">
-      <span class="section-num">01</span>
-      <span class="section-title">All Holdings</span>
-      <span style="font-size:10px;color:var(--text-faint);margin-left:auto">25 funds &nbsp;·&nbsp; click header to sort</span>
-    </div>
-
-    <div class="alloc-bar"><div class="seg-bar-chunk" style="width:21.5%;background:#4f86f7" title="Equity: UltraLarge 21.5%"></div><div class="seg-bar-chunk" style="width:16.8%;background:#fbbf24" title="Commo: Gold/Silver 16.8%"></div><div class="seg-bar-chunk" style="width:10.4%;background:#38bdf8" title="Equity: Flexi/Multi 10.4%"></div><div class="seg-bar-chunk" style="width:8.5%;background:#94a3b8" title="Equity: Liquid 8.5%"></div><div class="seg-bar-chunk" style="width:7.9%;background:#a78bfa" title="Equity: Value 7.9%"></div><div class="seg-bar-chunk" style="width:7.5%;background:#34d399" title="Equity: Midcap 7.5%"></div><div class="seg-bar-chunk" style="width:7.4%;background:#60a5fa" title="Equity: Hybrid 7.4%"></div><div class="seg-bar-chunk" style="width:6.5%;background:#6ee7b7" title="Equity: Smallcap 6.5%"></div><div class="seg-bar-chunk" style="width:5.0%;background:#f472b6" title="Equity: US 5.0%"></div><div class="seg-bar-chunk" style="width:4.5%;background:#c4b5fd" title="Equity: Momentum 4.5%"></div><div class="seg-bar-chunk" style="width:4.0%;background:#7fb3ff" title="Equity: Largecap 4.0%"></div></div>
-
-    <div class="fund-table-wrap">
-      <table class="fund-table" id="fund-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th onclick="sortTable('fund-table',1)">Fund</th>
-            <th onclick="sortTable('fund-table',2)">Value</th>
-            <th onclick="sortTable('fund-table',3)">Gain %</th>
-            <th onclick="sortTable('fund-table',4)">Cost</th>
-            <th onclick="sortTable('fund-table',5)">XIRR</th>
-            <th onclick="sortTable('fund-table',6)">1D</th>
-            <th onclick="sortTable('fund-table',7)">Share</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#64748b"></span></td>
-          <td class="fund-name"></td>
-          <td class="fund-val">₹7,435,698</td>
-          <td class="fund-num pos">+17.0%</td>
-          <td class="fund-num">₹6,357,000</td>
-          <td class="fund-num neg">0.0%</td>
-          <td class="fund-num neu">—</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:100%;background:#64748b"></div></div><span>100.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#94a3b8"></span></td>
-          <td class="fund-name">Kotak Arbitrage</td>
-          <td class="fund-val">₹635,532</td>
-          <td class="fund-num pos">+5.9%</td>
-          <td class="fund-num">₹600,000</td>
-          <td class="fund-num pos">6.8%</td>
-          <td class="fund-num pos">0.1%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:32%;background:#94a3b8"></div></div><span>8.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#fbbf24"></span></td>
-          <td class="fund-name">SBI Gold</td>
-          <td class="fund-val">₹610,064</td>
-          <td class="fund-num pos">+48.8%</td>
-          <td class="fund-num">₹410,000</td>
-          <td class="fund-num pos">104.5%</td>
-          <td class="fund-num pos">5.1%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:32%;background:#fbbf24"></div></div><span>8.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
-          <td class="fund-name">Bandhan Nifty 50</td>
-          <td class="fund-val">₹540,657</td>
-          <td class="fund-num pos">+105.6%</td>
-          <td class="fund-num">₹263,000</td>
-          <td class="fund-num pos">14.4%</td>
-          <td class="fund-num neg">-1.2%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:28%;background:#4f86f7"></div></div><span>7.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#fbbf24"></span></td>
-          <td class="fund-name">SBI Silver</td>
-          <td class="fund-val">₹485,217</td>
-          <td class="fund-num pos">+125.8%</td>
-          <td class="fund-num">₹215,000</td>
-          <td class="fund-num pos">209.8%</td>
-          <td class="fund-num pos">8.7%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:24%;background:#fbbf24"></div></div><span>6.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
-          <td class="fund-name">Bandhan Nifty 50</td>
-          <td class="fund-val">₹424,548</td>
-          <td class="fund-num pos">+10.3%</td>
-          <td class="fund-num">₹385,000</td>
-          <td class="fund-num pos">6.7%</td>
-          <td class="fund-num neg">-1.2%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:24%;background:#4f86f7"></div></div><span>6.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#f472b6"></span></td>
-          <td class="fund-name">Franklin US Opportunit…</td>
-          <td class="fund-val">₹368,336</td>
-          <td class="fund-num pos">+5.2%</td>
-          <td class="fund-num">₹350,000</td>
-          <td class="fund-num pos">8.7%</td>
-          <td class="fund-num pos">0.8%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:20%;background:#f472b6"></div></div><span>5.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#34d399"></span></td>
-          <td class="fund-name">HDFC Mid-Cap</td>
-          <td class="fund-val">₹358,290</td>
-          <td class="fund-num pos">+25.7%</td>
-          <td class="fund-num">₹285,000</td>
-          <td class="fund-num pos">15.1%</td>
-          <td class="fund-num neg">-1.7%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:20%;background:#34d399"></div></div><span>5.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#38bdf8"></span></td>
-          <td class="fund-name">Parag Parikh Flexi Cap</td>
-          <td class="fund-val">₹333,956</td>
-          <td class="fund-num pos">+2.8%</td>
-          <td class="fund-num">₹325,000</td>
-          <td class="fund-num pos">3.7%</td>
-          <td class="fund-num neg">-0.6%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#38bdf8"></div></div><span>4.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#60a5fa"></span></td>
-          <td class="fund-name">ICICI Prudential Multi…</td>
-          <td class="fund-val">₹331,259</td>
-          <td class="fund-num pos">+12.3%</td>
-          <td class="fund-num">₹295,000</td>
-          <td class="fund-num pos">14.7%</td>
-          <td class="fund-num neg">-0.5%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#60a5fa"></div></div><span>4.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
-          <td class="fund-name">DSP Nifty 50 Equal Wei…</td>
-          <td class="fund-val">₹319,192</td>
-          <td class="fund-num pos">+8.2%</td>
-          <td class="fund-num">₹295,000</td>
-          <td class="fund-num pos">8.0%</td>
-          <td class="fund-num neg">-1.2%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#4f86f7"></div></div><span>4.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
-          <td class="fund-name">DSP Nifty Top 10 Equal…</td>
-          <td class="fund-val">₹312,255</td>
-          <td class="fund-num neg">-2.4%</td>
-          <td class="fund-num">₹320,000</td>
-          <td class="fund-num neg">-3.1%</td>
-          <td class="fund-num neg">-1.3%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#4f86f7"></div></div><span>4.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#7fb3ff"></span></td>
-          <td class="fund-name">Kotak Nifty Next 50</td>
-          <td class="fund-val">₹295,862</td>
-          <td class="fund-num pos">+3.8%</td>
-          <td class="fund-num">₹285,000</td>
-          <td class="fund-num pos">7.5%</td>
-          <td class="fund-num neg">-1.5%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#7fb3ff"></div></div><span>4.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#6ee7b7"></span></td>
-          <td class="fund-name">HDFC Small Cap</td>
-          <td class="fund-val">₹290,980</td>
-          <td class="fund-num pos">+6.6%</td>
-          <td class="fund-num">₹273,000</td>
-          <td class="fund-num pos">4.5%</td>
-          <td class="fund-num neg">-1.9%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#6ee7b7"></div></div><span>4.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#38bdf8"></span></td>
-          <td class="fund-name">Nippon India Multi Cap</td>
-          <td class="fund-val">₹262,660</td>
-          <td class="fund-num pos">+1.0%</td>
-          <td class="fund-num">₹260,000</td>
-          <td class="fund-num pos">1.4%</td>
-          <td class="fund-num neg">-1.5%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#38bdf8"></div></div><span>4.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#c4b5fd"></span></td>
-          <td class="fund-name">HDFC NIFTY200 Momentum…</td>
-          <td class="fund-val">₹234,275</td>
-          <td class="fund-num neg">-8.2%</td>
-          <td class="fund-num">₹255,000</td>
-          <td class="fund-num neg">-6.6%</td>
-          <td class="fund-num neg">-1.6%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#c4b5fd"></div></div><span>3.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#a78bfa"></span></td>
-          <td class="fund-name">UTI Nifty 500 Value 50</td>
-          <td class="fund-val">₹224,606</td>
-          <td class="fund-num pos">+20.1%</td>
-          <td class="fund-num">₹187,000</td>
-          <td class="fund-num pos">27.6%</td>
-          <td class="fund-num neg">-1.4%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#a78bfa"></div></div><span>3.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#60a5fa"></span></td>
-          <td class="fund-name">HDFC Balanced Advantag…</td>
-          <td class="fund-val">₹220,208</td>
-          <td class="fund-num pos">+4.9%</td>
-          <td class="fund-num">₹210,000</td>
-          <td class="fund-num pos">5.3%</td>
-          <td class="fund-num neg">-1.1%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#60a5fa"></div></div><span>3.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#a78bfa"></span></td>
-          <td class="fund-name">ICICI Prudential Value</td>
-          <td class="fund-val">₹208,113</td>
-          <td class="fund-num pos">+1.5%</td>
-          <td class="fund-num">₹205,000</td>
-          <td class="fund-num pos">3.9%</td>
-          <td class="fund-num neg">-0.9%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#a78bfa"></div></div><span>3.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#34d399"></span></td>
-          <td class="fund-name">Motilal Oswal Nifty Mi…</td>
-          <td class="fund-val">₹196,075</td>
-          <td class="fund-num pos">+3.2%</td>
-          <td class="fund-num">₹190,000</td>
-          <td class="fund-num pos">3.3%</td>
-          <td class="fund-num neg">-1.7%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#34d399"></div></div><span>3.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#6ee7b7"></span></td>
-          <td class="fund-name">Motilal Oswal Nifty Sm…</td>
-          <td class="fund-val">₹193,501</td>
-          <td class="fund-num neg">-7.8%</td>
-          <td class="fund-num">₹210,000</td>
-          <td class="fund-num neg">-8.4%</td>
-          <td class="fund-num neg">-1.9%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#6ee7b7"></div></div><span>3.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#38bdf8"></span></td>
-          <td class="fund-name">JM Flexicap</td>
-          <td class="fund-val">₹179,281</td>
-          <td class="fund-num neg">-5.1%</td>
-          <td class="fund-num">₹189,000</td>
-          <td class="fund-num neg">-5.7%</td>
-          <td class="fund-num neg">-1.4%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:8%;background:#38bdf8"></div></div><span>2.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#a78bfa"></span></td>
-          <td class="fund-name">SBI Contra</td>
-          <td class="fund-val">₹156,134</td>
-          <td class="fund-num pos">+4.1%</td>
-          <td class="fund-num">₹150,000</td>
-          <td class="fund-num pos">6.1%</td>
-          <td class="fund-num neg">-1.3%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:8%;background:#a78bfa"></div></div><span>2.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#fbbf24"></span></td>
-          <td class="fund-name">HDFC Silver</td>
-          <td class="fund-val">₹155,213</td>
-          <td class="fund-num pos">+55.2%</td>
-          <td class="fund-num">₹100,000</td>
-          <td class="fund-num pos">217.3%</td>
-          <td class="fund-num pos">9.0%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:8%;background:#fbbf24"></div></div><span>2.0%</span></td>
-        </tr>
-        <tr class="fund-row">
-          <td class="fund-seg-dot"><span class="dot" style="background:#c4b5fd"></span></td>
-          <td class="fund-name">Edelweiss Nifty Midcap…</td>
-          <td class="fund-val">₹99,485</td>
-          <td class="fund-num neg">-0.6%</td>
-          <td class="fund-num">₹100,000</td>
-          <td class="fund-num neg">-0.7%</td>
-          <td class="fund-num neg">-1.5%</td>
-          <td class="fund-share-cell"><div class="share-bar"><div style="width:4%;background:#c4b5fd"></div></div><span>1.0%</span></td>
-        </tr></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       TAB: ANALYTICS
-  ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="analytics">
-
-    <div class="two-col" style="margin-bottom:32px">
-      <div class="analytics-panel">
-        <div class="analytics-panel-title">Performance Metrics &nbsp;<span class="bench-label">vs Nifty 50</span></div>
-        <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-label">CAGR</div>
-          <div class="metric-port better">15.3%</div>
-          <span class="metric-bench">13.3%</span>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Best 1Y</div>
-          <div class="metric-port worse">90.3%</div>
-          <span class="metric-bench">90.6%</span>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Worst 1Y</div>
-          <div class="metric-port better">-29.6%</div>
-          <span class="metric-bench">-31.0%</span>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Win Ratio</div>
-          <div class="metric-port ">47.0%</div>
-          
         </div>
         <div class="metric-card">
           <div class="metric-label">Beat Benchmark</div>
@@ -1087,7 +832,7 @@ body::before {
         </div>
         <div class="metric-card">
           <div class="metric-label">Downside Capture</div>
-          <div class="metric-port ">95.3%</div>
+          <div class="metric-port ">95.1%</div>
           
         </div></div>
       </div>
@@ -1096,7 +841,7 @@ body::before {
         <div class="metrics-grid">
         <div class="metric-card">
           <div class="metric-label">Volatility</div>
-          <div class="metric-port worse">16.1%</div>
+          <div class="metric-port better">16.1%</div>
           <span class="metric-bench">16.3%</span>
         </div>
         <div class="metric-card">
@@ -1107,22 +852,17 @@ body::before {
         <div class="metric-card">
           <div class="metric-label">Sharpe</div>
           <div class="metric-port better">0.58</div>
-          <span class="metric-bench">0.45</span>
+          <span class="metric-bench">0.44</span>
         </div>
         <div class="metric-card">
           <div class="metric-label">Sortino</div>
           <div class="metric-port better">0.68</div>
-          <span class="metric-bench">0.54</span>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Beta</div>
-          <div class="metric-port ">0.97</div>
-          
+          <span class="metric-bench">0.53</span>
         </div>
         <div class="metric-card">
           <div class="metric-label">Calmar</div>
           <div class="metric-port better">0.41</div>
-          <span class="metric-bench">0.35</span>
+          <span class="metric-bench">0.34</span>
         </div>
         <div class="metric-card">
           <div class="metric-label">VaR (5%)</div>
@@ -1130,53 +870,333 @@ body::before {
           <span class="metric-bench">-1.4%</span>
         </div>
         <div class="metric-card">
-          <div class="metric-label">CVaR (5%)</div>
-          <div class="metric-port worse">-2.4%</div>
-          <span class="metric-bench">-2.4%</span>
-        </div>
-        <div class="metric-card">
           <div class="metric-label">Alpha</div>
-          <div class="metric-port ">1.9%</div>
+          <div class="metric-port ">2.1%</div>
           
         </div>
         <div class="metric-card">
-          <div class="metric-label">Correlation</div>
-          <div class="metric-port ">0.98</div>
+          <div class="metric-label">Beta</div>
+          <div class="metric-port ">0.97</div>
           
         </div></div>
       </div>
     </div>
 
-    <div class="analytics-panel" style="margin-bottom:32px">
+    <!-- Yearly XIRR full width below -->
+    <div class="analytics-panel" style="margin-bottom:0">
       <div class="analytics-panel-title">Yearly Discrete XIRR</div>
-      <div class="xirr-chart" style="height:140px">
+      <div class="xirr-chart" style="height:130px">
             <div class="xirr-bar-col">
-              <div class="xirr-val">8%</div>
-              <div class="xirr-bar" style="height:25px;background:#4f86f7;border:2px solid #fff" title="2022: 7.5%"></div>
-              <div class="xirr-yr">2022</div>
+              <div class="xirr-val" style="color:var(--text-dim)">8%</div>
+              <div class="xirr-bar" style="height:25px;background:#4f86f7" title="2022: 7.5%"></div>
+              <div class="xirr-yr" style="color:var(--text-faint)">2022</div>
             </div>
             <div class="xirr-bar-col">
-              <div class="xirr-val">24%</div>
-              <div class="xirr-bar" style="height:80px;background:#4f86f7;border:2px solid #fff" title="2023: 23.6%"></div>
-              <div class="xirr-yr">2023</div>
+              <div class="xirr-val" style="color:#34d399;font-weight:700">24%</div>
+              <div class="xirr-bar" style="height:80px;background:#4f86f7;outline:2px solid #34d399;outline-offset:1px;border-radius:3px 3px 0 0" title="2023: 23.6%"></div>
+              <div class="xirr-yr" style="color:#34d399;font-weight:600">2023</div>
             </div>
             <div class="xirr-bar-col">
-              <div class="xirr-val">9%</div>
-              <div class="xirr-bar" style="height:29px;background:#4f86f7;" title="2024: 8.7%"></div>
-              <div class="xirr-yr">2024</div>
+              <div class="xirr-val" style="color:var(--text-dim)">9%</div>
+              <div class="xirr-bar" style="height:29px;background:#4f86f7" title="2024: 8.7%"></div>
+              <div class="xirr-yr" style="color:var(--text-faint)">2024</div>
             </div>
             <div class="xirr-bar-col">
-              <div class="xirr-val">15%</div>
-              <div class="xirr-bar" style="height:49px;background:#4f86f7;" title="2025: 14.6%"></div>
-              <div class="xirr-yr">2025</div>
+              <div class="xirr-val" style="color:var(--text-dim)">15%</div>
+              <div class="xirr-bar" style="height:49px;background:#4f86f7" title="2025: 14.6%"></div>
+              <div class="xirr-yr" style="color:var(--text-faint)">2025</div>
             </div>
             <div class="xirr-bar-col">
-              <div class="xirr-val">9%</div>
-              <div class="xirr-bar" style="height:29px;background:#4f86f7;" title="2026: 8.6%"></div>
-              <div class="xirr-yr">2026</div>
+              <div class="xirr-val" style="color:#f87171;font-weight:700">4%</div>
+              <div class="xirr-bar" style="height:12px;background:#4f86f7;outline:2px solid #f87171;outline-offset:1px;border-radius:3px 3px 0 0" title="2026: 3.7%"></div>
+              <div class="xirr-yr" style="color:#f87171;font-weight:600">2026</div>
             </div></div>
     </div>
 
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TAB: HOLDINGS
+  ══════════════════════════════════════════ -->
+  <div class="tab-panel" id="holdings">
+
+    <div class="section-header" style="margin-bottom:16px">
+      <span class="section-title">All Holdings</span>
+      <span style="font-size:10px;color:var(--text-faint);margin-left:auto">24 funds &nbsp;·&nbsp; click header to sort</span>
+    </div>
+
+    <div class="alloc-bar"><div class="seg-bar-chunk" style="width:21.7%;background:#4f86f7" title="Equity: UltraLarge 21.7%"></div><div class="seg-bar-chunk" style="width:16.2%;background:#fbbf24" title="Commo: Gold/Silver 16.2%"></div><div class="seg-bar-chunk" style="width:10.5%;background:#38bdf8" title="Equity: Flexi/Multi 10.5%"></div><div class="seg-bar-chunk" style="width:8.6%;background:#94a3b8" title="Equity: Liquid 8.6%"></div><div class="seg-bar-chunk" style="width:7.9%;background:#a78bfa" title="Equity: Value 7.9%"></div><div class="seg-bar-chunk" style="width:7.6%;background:#60a5fa" title="Equity: Hybrid 7.6%"></div><div class="seg-bar-chunk" style="width:7.5%;background:#34d399" title="Equity: Midcap 7.5%"></div><div class="seg-bar-chunk" style="width:6.4%;background:#6ee7b7" title="Equity: Smallcap 6.4%"></div><div class="seg-bar-chunk" style="width:5.0%;background:#f472b6" title="Equity: US 5.0%"></div><div class="seg-bar-chunk" style="width:4.5%;background:#c4b5fd" title="Equity: Momentum 4.5%"></div><div class="seg-bar-chunk" style="width:4.0%;background:#7fb3ff" title="Equity: Largecap 4.0%"></div></div>
+
+    <div class="fund-table-wrap">
+      <table class="fund-table" id="fund-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th onclick="sortTable('fund-table',1)">Fund</th>
+            <th onclick="sortTable('fund-table',2)">Value</th>
+            <th onclick="sortTable('fund-table',3)">Gain %</th>
+            <th onclick="sortTable('fund-table',4)">Cost</th>
+            <th onclick="sortTable('fund-table',5)">XIRR</th>
+            <th onclick="sortTable('fund-table',6)">1D</th>
+            <th onclick="sortTable('fund-table',7)">Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#94a3b8"></span></td>
+          <td class="fund-name">Kotak Arbitrage</td>
+          <td class="fund-val">₹635,765</td>
+          <td class="fund-num pos">+6.0%</td>
+          <td class="fund-num">₹600,000</td>
+          <td class="fund-num pos">6.8%</td>
+          <td class="fund-num neu">0.0%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:36%;background:#94a3b8"></div></div><span>9.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#fbbf24"></span></td>
+          <td class="fund-name">SBI Gold</td>
+          <td class="fund-val">₹599,810</td>
+          <td class="fund-num pos">+42.8%</td>
+          <td class="fund-num">₹420,000</td>
+          <td class="fund-num pos">92.2%</td>
+          <td class="fund-num neg">-3.3%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:32%;background:#fbbf24"></div></div><span>8.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
+          <td class="fund-name">Bandhan Nifty 50</td>
+          <td class="fund-val">₹532,266</td>
+          <td class="fund-num pos">+102.4%</td>
+          <td class="fund-num">₹263,000</td>
+          <td class="fund-num pos">14.1%</td>
+          <td class="fund-num neg">-1.6%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:28%;background:#4f86f7"></div></div><span>7.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#fbbf24"></span></td>
+          <td class="fund-name">SBI Silver</td>
+          <td class="fund-val">₹450,586</td>
+          <td class="fund-num pos">+109.6%</td>
+          <td class="fund-num">₹215,000</td>
+          <td class="fund-num pos">180.6%</td>
+          <td class="fund-num neg">-7.1%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:24%;background:#fbbf24"></div></div><span>6.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
+          <td class="fund-name">Bandhan Nifty 50</td>
+          <td class="fund-val">₹417,972</td>
+          <td class="fund-num pos">+8.6%</td>
+          <td class="fund-num">₹385,000</td>
+          <td class="fund-num pos">5.6%</td>
+          <td class="fund-num neg">-1.5%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:24%;background:#4f86f7"></div></div><span>6.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#f472b6"></span></td>
+          <td class="fund-name">Franklin US Opportunit…</td>
+          <td class="fund-val">₹370,669</td>
+          <td class="fund-num pos">+5.9%</td>
+          <td class="fund-num">₹350,000</td>
+          <td class="fund-num pos">9.8%</td>
+          <td class="fund-num pos">0.6%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:20%;background:#f472b6"></div></div><span>5.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#34d399"></span></td>
+          <td class="fund-name">HDFC Mid-Cap</td>
+          <td class="fund-val">₹349,219</td>
+          <td class="fund-num pos">+22.5%</td>
+          <td class="fund-num">₹285,000</td>
+          <td class="fund-num pos">13.3%</td>
+          <td class="fund-num neg">-2.5%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:20%;background:#34d399"></div></div><span>5.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#38bdf8"></span></td>
+          <td class="fund-name">Parag Parikh Flexi Cap</td>
+          <td class="fund-val">₹342,559</td>
+          <td class="fund-num pos">+2.3%</td>
+          <td class="fund-num">₹335,000</td>
+          <td class="fund-num pos">3.1%</td>
+          <td class="fund-num neg">-0.4%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:20%;background:#38bdf8"></div></div><span>5.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#60a5fa"></span></td>
+          <td class="fund-name">ICICI Prudential Multi…</td>
+          <td class="fund-val">₹341,671</td>
+          <td class="fund-num pos">+10.2%</td>
+          <td class="fund-num">₹310,000</td>
+          <td class="fund-num pos">12.8%</td>
+          <td class="fund-num neg">-1.4%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:20%;background:#60a5fa"></div></div><span>5.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
+          <td class="fund-name">DSP Nifty 50 Equal Wei…</td>
+          <td class="fund-val">₹332,566</td>
+          <td class="fund-num pos">+5.6%</td>
+          <td class="fund-num">₹315,000</td>
+          <td class="fund-num pos">5.8%</td>
+          <td class="fund-num neg">-2.1%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#4f86f7"></div></div><span>4.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#4f86f7"></span></td>
+          <td class="fund-name">DSP Nifty Top 10 Equal…</td>
+          <td class="fund-val">₹318,852</td>
+          <td class="fund-num neg">-3.4%</td>
+          <td class="fund-num">₹330,000</td>
+          <td class="fund-num neg">-4.4%</td>
+          <td class="fund-num neg">-1.1%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#4f86f7"></div></div><span>4.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#7fb3ff"></span></td>
+          <td class="fund-name">Kotak Nifty Next 50</td>
+          <td class="fund-val">₹297,888</td>
+          <td class="fund-num pos">+1.0%</td>
+          <td class="fund-num">₹295,000</td>
+          <td class="fund-num pos">2.0%</td>
+          <td class="fund-num neg">-2.7%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#7fb3ff"></div></div><span>4.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#6ee7b7"></span></td>
+          <td class="fund-name">HDFC Small Cap</td>
+          <td class="fund-val">₹285,288</td>
+          <td class="fund-num pos">+4.5%</td>
+          <td class="fund-num">₹273,000</td>
+          <td class="fund-num pos">3.1%</td>
+          <td class="fund-num neg">-2.0%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#6ee7b7"></div></div><span>4.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#38bdf8"></span></td>
+          <td class="fund-name">Nippon India Multi Cap</td>
+          <td class="fund-val">₹257,987</td>
+          <td class="fund-num neg">-0.8%</td>
+          <td class="fund-num">₹260,000</td>
+          <td class="fund-num neg">-1.0%</td>
+          <td class="fund-num neg">-1.8%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:16%;background:#38bdf8"></div></div><span>4.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#c4b5fd"></span></td>
+          <td class="fund-name">HDFC NIFTY200 Momentum…</td>
+          <td class="fund-val">₹228,708</td>
+          <td class="fund-num neg">-10.3%</td>
+          <td class="fund-num">₹255,000</td>
+          <td class="fund-num neg">-8.4%</td>
+          <td class="fund-num neg">-2.4%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#c4b5fd"></div></div><span>3.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#a78bfa"></span></td>
+          <td class="fund-name">UTI Nifty 500 Value 50</td>
+          <td class="fund-val">₹217,927</td>
+          <td class="fund-num pos">+16.5%</td>
+          <td class="fund-num">₹187,000</td>
+          <td class="fund-num pos">22.5%</td>
+          <td class="fund-num neg">-3.0%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#a78bfa"></div></div><span>3.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#60a5fa"></span></td>
+          <td class="fund-name">HDFC Balanced Advantag…</td>
+          <td class="fund-val">₹217,387</td>
+          <td class="fund-num pos">+3.5%</td>
+          <td class="fund-num">₹210,000</td>
+          <td class="fund-num pos">3.8%</td>
+          <td class="fund-num neg">-1.3%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#60a5fa"></div></div><span>3.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#a78bfa"></span></td>
+          <td class="fund-name">ICICI Prudential Value</td>
+          <td class="fund-val">₹215,110</td>
+          <td class="fund-num pos">+0.1%</td>
+          <td class="fund-num">₹215,000</td>
+          <td class="fund-num pos">0.1%</td>
+          <td class="fund-num neg">-1.4%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#a78bfa"></div></div><span>3.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#34d399"></span></td>
+          <td class="fund-name">Motilal Oswal Nifty Mi…</td>
+          <td class="fund-val">₹201,779</td>
+          <td class="fund-num pos">+0.9%</td>
+          <td class="fund-num">₹200,000</td>
+          <td class="fund-num pos">1.0%</td>
+          <td class="fund-num neg">-2.2%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#34d399"></div></div><span>3.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#6ee7b7"></span></td>
+          <td class="fund-name">Motilal Oswal Nifty Sm…</td>
+          <td class="fund-val">₹189,406</td>
+          <td class="fund-num neg">-9.8%</td>
+          <td class="fund-num">₹210,000</td>
+          <td class="fund-num neg">-10.4%</td>
+          <td class="fund-num neg">-2.1%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:12%;background:#6ee7b7"></div></div><span>3.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#38bdf8"></span></td>
+          <td class="fund-name">JM Flexicap</td>
+          <td class="fund-val">₹175,705</td>
+          <td class="fund-num neg">-7.0%</td>
+          <td class="fund-num">₹189,000</td>
+          <td class="fund-num neg">-7.8%</td>
+          <td class="fund-num neg">-2.0%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:8%;background:#38bdf8"></div></div><span>2.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#a78bfa"></span></td>
+          <td class="fund-name">SBI Contra</td>
+          <td class="fund-val">₹152,966</td>
+          <td class="fund-num pos">+2.0%</td>
+          <td class="fund-num">₹150,000</td>
+          <td class="fund-num pos">2.9%</td>
+          <td class="fund-num neg">-2.0%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:8%;background:#a78bfa"></div></div><span>2.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#fbbf24"></span></td>
+          <td class="fund-name">HDFC Silver</td>
+          <td class="fund-val">₹142,324</td>
+          <td class="fund-num pos">+42.3%</td>
+          <td class="fund-num">₹100,000</td>
+          <td class="fund-num pos">149.4%</td>
+          <td class="fund-num neg">-8.3%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:8%;background:#fbbf24"></div></div><span>2.0%</span></td>
+        </tr>
+        <tr class="fund-row" data-seq="">
+          <td class="fund-seg-dot"><span class="dot" style="background:#c4b5fd"></span></td>
+          <td class="fund-name">Edelweiss Nifty Midcap…</td>
+          <td class="fund-val">₹107,153</td>
+          <td class="fund-num neg">-2.6%</td>
+          <td class="fund-num">₹110,000</td>
+          <td class="fund-num neg">-3.6%</td>
+          <td class="fund-num neg">-2.3%</td>
+          <td class="fund-share-cell"><div class="share-bar"><div style="width:8%;background:#c4b5fd"></div></div><span>2.0%</span></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr class="fund-row total-row">
+          <td></td>
+          <td class="fund-name" style="font-weight:600;color:var(--text)">Total</td>
+          <td class="fund-val">₹7,381,564</td>
+          <td class="fund-num pos">+14.2%</td>
+          <td class="fund-num">₹6,462,000</td>
+          <td class="fund-num" style="color:var(--text-faint)">15.3%</td>
+          <td class="fund-num" style="color:var(--text-faint)">-2.10%</td>
+          <td class="fund-share-cell" style="color:var(--text-faint)">100%</td>
+        </tr></tfoot>
+      </table>
+    </div>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -1185,7 +1205,6 @@ body::before {
   <div class="tab-panel" id="risk">
 
     <div class="section-header" style="margin-bottom:16px">
-      <span class="section-num">03</span>
       <span class="section-title">Drop from Peak &amp; Z-Score</span>
       <span style="font-size:10px;color:var(--text-faint);margin-left:auto">click header to sort</span>
     </div>
@@ -1210,154 +1229,154 @@ body::before {
         </thead>
         <tbody>
         <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#4f86f7"></span>Bandhan Nifty 50</td>
+          <td class="num neg">-6.9%</td>
+          <td class="num neg">-3.60</td>
+          <td>₹417,972</td>
+          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
+          <td class="dim">2026-01-02</td>
+        </tr>
+        <tr class="peak-row">
           <td><span class="peak-dot" style="background:#38bdf8"></span>Parag Parikh Flexi Cap</td>
-          <td class="num neg">-4.5%</td>
-          <td class="num neg">-3.00</td>
-          <td>₹333,956</td>
+          <td class="num neg">-4.9%</td>
+          <td class="num neg">-3.24</td>
+          <td>₹342,559</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
           <td class="dim">2025-10-27</td>
         </tr>
         <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#4f86f7"></span>DSP Nifty Top 10 Equal Weigh…</td>
-          <td class="num neg">-9.5%</td>
-          <td class="num neg">-2.69</td>
-          <td>₹312,255</td>
-          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2025-12-22</td>
-        </tr>
-        <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#4f86f7"></span>Bandhan Nifty 50</td>
-          <td class="num neg">-5.5%</td>
-          <td class="num neg">-2.65</td>
-          <td>₹424,548</td>
-          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2026-01-02</td>
-        </tr>
-        <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#6ee7b7"></span>HDFC Small Cap</td>
-          <td class="num neg">-9.5%</td>
-          <td class="num neg">-1.92</td>
-          <td>₹290,980</td>
-          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2025-09-19</td>
-        </tr>
-        <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#38bdf8"></span>JM Flexicap</td>
-          <td class="num neg">-12.2%</td>
-          <td class="num neg">-1.82</td>
-          <td>₹179,281</td>
-          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2024-12-11</td>
-        </tr>
-        <tr class="peak-row">
           <td><span class="peak-dot" style="background:#60a5fa"></span>HDFC Balanced Advantage</td>
-          <td class="num neg">-3.0%</td>
-          <td class="num neg">-1.67</td>
-          <td>₹220,208</td>
-          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2026-01-02</td>
-        </tr>
-        <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#34d399"></span>Motilal Oswal Nifty Midcap 1…</td>
-          <td class="num neg">-4.8%</td>
-          <td class="num neg">-1.48</td>
-          <td>₹196,075</td>
-          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2026-01-07</td>
-        </tr>
-        <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#a78bfa"></span>ICICI Prudential Value</td>
           <td class="num neg">-4.2%</td>
-          <td class="num neg">-1.39</td>
-          <td>₹208,113</td>
+          <td class="num neg">-3.07</td>
+          <td>₹217,387</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
           <td class="dim">2026-01-02</td>
         </tr>
         <tr class="peak-row">
           <td><span class="peak-dot" style="background:#a78bfa"></span>SBI Contra</td>
-          <td class="num neg">-3.8%</td>
-          <td class="num neg">-1.33</td>
-          <td>₹156,134</td>
+          <td class="num neg">-5.8%</td>
+          <td class="num neg">-3.04</td>
+          <td>₹152,966</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
           <td class="dim">2026-01-02</td>
         </tr>
         <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#c4b5fd"></span>Edelweiss Nifty Midcap150 Mo…</td>
-          <td class="num neg">-11.2%</td>
-          <td class="num neg">-1.20</td>
-          <td>₹99,485</td>
+          <td><span class="peak-dot" style="background:#4f86f7"></span>DSP Nifty Top 10 Equal Weigh…</td>
+          <td class="num neg">-10.5%</td>
+          <td class="num neg">-3.00</td>
+          <td>₹318,852</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2024-12-16</td>
+          <td class="dim">2025-12-22</td>
         </tr>
         <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#38bdf8"></span>Nippon India Multi Cap</td>
-          <td class="num neg">-4.8%</td>
-          <td class="num neg">-1.16</td>
-          <td>₹262,660</td>
+          <td><span class="peak-dot" style="background:#34d399"></span>Motilal Oswal Nifty Midcap 1…</td>
+          <td class="num neg">-6.9%</td>
+          <td class="num neg">-2.79</td>
+          <td>₹201,779</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2025-10-29</td>
-        </tr>
-        <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#c4b5fd"></span>HDFC NIFTY200 Momentum 30</td>
-          <td class="num neg">-13.1%</td>
-          <td class="num neg">-1.07</td>
-          <td>₹234,275</td>
-          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
-          <td class="dim">2024-12-16</td>
+          <td class="dim">2026-01-07</td>
         </tr>
         <tr class="peak-row">
           <td><span class="peak-dot" style="background:#34d399"></span>HDFC Mid-Cap</td>
-          <td class="num neg">-3.1%</td>
-          <td class="num neg">-0.87</td>
-          <td>₹358,290</td>
+          <td class="num neg">-5.5%</td>
+          <td class="num neg">-2.72</td>
+          <td>₹349,219</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
           <td class="dim">2026-02-11</td>
         </tr>
         <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#38bdf8"></span>JM Flexicap</td>
+          <td class="num neg">-14.0%</td>
+          <td class="num neg">-2.63</td>
+          <td>₹175,705</td>
+          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
+          <td class="dim">2024-12-11</td>
+        </tr>
+        <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#6ee7b7"></span>HDFC Small Cap</td>
+          <td class="num neg">-11.3%</td>
+          <td class="num neg">-2.52</td>
+          <td>₹285,288</td>
+          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
+          <td class="dim">2025-09-19</td>
+        </tr>
+        <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#c4b5fd"></span>Edelweiss Nifty Midcap150 Mo…</td>
+          <td class="num neg">-13.2%</td>
+          <td class="num neg">-2.48</td>
+          <td>₹107,153</td>
+          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
+          <td class="dim">2024-12-16</td>
+        </tr>
+        <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#c4b5fd"></span>HDFC NIFTY200 Momentum 30</td>
+          <td class="num neg">-15.1%</td>
+          <td class="num neg">-2.44</td>
+          <td>₹228,708</td>
+          <td><span class="quad-badge" style="color:#34d399;border-color:#34d399">PRIME REVERSION</span></td>
+          <td class="dim">2024-12-16</td>
+        </tr>
+        <tr class="peak-row">
           <td><span class="peak-dot" style="background:#4f86f7"></span>DSP Nifty 50 Equal Weight</td>
+          <td class="num neg">-5.2%</td>
+          <td class="num neg">-2.39</td>
+          <td>₹332,566</td>
+          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
+          <td class="dim">2026-02-11</td>
+        </tr>
+        <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#a78bfa"></span>ICICI Prudential Value</td>
+          <td class="num neg">-5.6%</td>
+          <td class="num neg">-2.34</td>
+          <td>₹215,110</td>
+          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
+          <td class="dim">2026-01-02</td>
+        </tr>
+        <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#38bdf8"></span>Nippon India Multi Cap</td>
+          <td class="num neg">-6.5%</td>
+          <td class="num neg">-2.02</td>
+          <td>₹257,987</td>
+          <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
+          <td class="dim">2025-10-29</td>
+        </tr>
+        <tr class="peak-row">
+          <td><span class="peak-dot" style="background:#60a5fa"></span>ICICI Prudential Multi-Asset</td>
           <td class="num neg">-3.2%</td>
-          <td class="num neg">-0.73</td>
-          <td>₹319,192</td>
+          <td class="num neg">-0.46</td>
+          <td>₹341,671</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
           <td class="dim">2026-02-11</td>
         </tr>
         <tr class="peak-row">
           <td><span class="peak-dot" style="background:#f472b6"></span>Franklin US Opportunities</td>
-          <td class="num neg">-4.2%</td>
-          <td class="num neg">-0.49</td>
-          <td>₹368,336</td>
+          <td class="num neg">-3.6%</td>
+          <td class="num neg">-0.15</td>
+          <td>₹370,669</td>
           <td><span class="quad-badge" style="color:#fbbf24;border-color:#fbbf24">FADING</span></td>
           <td class="dim">2026-01-27</td>
         </tr>
         <tr class="peak-row">
-          <td><span class="peak-dot" style="background:#60a5fa"></span>ICICI Prudential Multi-Asset</td>
-          <td class="num neg">-1.8%</td>
-          <td class="num pos">+0.54</td>
-          <td>₹331,259</td>
-          <td><span class="quad-badge" style="color:#f87171;border-color:#f87171">OVERHEATED</span></td>
-          <td class="dim">2026-02-11</td>
-        </tr>
-        <tr class="peak-row">
           <td><span class="peak-dot" style="background:#fbbf24"></span>SBI Silver</td>
-          <td class="num neg">-21.1%</td>
-          <td class="num pos">+1.38</td>
-          <td>₹485,217</td>
+          <td class="num neg">-26.8%</td>
+          <td class="num pos">+0.99</td>
+          <td>₹450,586</td>
           <td><span class="quad-badge" style="color:#fb923c;border-color:#fb923c">OVERSOLD BOUNCE</span></td>
           <td class="dim">2026-01-29</td>
         </tr>
         <tr class="peak-row">
           <td><span class="peak-dot" style="background:#a78bfa"></span>UTI Nifty 500 Value 50</td>
-          <td class="num neg">-2.1%</td>
-          <td class="num pos">+1.77</td>
-          <td>₹224,606</td>
+          <td class="num neg">-5.0%</td>
+          <td class="num pos">+1.03</td>
+          <td>₹217,927</td>
           <td><span class="quad-badge" style="color:#f87171;border-color:#f87171">OVERHEATED</span></td>
           <td class="dim">2026-02-26</td>
         </tr>
         <tr class="peak-row">
           <td><span class="peak-dot" style="background:#fbbf24"></span>SBI Gold</td>
-          <td class="num neg">-5.5%</td>
-          <td class="num pos">+2.11</td>
-          <td>₹610,064</td>
+          <td class="num neg">-8.6%</td>
+          <td class="num pos">+1.68</td>
+          <td>₹599,810</td>
           <td><span class="quad-badge" style="color:#f87171;border-color:#f87171">OVERHEATED</span></td>
           <td class="dim">2026-01-29</td>
         </tr></tbody>
@@ -1365,204 +1384,36 @@ body::before {
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       TAB: RETURNS SINCE PURCHASE
-  ══════════════════════════════════════════ -->
-  <div class="tab-panel" id="returns">
-
-    <div class="section-header" style="margin-bottom:16px">
-      <span class="section-num">04</span>
-      <span class="section-title">Returns Since Last Purchase</span>
-      <span style="font-size:10px;color:var(--text-faint);margin-left:auto">by fund, sorted best → worst</span>
-    </div>
-
-    <div class="fund-table-wrap">
-      <table class="data-table" id="ret-table">
-        <thead>
-          <tr>
-            <th onclick="sortTable('ret-table',0)">Fund</th>
-            <th onclick="sortTable('ret-table',1)">Return</th>
-            <th></th>
-            <th onclick="sortTable('ret-table',3)">Purchase Date</th>
-            <th onclick="sortTable('ret-table',4)">Days Held</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td class="fund-name">Bandhan Nifty 50</td>
-          <td class="num pos">+64.5%</td>
-          <td><div class="ret-bar"><div style="width:52%;background:#34d399"></div></div></td>
-          <td class="dim">2022-06-16</td>
-          <td class="dim">1355d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">HDFC Silver</td>
-          <td class="num pos">+55.2%</td>
-          <td><div class="ret-bar"><div style="width:44%;background:#34d399"></div></div></td>
-          <td class="dim">2025-10-14</td>
-          <td class="dim">139d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">SBI Silver</td>
-          <td class="num pos">+25.8%</td>
-          <td><div class="ret-bar"><div style="width:21%;background:#34d399"></div></div></td>
-          <td class="dim">2025-12-30</td>
-          <td class="dim">62d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">SBI Gold</td>
-          <td class="num pos">+11.2%</td>
-          <td><div class="ret-bar"><div style="width:9%;background:#34d399"></div></div></td>
-          <td class="dim">2026-02-17</td>
-          <td class="dim">13d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">UTI Nifty 500 Value 50</td>
-          <td class="num pos">+7.8%</td>
-          <td><div class="ret-bar"><div style="width:6%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-08</td>
-          <td class="dim">53d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Kotak Arbitrage</td>
-          <td class="num pos">+3.3%</td>
-          <td><div class="ret-bar"><div style="width:3%;background:#34d399"></div></div></td>
-          <td class="dim">2025-09-08</td>
-          <td class="dim">175d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Edelweiss Nifty Midcap…</td>
-          <td class="num pos">+3.1%</td>
-          <td><div class="ret-bar"><div style="width:2%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-23</td>
-          <td class="dim">38d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Nippon India Multi Cap</td>
-          <td class="num pos">+2.7%</td>
-          <td><div class="ret-bar"><div style="width:2%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-20</td>
-          <td class="dim">41d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Motilal Oswal Nifty Mi…</td>
-          <td class="num pos">+1.9%</td>
-          <td><div class="ret-bar"><div style="width:2%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-21</td>
-          <td class="dim">40d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">DSP Nifty 50 Equal Wei…</td>
-          <td class="num pos">+1.4%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-23</td>
-          <td class="dim">38d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Bandhan Nifty 50</td>
-          <td class="num pos">+1.1%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#34d399"></div></div></td>
-          <td class="dim">2025-09-26</td>
-          <td class="dim">157d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">HDFC Mid-Cap</td>
-          <td class="num pos">+1.0%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-21</td>
-          <td class="dim">40d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">HDFC Small Cap</td>
-          <td class="num pos">+0.8%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-21</td>
-          <td class="dim">40d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Franklin US Opportunit…</td>
-          <td class="num pos">+0.8%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#34d399"></div></div></td>
-          <td class="dim">2026-02-27</td>
-          <td class="dim">3d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Motilal Oswal Nifty Sm…</td>
-          <td class="num pos">+0.7%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-21</td>
-          <td class="dim">40d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">JM Flexicap</td>
-          <td class="num pos">+0.7%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-21</td>
-          <td class="dim">40d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">HDFC Balanced Advantag…</td>
-          <td class="num pos">+0.6%</td>
-          <td><div class="ret-bar"><div style="width:0%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-23</td>
-          <td class="dim">38d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">ICICI Prudential Multi…</td>
-          <td class="num pos">+0.0%</td>
-          <td><div class="ret-bar"><div style="width:0%;background:#34d399"></div></div></td>
-          <td class="dim">2026-01-08</td>
-          <td class="dim">53d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">ICICI Prudential Value</td>
-          <td class="num neg">-0.2%</td>
-          <td><div class="ret-bar"><div style="width:0%;background:#f87171"></div></div></td>
-          <td class="dim">2026-01-23</td>
-          <td class="dim">38d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Parag Parikh Flexi Cap</td>
-          <td class="num neg">-0.6%</td>
-          <td><div class="ret-bar"><div style="width:0%;background:#f87171"></div></div></td>
-          <td class="dim">2026-02-27</td>
-          <td class="dim">3d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">HDFC NIFTY200 Momentum…</td>
-          <td class="num neg">-1.1%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#f87171"></div></div></td>
-          <td class="dim">2026-01-08</td>
-          <td class="dim">53d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">DSP Nifty Top 10 Equal…</td>
-          <td class="num neg">-1.3%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#f87171"></div></div></td>
-          <td class="dim">2026-02-27</td>
-          <td class="dim">3d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">Kotak Nifty Next 50</td>
-          <td class="num neg">-1.5%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#f87171"></div></div></td>
-          <td class="dim">2026-02-27</td>
-          <td class="dim">3d</td>
-        </tr>
-        <tr>
-          <td class="fund-name">SBI Contra</td>
-          <td class="num neg">-1.8%</td>
-          <td><div class="ret-bar"><div style="width:1%;background:#f87171"></div></div></td>
-          <td class="dim">2026-01-08</td>
-          <td class="dim">53d</td>
-        </tr></tbody>
-      </table>
-    </div>
-  </div>
 
 </div><!-- /page -->
 
 <script>
+// ── Theme toggle ──
+function toggleTheme() {
+  var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  try { localStorage.setItem('cv-theme', isDark ? 'light' : 'dark'); } catch(e) {}
+}
+// Restore saved theme
+(function() {
+  try {
+    var t = localStorage.getItem('cv-theme');
+    if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  } catch(e) {}
+})();
+
+// Hide toggle when scrolled, show when back at top
+(function() {
+  var toggle = document.querySelector('.toggle-wrap');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) {
+      toggle.classList.add('hidden');
+    } else {
+      toggle.classList.remove('hidden');
+    }
+  }, { passive: true });
+})();
+
 // ── Tab switching ──
 function switchTab(id, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -1571,9 +1422,9 @@ function switchTab(id, btn) {
   btn.classList.add('active');
 }
 
-// ── Sparkline interactive dot tooltip ──
+// ── Sparkline with inflow bubbles ──
 (function() {
-  var data = [{"x": 0.0, "y": 100.0, "date": "2026-01-09", "val": 7072356.0, "chg": -16516.0, "pct": -0.2}, {"x": 4.0, "y": 59.71, "date": "2026-01-20", "val": 7212744.0, "chg": -27487.0, "pct": -0.4}, {"x": 8.0, "y": 51.57, "date": "2026-01-22", "val": 7241119.0, "chg": -68226.0, "pct": -0.9}, {"x": 12.0, "y": 48.2, "date": "2026-01-23", "val": 7252840.0, "chg": -8279.0, "pct": -0.1}, {"x": 16.0, "y": 25.83, "date": "2026-01-30", "val": 7330798.0, "chg": -233137.0, "pct": -3.1}, {"x": 20.0, "y": 99.93, "date": "2026-02-02", "val": 7072593.0, "chg": -258204.0, "pct": -3.5}, {"x": 24.0, "y": 41.94, "date": "2026-02-03", "val": 7274675.0, "chg": 202082.0, "pct": 2.9}, {"x": 28.0, "y": 19.4, "date": "2026-02-04", "val": 7353189.0, "chg": 78514.0, "pct": 1.1}, {"x": 32.0, "y": 45.69, "date": "2026-02-05", "val": 7261603.0, "chg": -111586.0, "pct": -1.5}, {"x": 36.0, "y": 50.35, "date": "2026-02-06", "val": 7245376.0, "chg": -16227.0, "pct": -0.2}, {"x": 40.0, "y": 17.81, "date": "2026-02-09", "val": 7358731.0, "chg": 113355.0, "pct": 1.6}, {"x": 44.0, "y": 14.05, "date": "2026-02-10", "val": 7371836.0, "chg": 13105.0, "pct": 0.2}, {"x": 48.0, "y": 9.0, "date": "2026-02-11", "val": 7389431.0, "chg": 17595.0, "pct": 0.2}, {"x": 52.0, "y": 20.71, "date": "2026-02-12", "val": 7348645.0, "chg": -40786.0, "pct": -0.6}, {"x": 56.0, "y": 46.48, "date": "2026-02-13", "val": 7258861.0, "chg": -109784.0, "pct": -1.5}, {"x": 60.0, "y": 40.08, "date": "2026-02-16", "val": 7281151.0, "chg": 22289.0, "pct": 0.3}, {"x": 64.0, "y": 39.28, "date": "2026-02-17", "val": 7283919.0, "chg": -7232.0, "pct": -0.1}, {"x": 68.0, "y": 29.33, "date": "2026-02-18", "val": 7318591.0, "chg": 34673.0, "pct": 0.5}, {"x": 72.0, "y": 43.52, "date": "2026-02-19", "val": 7269172.0, "chg": -59419.0, "pct": -0.8}, {"x": 76.0, "y": 25.3, "date": "2026-02-20", "val": 7332654.0, "chg": 63482.0, "pct": 0.9}, {"x": 80.0, "y": 8.85, "date": "2026-02-23", "val": 7389981.0, "chg": 57327.0, "pct": 0.8}, {"x": 84.0, "y": 13.0, "date": "2026-02-24", "val": 7375520.0, "chg": -24461.0, "pct": -0.3}, {"x": 88.0, "y": 0.45, "date": "2026-02-25", "val": 7419234.0, "chg": 38714.0, "pct": 0.5}, {"x": 92.0, "y": 5.15, "date": "2026-02-26", "val": 7402863.0, "chg": -16370.0, "pct": -0.2}, {"x": 96.0, "y": 4.67, "date": "2026-02-27", "val": 7404541.0, "chg": -38322.0, "pct": -0.5}, {"x": 100.0, "y": 0.0, "date": "2026-03-02", "val": 7420802.0, "chg": 16262.0, "pct": 0.2}];
+  var data = [{"x": 0.0, "y": 59.75, "date": "2026-01-20", "val": 7212744.0, "chg": -27487.0, "pct": -0.4, "txn": 25000}, {"x": 3.85, "y": 51.6, "date": "2026-01-22", "val": 7241119.0, "chg": -68226.0, "pct": -0.9, "txn": 25000}, {"x": 7.69, "y": 48.24, "date": "2026-01-23", "val": 7252840.0, "chg": -8279.0, "pct": -0.1, "txn": 20000}, {"x": 11.54, "y": 25.85, "date": "2026-01-30", "val": 7330798.0, "chg": -233137.0, "pct": -3.1, "txn": 0}, {"x": 15.38, "y": 100.0, "date": "2026-02-02", "val": 7072593.0, "chg": -258204.0, "pct": -3.5, "txn": 0}, {"x": 19.23, "y": 41.97, "date": "2026-02-03", "val": 7274675.0, "chg": 202082.0, "pct": 2.9, "txn": 0}, {"x": 23.08, "y": 19.42, "date": "2026-02-04", "val": 7353189.0, "chg": 78514.0, "pct": 1.1, "txn": 0}, {"x": 26.92, "y": 45.72, "date": "2026-02-05", "val": 7261603.0, "chg": -111586.0, "pct": -1.5, "txn": 20000}, {"x": 30.77, "y": 50.38, "date": "2026-02-06", "val": 7245376.0, "chg": -16227.0, "pct": -0.2, "txn": 0}, {"x": 34.62, "y": 17.83, "date": "2026-02-09", "val": 7358731.0, "chg": 113355.0, "pct": 1.6, "txn": 0}, {"x": 38.46, "y": 14.06, "date": "2026-02-10", "val": 7371836.0, "chg": 13105.0, "pct": 0.2, "txn": 0}, {"x": 42.31, "y": 9.01, "date": "2026-02-11", "val": 7389431.0, "chg": 17595.0, "pct": 0.2, "txn": 0}, {"x": 46.15, "y": 20.72, "date": "2026-02-12", "val": 7348645.0, "chg": -40786.0, "pct": -0.6, "txn": 0}, {"x": 50.0, "y": 46.51, "date": "2026-02-13", "val": 7258861.0, "chg": -109784.0, "pct": -1.5, "txn": 20000}, {"x": 53.85, "y": 40.11, "date": "2026-02-16", "val": 7281151.0, "chg": 22289.0, "pct": 0.3, "txn": 0}, {"x": 57.69, "y": 39.31, "date": "2026-02-17", "val": 7283919.0, "chg": -7232.0, "pct": -0.1, "txn": 10000}, {"x": 61.54, "y": 29.35, "date": "2026-02-18", "val": 7318591.0, "chg": 34673.0, "pct": 0.5, "txn": 0}, {"x": 65.38, "y": 43.55, "date": "2026-02-19", "val": 7269172.0, "chg": -59419.0, "pct": -0.8, "txn": 10000}, {"x": 69.23, "y": 25.31, "date": "2026-02-20", "val": 7332654.0, "chg": 63482.0, "pct": 0.9, "txn": 0}, {"x": 73.08, "y": 8.85, "date": "2026-02-23", "val": 7389981.0, "chg": 57327.0, "pct": 0.8, "txn": 0}, {"x": 76.92, "y": 13.0, "date": "2026-02-24", "val": 7375520.0, "chg": -24461.0, "pct": -0.3, "txn": 10000}, {"x": 80.77, "y": 0.45, "date": "2026-02-25", "val": 7419234.0, "chg": 38714.0, "pct": 0.5, "txn": 5000}, {"x": 84.62, "y": 5.15, "date": "2026-02-26", "val": 7402863.0, "chg": -16370.0, "pct": -0.2, "txn": 0}, {"x": 88.46, "y": 4.67, "date": "2026-02-27", "val": 7404541.0, "chg": -38322.0, "pct": -0.5, "txn": 40000}, {"x": 92.31, "y": 0.0, "date": "2026-03-02", "val": 7420802.0, "chg": 16262.0, "pct": 0.2, "txn": 0}, {"x": 96.15, "y": 0.0, "date": "2026-03-03", "val": 7420802.0, "chg": 0, "pct": 0, "txn": 0}, {"x": 100.0, "y": 15.53, "date": "2026-03-04", "val": 7366730.0, "chg": -159072.0, "pct": -2.1, "txn": 105000}];
   if (!data.length) return;
 
   var container = document.getElementById('spark-container');
@@ -1583,7 +1434,16 @@ function switchTab(id, btn) {
   var ttDate    = document.getElementById('spark-tt-date');
   var ttVal     = document.getElementById('spark-tt-val');
   var ttChg     = document.getElementById('spark-tt-chg');
+  var ttTxn     = document.getElementById('spark-tt-txn');
   var ctx       = canvas.getContext('2d');
+
+  // bubble sizing: scale txn amount to radius (px in logical space)
+  var maxTxn = Math.max.apply(null, data.map(function(d) { return d.txn || 0; }));
+  var MAX_R = 8, MIN_R = 1;
+  function bubbleRadius(txn) {
+    if (!txn) return 0;
+    return MIN_R + (MAX_R - MIN_R) * Math.sqrt(txn / maxTxn);
+  }
 
   function fmtVal(n) {
     return '₹' + Math.round(n).toLocaleString('en-IN');
@@ -1594,67 +1454,104 @@ function switchTab(id, btn) {
            '  (' + sign + pct.toFixed(2) + '%)';
   }
 
-  function drawDot(px, py) {
+  function getRect() { return svg.getBoundingClientRect(); }
+
+  function drawAll(activePt) {
+    var rect = getRect();
     var dpr = window.devicePixelRatio || 1;
     canvas.width  = canvas.offsetWidth  * dpr;
     canvas.height = canvas.offsetHeight * dpr;
-    ctx.scale(dpr, dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
 
-    // vertical rule
-    ctx.beginPath();
-    ctx.moveTo(px, 0);
-    ctx.lineTo(px, canvas.offsetHeight);
-    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([3, 3]);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    // ── 1. Draw inflow bubbles (always visible) ──
+    data.forEach(function(d) {
+      if (!d.txn) return;
+      var px = d.x / 100 * rect.width;
+      var py = d.y / 100 * rect.height;
+      var r  = bubbleRadius(d.txn);
+      // Only clamp top so bubble never clips — allow it to sit on the line naturally
+      py = Math.max(r + 2, py);
 
-    // outer glow ring
-    ctx.beginPath();
-    ctx.arc(px, py, 7, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(79,134,247,0.18)';
-    ctx.fill();
+      // outer pulse ring
+      ctx.beginPath();
+      ctx.arc(px, py, r + 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(251,191,36,0.08)';
+      ctx.fill();
 
-    // white fill circle
-    ctx.beginPath();
-    ctx.arc(px, py, 5, 0, Math.PI * 2);
-    ctx.fillStyle = '#ffffff';
-    ctx.fill();
+      // filled bubble
+      ctx.beginPath();
+      ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(251,191,36,0.18)';
+      ctx.fill();
 
-    // blue stroke
-    ctx.beginPath();
-    ctx.arc(px, py, 5, 0, Math.PI * 2);
-    ctx.strokeStyle = '#4f86f7';
-    ctx.lineWidth = 2;
-    ctx.stroke();
+      // stroke ring
+      ctx.beginPath();
+      ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    });
+
+    // ── 2. Draw hover dot on top ──
+    if (activePt) {
+      var px = activePt.x / 100 * rect.width;
+      var py = activePt.y / 100 * rect.height;
+
+      // vertical rule
+      ctx.beginPath();
+      ctx.moveTo(px, 0);
+      ctx.lineTo(px, rect.height);
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // glow
+      ctx.beginPath();
+      ctx.arc(px, py, 7, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(79,134,247,0.2)';
+      ctx.fill();
+
+      // white dot
+      ctx.beginPath();
+      ctx.arc(px, py, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+
+      // blue stroke
+      ctx.beginPath();
+      ctx.arc(px, py, 5, 0, Math.PI * 2);
+      ctx.strokeStyle = '#4f86f7';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
   }
 
-  function clearDot() {
-    var dpr = window.devicePixelRatio || 1;
-    canvas.width  = canvas.offsetWidth  * dpr;
-    canvas.height = canvas.offsetHeight * dpr;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+  // Draw bubbles immediately on load
+  window.addEventListener('load', function() { drawAll(null); });
+  // Also draw after a short delay in case fonts/layout shift
+  setTimeout(function() { drawAll(null); }, 150);
+  // Redraw on resize
+  window.addEventListener('resize', function() { drawAll(null); });
 
   container.addEventListener('mousemove', function(e) {
-    var rect = svg.getBoundingClientRect();
+    var rect = getRect();
     var mx = (e.clientX - rect.left) / rect.width;
 
-    // nearest point
     var best = data[0], bestD = 999;
     for (var i = 0; i < data.length; i++) {
       var d = Math.abs(data[i].x / 100 - mx);
       if (d < bestD) { bestD = d; best = data[i]; }
     }
 
+    drawAll(best);
+
     var px = best.x / 100 * rect.width;
     var py = best.y / 100 * rect.height;
-    drawDot(px, py);
 
-    // tooltip positioning — keep inside container
-    var ttW = 180;
+    var ttW = 190;
     var left = px + 16;
     if (left + ttW > rect.width) left = px - ttW - 16;
     tt.style.left    = left + 'px';
@@ -1666,10 +1563,17 @@ function switchTab(id, btn) {
     var pos = best.chg >= 0;
     ttChg.textContent = fmtChg(best.chg, best.pct);
     ttChg.style.color = pos ? '#34d399' : '#f87171';
+
+    if (best.txn) {
+      ttTxn.textContent = '↑ Inflow: ' + fmtVal(best.txn);
+      ttTxn.style.display = 'block';
+    } else {
+      ttTxn.style.display = 'none';
+    }
   });
 
   container.addEventListener('mouseleave', function() {
-    clearDot();
+    drawAll(null);
     tt.style.display = 'none';
   });
 })();
