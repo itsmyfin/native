@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital View — Portfolio Allocation Framework</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #0f1923;
+    --ink2:      #2c3e50;
+    --muted:     #6b7c93;
+    --rule:      #dde3ea;
+    --bg:        #f5f3ef;
+    --paper:     #fdfcfa;
+    --accent:    #1a3d6e;
+    --gold:      #b8892a;
+    --green:     #1d6f42;
+    --red:       #9c0006;
+    --amber:     #7b6300;
+    --blue:      #1d4e89;
+    --teal:      #0e5a6e;
+    --tag-h:     #fee2e2;
+    --tag-m:     #fef3c7;
+    --tag-l:     #f1f5f9;
+    --new-bg:    #eff6ff;
+    --buy-bg:    #f0fdf4;
+    --hold-bg:   #fefce8;
+    --harvest-bg:#fff7ed;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 28px 48px 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .header-left .wordmark {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 6px;
+  }
+  .header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .header-left h1 em {
+    font-style: italic;
+    opacity: 0.7;
+    font-size: 22px;
+  }
+  .header-meta {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    opacity: 0.65;
+    line-height: 1.8;
+  }
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .stat-val.green { color: #6ee7a0; }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-top: 2px;
+  }
+
+  /* ── TABS ── */
+  nav.tabs {
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    padding: 0 48px;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 20px 12px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── MAIN ── */
+  main {
+    padding: 36px 48px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--accent);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  /* ── TABLES ── */
+  .tbl-wrap { overflow-x: auto; border-radius: 4px; border: 1px solid var(--rule); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--paper);
+  }
+  thead tr {
+    background: var(--accent);
+    color: white;
+  }
+  thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 10px 14px;
+    text-align: left;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  thead th:last-child { border-right: none; }
+  thead th.num { text-align: right; }
+  thead th.ctr { text-align: center; }
+
+  tbody tr { border-bottom: 1px solid var(--rule); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f0f4f9; }
+  tbody td {
+    padding: 9px 14px;
+    vertical-align: middle;
+    color: var(--ink2);
+    border-right: 1px solid var(--rule);
+  }
+  tbody td:last-child { border-right: none; }
+  td.num { text-align: right; font-family: 'DM Mono', monospace; font-size: 12px; }
+  td.ctr { text-align: center; }
+  td.mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+
+  tfoot tr {
+    background: #dde6f0;
+    border-top: 2px solid var(--accent);
+    font-weight: 600;
+  }
+  tfoot td {
+    padding: 10px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    border-right: 1px solid #c5d2e0;
+  }
+
+  /* segment group header rows */
+  tr.seg-group td {
+    background: #eef2f8;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    padding: 5px 14px;
+  }
+
+  /* ── CHIPS/TAGS ── */
+  .chip {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .chip-buy    { background: var(--buy-bg);     color: var(--green);   border: 1px solid #bbf7d0; }
+  .chip-hold   { background: var(--hold-bg);    color: var(--amber);   border: 1px solid #fde68a; }
+  .chip-new    { background: var(--new-bg);     color: var(--blue);    border: 1px solid #bfdbfe; }
+  .chip-harvest{ background: var(--harvest-bg); color: #92400e;        border: 1px solid #fed7aa; }
+  .chip-high   { background: var(--tag-h);      color: var(--red);     border: 1px solid #fecaca; }
+  .chip-medium { background: var(--tag-m);      color: var(--amber);   border: 1px solid #fde68a; }
+  .chip-low    { background: var(--tag-l);      color: var(--muted);   border: 1px solid var(--rule); }
+
+  .dir-add    { color: var(--green); font-weight: 600; }
+  .dir-reduce { color: var(--red);   font-weight: 600; }
+  .dir-hold   { color: var(--amber); font-weight: 600; }
+  .dir-build  { color: var(--blue);  font-weight: 600; }
+
+  .xirr-pos { color: var(--green); font-family: 'DM Mono', monospace; font-size: 12px; }
+  .xirr-neg { color: var(--red);   font-family: 'DM Mono', monospace; font-size: 12px; }
+  .xirr-neu { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; }
+
+  .act-buy  { color: var(--green); font-weight: 600; font-family: 'DM Mono', monospace; font-size: 11px; }
+  .act-sell { color: var(--red);   font-weight: 600; font-family: 'DM Mono', monospace; font-size: 11px; }
+  .act-nil  { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; }
+
+  /* ── PROGRESS BARS ── */
+  .bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .bar-track {
+    flex: 1; height: 6px; background: var(--rule);
+    border-radius: 3px; overflow: hidden; min-width: 60px;
+  }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .bar-pct { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); width: 34px; text-align: right; }
+
+  /* ── PHASE CARDS ── */
+  .phases { display: flex; flex-direction: column; gap: 24px; }
+  .phase-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .phase-header {
+    padding: 12px 20px;
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .phase-items { }
+  .phase-item {
+    display: grid;
+    grid-template-columns: 80px 200px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: stretch;
+  }
+  .phase-item:last-child { border-bottom: none; }
+  .phase-item > div {
+    padding: 12px 16px;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+  }
+  .phase-item > div:last-child { border-right: none; }
+  .pi-action { font-weight: 600; font-size: 13px; color: var(--ink); }
+  .pi-detail { font-size: 12.5px; color: var(--ink2); line-height: 1.5; }
+
+  /* ── DEPLOYMENT CALENDAR ── */
+  .deploy-months { display: flex; flex-direction: column; gap: 20px; }
+  .deploy-month { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .deploy-month-hdr {
+    padding: 10px 18px;
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .deploy-month-hdr .month-total {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    font-family: 'DM Serif Display', serif;
+  }
+  .deploy-entry {
+    display: grid;
+    grid-template-columns: 110px 1fr 170px 120px 130px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    align-items: center;
+  }
+  .deploy-entry:last-child { border-bottom: none; }
+  .deploy-entry > div {
+    padding: 9px 14px;
+    border-right: 1px solid var(--rule);
+  }
+  .deploy-entry > div:last-child { border-right: none; }
+  .de-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .de-fund { font-weight: 500; color: var(--ink); }
+  .de-type-lump { color: #92400e; font-size: 11px; font-family: 'DM Mono', monospace; }
+  .de-type-sip  { color: var(--blue); font-size: 11px; font-family: 'DM Mono', monospace; }
+  .de-amt { font-family: 'DM Mono', monospace; font-weight: 600; color: var(--ink); text-align: right; }
+  .de-cum { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-align: right; }
+
+  /* ── PRINCIPLES ── */
+  .principles { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .principle-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 20px;
+    border-left: 3px solid var(--accent);
+  }
+  .principle-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .principle-body { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── RATIONALE ── */
+  .rationale-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .rationale-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .rationale-hdr {
+    background: var(--accent);
+    color: white;
+    padding: 14px 20px;
+  }
+  .rationale-hdr .r-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 4px;
+  }
+  .rationale-hdr .r-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .rationale-role {
+    padding: 14px 20px;
+    background: #f0f4fa;
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.55;
+    border-bottom: 1px solid var(--rule);
+  }
+  .rationale-role strong { color: var(--accent); }
+  .rationale-bullets {
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .rb {
+    display: flex;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+  .rb-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.15;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* valuation table */
+  .val-table-wrap { grid-column: 1 / -1; }
+  .val-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+  .val-expensive { background: #fee2e2; color: var(--red); }
+  .val-moderate  { background: #fef3c7; color: var(--amber); }
+  .val-attractive{ background: #dcfce7; color: var(--green); }
+  .val-source {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+    padding: 0 2px;
+  }
+
+  /* ── REVIEW GATES ── */
+  .note-bar {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 5px;
+    padding: 10px 16px;
+    font-size: 12.5px;
+    color: #92400e;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .note-bar strong { color: #78350f; }
+
+  tr.group-row td {
+    background: #eef2f8;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    padding: 5px 14px;
+  }
+
+  .fund-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
+  .fund-seg-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); }
+
+  .clock-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink); font-weight: 500; }
+  .clock-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); display: block; margin-top: 2px; }
+
+  .rev-date { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); }
+  .rev-months { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); display: block; margin-top: 2px; }
+
+  .period { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 600; }
+  .period-note { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; line-height: 1.4; }
+
+  .gate-logic { font-size: 12px; color: var(--ink2); line-height: 1.5; }
+  .gate-logic ul { padding-left: 14px; margin-top: 4px; }
+  .gate-logic li { margin-bottom: 3px; }
+
+  .instr-chip {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .instr-hold  { background: #fef3c7; color: var(--amber);  border: 1px solid #fde68a; }
+  .instr-watch { background: #eff6ff; color: var(--blue);   border: 1px solid #bfdbfe; }
+  .instr-text  { font-size: 12px; color: var(--ink2); line-height: 1.5; }
+
+  .gate-principles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+  .gate-principle {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .gate-principle h3 { font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--accent); margin-bottom: 6px; font-weight: 400; }
+  .gate-principle p  { font-size: 12.5px; color: var(--ink2); line-height: 1.6; }
+  .gate-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 28px 0 12px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    header { padding: 20px 20px 16px; flex-direction: column; align-items: flex-start; }
+    main { padding: 20px; }
+    nav.tabs { padding: 0 20px; }
+    .principles { grid-template-columns: 1fr; }
+    .rationale-grid { grid-template-columns: 1fr; }
+    .phase-item { grid-template-columns: 70px 1fr; }
+    .phase-item .pi-action { display: none; }
+    .deploy-entry { grid-template-columns: 80px 1fr 100px; }
+    .deploy-entry .de-type-lump, .deploy-entry .de-type-sip, .deploy-entry .de-cum { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-left">
+      <div class="wordmark">Capital View · Portfolio Intelligence</div>
+      <h1>Allocation Framework <em>— March 2026</em></h1>
+    </div>
+    <div class="header-stats">
+      <div class="stat"><div class="stat-val">₹74.1L</div><div class="stat-label">Current AUM</div></div>
+      <div class="stat"><div class="stat-val green">₹11.1L</div><div class="stat-label">Buy Queue</div></div>
+      <div class="stat"><div class="stat-val">₹85.3L</div><div class="stat-label">Post-Deploy</div></div>
+      <div class="stat"><div class="stat-val">26</div><div class="stat-label">Holdings</div></div>
+      <div class="stat"><div class="stat-val">13</div><div class="stat-label">Segments</div></div>
+    </div>
+  </div>
+  <div class="header-meta">
+    As of 6 March 2026<br>
+    Confidential — Personal<br>
+    Next review: Sep 2026
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tab active" onclick="showTab('allocation')">1 · Allocation</div>
+  <div class="tab" onclick="showTab('funds')">2 · Fund Detail</div>
+  <div class="tab" onclick="showTab('plan')">3 · Implementation</div>
+  <div class="tab" onclick="showTab('calendar')">4 · Calendar</div>
+  <div class="tab" onclick="showTab('principles')">5 · Principles</div>
+  <div class="tab" onclick="showTab('rationale')">6 · Rationale</div>
+  <div class="tab" onclick="showTab('gates')">7 · Review Gates</div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════ TAB 1: ALLOCATION -->
+<section class="section active" id="allocation">
+  <div class="section-title">Segment Allocation</div>
+  <div class="section-sub">Near-term target reflects existing buy queue. Post buy queue shows composition after all planned purchases. Direction and Action reflect actual fund-level decisions.</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th class="num">Current ₹</th>
+          <th class="ctr">Current %</th>
+          <th class="ctr">Target %</th>
+          <th class="ctr">Post Buy Q %</th>
+          <th style="min-width:180px">Progress vs Target</th>
+          <th class="ctr">Direction</th>
+          <th class="ctr">Action</th>
+        </tr>
+      </thead>
+      <tbody id="alloc-tbody"></tbody>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td class="num">₹74.1L</td>
+          <td class="ctr">100%</td>
+          <td class="ctr">100%</td>
+          <td class="ctr">100%</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ TAB 2: FUND DETAIL -->
+<section class="section" id="funds">
+  <div class="section-title">Fund-level Detail & Actions</div>
+  <div class="section-sub">BUY (green) — actively adding per plan &nbsp;·&nbsp; HOLD (amber) — maintain, no new additions &nbsp;·&nbsp; NEW (blue) — initiating &nbsp;·&nbsp; TAX HARVEST (orange) — redeem &amp; rotate. XIRR: green = positive, red = negative.</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fund</th>
+          <th>Segment</th>
+          <th class="num">Cost</th>
+          <th class="num">Current ₹</th>
+          <th class="num">Buy Queue</th>
+          <th class="ctr">Target %</th>
+          <th class="ctr">Final %</th>
+          <th class="ctr">XIRR</th>
+          <th style="min-width:320px">Action / Rationale</th>
+        </tr>
+      </thead>
+      <tbody id="funds-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ TAB 3: IMPLEMENTATION -->
+<section class="section" id="plan">
+  <div class="section-title">Implementation Plan</div>
+  <div class="section-sub">Three phases from March 2026 through March 2027 and beyond. HIGH = execute immediately, MEDIUM = next 3 months, LOW = review gates.</div>
+  <div class="phases" id="phases-container"></div>
+</section>
+
+<!-- ══════════════════════════════════════════ TAB 4: CALENDAR -->
+<section class="section" id="calendar">
+  <div class="section-title">Deployment Calendar</div>
+  <div class="section-sub">
+    Total buy queue: <strong>₹11,11,356</strong> &nbsp;·&nbsp;
+    Net new external capital: <strong>₹10,03,399</strong> &nbsp;·&nbsp;
+    DSP 50 EW ₹1,07,957 self-funded from Bandhan Regular harvest (Mar 2027).
+    Lump sums in amber, fortnightly SIPs in blue. Set fortnightly SIPs on 1st &amp; 16th via AMC portal.
+  </div>
+  <div class="deploy-months" id="deploy-container"></div>
+</section>
+
+<!-- ══════════════════════════════════════════ TAB 5: PRINCIPLES -->
+<section class="section" id="principles">
+  <div class="section-title">Guiding Principles &amp; Review Gates</div>
+  <div class="section-sub">Principles govern allocation decisions and prevent reactive trading. Review gates are explicit time-bound checkpoints to reassess underperforming positions.</div>
+  <div class="principles" id="principles-container"></div>
+</section>
+
+<!-- ══════════════════════════════════════════ TAB 6: RATIONALE -->
+<section class="section" id="rationale">
+  <div class="section-title">New Fund Rationale — International Sleeve</div>
+  <div class="section-sub">Investment case for the two new funds initiating in April–May 2026.</div>
+  <div class="rationale-grid" id="rationale-container"></div>
+</section>
+
+<!-- ══════════════════════════════════════════ TAB 7: REVIEW GATES -->
+<section class="section" id="gates">
+  <div class="section-title">Review Gates</div>
+  <div class="section-sub">When to hold, when to cut — logic and instructions for every underperforming or watch-list position. All 3 cut conditions must be true simultaneously before acting.</div>
+  <div class="note-bar">
+    <strong>On clock start dates:</strong> The review clock starts from <strong>first purchase date</strong> — not the average date across SIPs, not the last top-up. Subsequent SIPs are execution of the same thesis. Dates below are estimates — confirm exact first purchase dates from your account statement.
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:155px">Fund</th>
+          <th style="min-width:85px">1Y Return<br><small style="font-weight:400;opacity:.7">06-Mar-2026</small></th>
+          <th style="min-width:110px">Clock Starts</th>
+          <th style="min-width:90px">Min Period</th>
+          <th style="min-width:105px">Review Date</th>
+          <th style="min-width:260px">Manager · Holdings · Cut Logic</th>
+          <th style="min-width:195px">Mar 2026 Decision</th>
+        </tr>
+      </thead>
+      <tbody id="gates-tbody"></tbody>
+    </table>
+  </div>
+  <div class="gate-section-label">Generic Principles — When to Cut Any Fund</div>
+  <div class="gate-principles" id="gate-principles"></div>
+</section>
+
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const segments = [
+  { name:"Equity: UltraLarge",  cp:22, tgt:20, fin:20, dir:"▼ Reduce",  act:"-"   },
+  { name:"Commo: Gold/Silver",  cp:16, tgt:17, fin:16, dir:"▲ Add",     act:"Buy" },
+  { name:"Equity: Flexi/Multi", cp:11, tgt: 8, fin: 9, dir:"▼ Reduce",  act:"-"   },
+  { name:"Equity: Liquid",      cp: 9, tgt: 7, fin: 7, dir:"▼ Reduce",  act:"-"   },
+  { name:"Equity: Value",       cp: 8, tgt: 7, fin: 7, dir:"▼ Reduce",  act:"-"   },
+  { name:"Equity: Midcap",      cp: 8, tgt: 7, fin: 7, dir:"◆ Hold",    act:"Buy" },
+  { name:"Equity: Hybrid",      cp: 8, tgt: 7, fin: 7, dir:"◆ Hold",    act:"Buy" },
+  { name:"Equity: Smallcap",    cp: 6, tgt: 4, fin: 6, dir:"▼ Reduce",  act:"-"   },
+  { name:"Equity: Momentum",    cp: 5, tgt: 4, fin: 4, dir:"▼ Reduce",  act:"-"   },
+  { name:"Equity: Largecap",    cp: 4, tgt: 5, fin: 4, dir:"◆ Hold",    act:"Buy" },
+  { name:"Equity: Intl: US",    cp: 5, tgt: 5, fin: 4, dir:"▼ Reduce",  act:"-"   },
+  { name:"Equity: Intl: DM",    cp: 0, tgt: 4, fin: 3, dir:"▲▲ Build",  act:"Buy" },
+  { name:"Equity: Intl: EM",    cp: 0, tgt: 5, fin: 4, dir:"▲▲ Build",  act:"Buy" },
+];
+
+const funds = [
+  { seg:"UltraLarge",  name:"Bandhan Nifty 50 - Regular",        cost:263000, curr:538464, buyQ:0,      tgt:"5%",  fin:"6%",  xirr:"14.4%",  act:"TAX HARVEST", action:"Rs1L/year into DSP 50 EW. LTCG taxed at 12.5% above Rs1L exemption. No loss offset on unrealised positions." },
+  { seg:"UltraLarge",  name:"Bandhan Nifty 50",                  cost:385000, curr:422844, buyQ:0,      tgt:"5%",  fin:"5%",  xirr:"6.7%",   act:"HOLD",        action:"Dilute naturally, no new buys." },
+  { seg:"UltraLarge",  name:"DSP Nifty 50 Equal Weight",         cost:315000, curr:336925, buyQ:107957, tgt:"6%",  fin:"5%",  xirr:"8.0%",   act:"BUY",         action:"Harvest-funded. Rs1.08L lump at Mar 2027 annual harvest from Bandhan Regular." },
+  { seg:"UltraLarge",  name:"DSP Nifty Top 10 Equal Weight",     cost:330000, curr:321451, buyQ:0,      tgt:"4%",  fin:"4%",  xirr:"-3.1%",  act:"HOLD",        action:"Stop adding, await recovery. Review at month 24." },
+  { seg:"Gold/Silver", name:"SBI Gold",                          cost:420000, curr:593130, buyQ:222486, tgt:"11%", fin:"10%", xirr:"104.5%", act:"BUY",         action:"Rs25k fortnightly Apr–Dec (9 months). Gold at ATH, do not front-load. Accelerate if >10% correction." },
+  { seg:"Gold/Silver", name:"SBI Silver",                        cost:215000, curr:438146, buyQ:0,      tgt:"5%",  fin:"5%",  xirr:"209.8%", act:"HOLD",        action:"At target." },
+  { seg:"Gold/Silver", name:"HDFC Silver",                       cost:100000, curr:139199, buyQ:0,      tgt:"1%",  fin:"2%",  xirr:"217.3%", act:"HOLD",        action:"Over target, no new buys." },
+  { seg:"Flexi/Multi", name:"Parag Parikh Flexi Cap",            cost:335000, curr:344628, buyQ:0,      tgt:"4%",  fin:"4%",  xirr:"3.7%",   act:"HOLD",        action:"Indirect intl exposure (~30% overseas). No new buys." },
+  { seg:"Flexi/Multi", name:"Nippon India Multi Cap",            cost:260000, curr:261281, buyQ:0,      tgt:"3%",  fin:"3%",  xirr:"1.4%",   act:"HOLD",        action:"At target." },
+  { seg:"Flexi/Multi", name:"JM Flexicap",                       cost:189000, curr:178100, buyQ:0,      tgt:"1%",  fin:"2%",  xirr:"-5.7%",  act:"HOLD",        action:"Monitor. Review gate month 18: if XIRR <8% redeploy into Parag Parikh." },
+  { seg:"Liquid",      name:"Kotak Arbitrage",                   cost:600000, curr:635782, buyQ:0,      tgt:"7%",  fin:"7%",  xirr:"6.8%",   act:"HOLD",        action:"Do not add. Route distributions to international sleeve over 12–18 months." },
+  { seg:"Value",       name:"UTI Nifty 500 Value 50",            cost:187000, curr:221741, buyQ:0,      tgt:"3%",  fin:"3%",  xirr:"27.6%",  act:"HOLD",        action:"Strongest in sleeve, passive. Market moves will close the gap." },
+  { seg:"Value",       name:"ICICI Prudential Value",            cost:215000, curr:216831, buyQ:0,      tgt:"3%",  fin:"3%",  xirr:"3.9%",   act:"HOLD",        action:"Market movement will close small gap. No action needed." },
+  { seg:"Value",       name:"SBI Contra",                        cost:150000, curr:154648, buyQ:0,      tgt:"1%",  fin:"2%",  xirr:"6.1%",   act:"HOLD",        action:"At target." },
+  { seg:"Midcap",      name:"HDFC Mid-Cap",                      cost:285000, curr:353193, buyQ:0,      tgt:"4%",  fin:"4%",  xirr:"15.1%",  act:"HOLD",        action:"Best performer in sleeve." },
+  { seg:"Midcap",      name:"Motilal Oswal Nifty Midcap 150",   cost:200000, curr:204862, buyQ:17579,  tgt:"3%",  fin:"3%",  xirr:"3.3%",   act:"BUY",         action:"Rs17,579 lump sum March." },
+  { seg:"Hybrid",      name:"ICICI Prudential Multi-Asset",      cost:310000, curr:343465, buyQ:27270,  tgt:"5%",  fin:"4%",  xirr:"14.7%",  act:"BUY",         action:"Rs27,270 lump sum March." },
+  { seg:"Hybrid",      name:"HDFC Balanced Advantage",           cost:210000, curr:219346, buyQ:0,      tgt:"2%",  fin:"3%",  xirr:"5.3%",   act:"HOLD",        action:"At target." },
+  { seg:"Smallcap",    name:"HDFC Small Cap",                    cost:273000, curr:287474, buyQ:0,      tgt:"3%",  fin:"3%",  xirr:"4.5%",   act:"HOLD",        action:"Active manager, quality bias." },
+  { seg:"Smallcap",    name:"Motilal Oswal Nifty Smallcap 250", cost:210000, curr:192077, buyQ:0,      tgt:"1%",  fin:"2%",  xirr:"-8.4%",  act:"HOLD",        action:"Reducing target, no additions." },
+  { seg:"Momentum",    name:"HDFC NIFTY200 Momentum 30",         cost:255000, curr:232597, buyQ:0,      tgt:"3%",  fin:"3%",  xirr:"-6.6%",  act:"HOLD",        action:"Await trend recovery." },
+  { seg:"Momentum",    name:"Edelweiss Nifty Midcap150 Mom 50",  cost:110000, curr:109088, buyQ:0,      tgt:"1%",  fin:"1%",  xirr:"-0.7%",  act:"HOLD",        action:"At target." },
+  { seg:"Largecap",    name:"Kotak Nifty Next 50",               cost:295000, curr:301992, buyQ:68743,  tgt:"5%",  fin:"4%",  xirr:"7.5%",   act:"BUY",         action:"Rs68,743 lump sum March." },
+  { seg:"Intl: US",    name:"Franklin US Opportunities",         cost:350000, curr:367430, buyQ:0,      tgt:"5%",  fin:"4%",  xirr:"8.7%",   act:"HOLD",        action:"Hold and compound. No new additions planned." },
+  { seg:"Intl: DM",    name:"Axis Global Equity Alpha",          cost:0,      curr:0,      buyQ:296588, tgt:"4%",  fin:"3%",  xirr:"—",      act:"NEW",         action:"Rs1L lump sum 1 May + Rs25k fortnightly (1st & 16th) May–Sep. DM thesis: Europe/Japan 12–18 month story." },
+  { seg:"Intl: EM",    name:"Kotak Global EM Overseas",          cost:0,      curr:0,      buyQ:370735, tgt:"5%",  fin:"4%",  xirr:"—",      act:"NEW",         action:"Rs1.5L lump sum 1 Apr + Rs25k fortnightly (1st & 16th) Apr–Aug. Forward PE 13.4x, 41–60% cheaper than US." },
+];
+
+const phases = [
+  { phase:"Phase 1 — March 2026 (Lump Sums)", color:"#1a3d6e",
+    items:[
+      { priority:"HIGH",   action:"Kotak Nifty Next 50",             detail:"Rs68,743 lump sum — completes Largecap sleeve at target. Single transaction, no averaging needed at this size." },
+      { priority:"HIGH",   action:"ICICI Prudential Multi-Asset",    detail:"Rs27,270 lump sum — completes Hybrid sleeve top-up. Strong XIRR 14.7%, at target thereafter." },
+      { priority:"HIGH",   action:"Motilal Oswal Nifty Midcap 150", detail:"Rs17,579 lump sum — passive Midcap complement to HDFC Mid-Cap active." },
+    ]
+  },
+  { phase:"Phase 2 — April to August 2026 (SIPs Begin)", color:"#2e5fa3",
+    items:[
+      { priority:"HIGH", action:"Kotak Global EM Overseas — initiate", detail:"Rs1.5L lump sum 1 Apr. Then Rs25k fortnightly on 1st & 16th Apr–Aug (9 instalments). Total ~Rs3.75L. EM forward PE 13.4x, 41–60% cheaper than US — valuation window is open now." },
+      { priority:"HIGH", action:"SBI Gold — begin fortnightly SIP",    detail:"Rs25k fortnightly on 1st & 16th Apr–Dec. Stop when Rs2.22L target hit (~9 instalments). Gold at ATH — do not lump sum. Accelerate if >10% correction." },
+      { priority:"HIGH", action:"Axis Global Equity Alpha — initiate", detail:"Rs1L lump sum 1 May. Then Rs25k fortnightly on 1st & 16th May–Sep (8 instalments). Total ~Rs3L. DM (Europe/Japan) thesis: front-load given valuation gap vs US is still real." },
+    ]
+  },
+  { phase:"Phase 3 — September 2026 onwards", color:"#375623",
+    items:[
+      { priority:"HIGH",   action:"DSP 50 EW — tax harvest funded",  detail:"Rs1.08L lump sum March 2027 — funded by Bandhan Regular annual redemption. LTCG taxed at 12.5% above Rs1L exemption. Repeat annually." },
+      { priority:"HIGH",   action:"International sleeve review",      detail:"By Sep 2026 Kotak EM and Axis Global fully deployed. Combined intl (US + DM + EM) should be ~12% of AUM. Assess whether to continue SIPs or hold." },
+      { priority:"MEDIUM", action:"Kotak Arbitrage drawdown",         detail:"Liquid sleeve at 7% — above target. Route distributions into international or UltraLarge as those reach target weights." },
+      { priority:"MEDIUM", action:"Review Value sleeve",              detail:"UTI Value 50 (XIRR 27.6%) is anchor. If ICICI Value or SBI Contra below 10% XIRR at month 18, consolidate into UTI." },
+      { priority:"LOW",    action:"JM Flexicap — gate extended to Sep 2026",   detail:"Mar 2026 gate reviewed. 1Y return +4.4%, recovering. Gate extended 6 months. Sep 2026: if still below 8% AND lagging Parag Parikh by >5%, redeploy into PPFC." },
+      { priority:"LOW",    action:"DSP Top 10 EW — final warning, gate Mar 2027", detail:"Mar 2026 gate reviewed. XIRR turned positive (+2.2%) — escaped cut. Thesis unvalidated (12% gap vs DSP 50 EW). No new money. Mar 2027 is last gate — if still below 8% AND lagging, consolidate into DSP 50 EW." },
+    ]
+  },
+];
+
+const deploySchedule = [
+  { month:"March 2026", color:"#1a3d6e", total:113592,
+    entries:[
+      { date:"Immediately", fund:"Kotak Nifty Next 50",             type:"Lump Sum", amount:68743  },
+      { date:"Immediately", fund:"ICICI Prudential Multi-Asset",    type:"Lump Sum", amount:27270  },
+      { date:"Immediately", fund:"Motilal Oswal Nifty Midcap 150", type:"Lump Sum", amount:17579  },
+    ]
+  },
+  { month:"April 2026", color:"#1d4e89", total:225000,
+    entries:[
+      { date:"1 Apr",  fund:"Kotak Global EM Overseas", type:"Lump Sum",       amount:150000 },
+      { date:"1 Apr",  fund:"SBI Gold",                 type:"Fortnightly #1", amount:25000  },
+      { date:"16 Apr", fund:"Kotak Global EM Overseas", type:"Fortnightly #1", amount:25000  },
+      { date:"16 Apr", fund:"SBI Gold",                 type:"Fortnightly #2", amount:25000  },
+    ]
+  },
+  { month:"May 2026", color:"#1d4e89", total:225000,
+    entries:[
+      { date:"1 May",  fund:"Axis Global Equity Alpha", type:"Lump Sum",       amount:100000 },
+      { date:"1 May",  fund:"Kotak Global EM Overseas", type:"Fortnightly #2", amount:25000  },
+      { date:"1 May",  fund:"SBI Gold",                 type:"Fortnightly #3", amount:25000  },
+      { date:"16 May", fund:"Axis Global Equity Alpha", type:"Fortnightly #1", amount:25000  },
+      { date:"16 May", fund:"Kotak Global EM Overseas", type:"Fortnightly #3", amount:25000  },
+      { date:"16 May", fund:"SBI Gold",                 type:"Fortnightly #4", amount:25000  },
+    ]
+  },
+  { month:"Jun–Aug 2026", color:"#2e5fa3", total:225000,
+    entries:[
+      { date:"1st & 16th", fund:"Kotak Global EM Overseas", type:"Fortnightly ×6 (complete Aug 16)", amount:25000 },
+      { date:"1st & 16th", fund:"Axis Global Equity Alpha",  type:"Fortnightly ×6 (complete Sep 1)",  amount:25000 },
+      { date:"1st & 16th", fund:"SBI Gold",                  type:"Fortnightly ×6 (stop at Rs2.22L)", amount:25000 },
+    ]
+  },
+  { month:"March 2027", color:"#375623", total:107957,
+    entries:[
+      { date:"Post harvest", fund:"DSP Nifty 50 Equal Weight", type:"Lump Sum (harvest-funded)", amount:107957 },
+    ]
+  },
+];
+
+const principles = [
+  { title:"UltraLarge Rotation & Tax Harvest",
+    body:"Redeem Rs1L/year from Bandhan Nifty 50 Regular — slow, deliberate rotation into DSP Nifty 50 Equal Weight. LTCG above Rs1L annual exemption taxable at 12.5% — no loss offset as DSP Top 10, Motilal Smallcap and JM Flexicap losses are unrealised and being held. Accept tax cost as the price of transitioning. Full exit in ~5 years." },
+  { title:"International: EM First, DM Close Behind",
+    body:"Kotak Global EM: Rs1.5L lump sum 1 Apr + Rs25k fortnightly Apr–Aug. MSCI EM forward PE 13.4x vs US ~21x — 41–60% discount. Axis Global Alpha (DM): Rs1L lump sum 1 May + Rs25k fortnightly May–Sep. Both fully deployed by Sep 2026." },
+  { title:"Gold: Fortnightly, Not Lump Sum",
+    body:"SBI Gold Rs2.22L deployed at Rs25k fortnightly Apr–Dec. Gold at ATH — fortnightly averaging avoids single large entry at peak. Accelerate if gold corrects >10%. Stop when Rs2.22L target hit (~9 instalments)." },
+  { title:"March Lump Sums: Execute Immediately",
+    body:"Six small top-ups totalling Rs1.13L to be executed as single transactions in March. No averaging logic needed at these sizes. Completes Largecap, Hybrid and Midcap sleeves at target." },
+  { title:"DSP 50 EW: Harvest Calendar, Not Market Calendar",
+    body:"The Rs1.08L DSP 50 EW buy is funded by Bandhan Regular redemption — it happens in March 2027 when the annual harvest is executed, not based on market conditions. Do not bring this forward with fresh capital." },
+  { title:"Review Gates",
+    body:"Mar 2026 review complete. Zero funds cut — none met all 3 conditions simultaneously. JM Flexicap: extended to Sep 2026 (recovering, +4.4% 1Y). DSP Top 10 EW: final warning, gate Mar 2027 (thesis unvalidated, no new money). Motilal Smallcap 250: pre-gate signal HOLD, Jun 2026 gate (3Y CAGR 19.6%). HDFC Momentum 30: hold, Sep 2026 gate (+10.3% 1Y). Edelweiss Midcap Momentum: REMOVED from watch list (1Y +14.3%, 3Y 23.2%). Kotak EM: New position initiated Apr 2026 — Rs3.75L deployment Apr–Aug; 3Y gate Apr 2029." },
+];
+
+// ── RENDER FUNCTIONS ──────────────────────────────────────────────────────────
+
+function fmtINR(n) {
+  if (!n) return '—';
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+function dirClass(d) {
+  if (d.includes('▼')) return 'dir-reduce';
+  if (d.includes('▲▲')) return 'dir-build';
+  if (d.includes('▲')) return 'dir-add';
+  return 'dir-hold';
+}
+
+function actionChip(act) {
+  const map = {
+    'BUY':         '<span class="chip chip-buy">Buy</span>',
+    'HOLD':        '<span class="chip chip-hold">Hold</span>',
+    'NEW':         '<span class="chip chip-new">New</span>',
+    'TAX HARVEST': '<span class="chip chip-harvest">Harvest</span>',
+  };
+  return map[act] || `<span class="chip chip-hold">${act}</span>`;
+}
+
+function xirrSpan(x) {
+  if (x === '—') return `<span class="xirr-neu">—</span>`;
+  if (x.startsWith('-')) return `<span class="xirr-neg">${x}</span>`;
+  return `<span class="xirr-pos">${x}</span>`;
+}
+
+// TAB 1: Allocation
+function renderAllocation() {
+  const tb = document.getElementById('alloc-tbody');
+  tb.innerHTML = segments.map(s => {
+    const barPct = Math.min(100, Math.round(s.cp / (s.tgt || 1) * 100));
+    const barColor = s.cp > s.tgt + 1 ? '#9c0006' : s.cp < s.tgt - 1 ? '#1d4e89' : '#1d6f42';
+    const actHtml = s.act === 'Buy'
+      ? '<span class="act-buy">Buy</span>'
+      : '<span class="act-nil">—</span>';
+    return `<tr>
+      <td><strong>${s.name}</strong></td>
+      <td class="num">${fmtINR(Math.round(s.cp / 100 * 7414694))}</td>
+      <td class="ctr mono">${s.cp}%</td>
+      <td class="ctr mono">${s.tgt}%</td>
+      <td class="ctr mono">${s.fin}%</td>
+      <td>
+        <div class="bar-wrap">
+          <div class="bar-track"><div class="bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>
+          <span class="bar-pct">${s.cp}/${s.tgt}</span>
+        </div>
+      </td>
+      <td class="ctr"><span class="${dirClass(s.dir)}">${s.dir}</span></td>
+      <td class="ctr">${actHtml}</td>
+    </tr>`;
+  }).join('');
+}
+
+// TAB 2: Funds
+function renderFunds() {
+  const tb = document.getElementById('funds-tbody');
+  let lastSeg = null;
+  tb.innerHTML = funds.map(f => {
+    let groupRow = '';
+    if (f.seg !== lastSeg) {
+      lastSeg = f.seg;
+      groupRow = `<tr class="seg-group"><td colspan="9">${f.seg}</td></tr>`;
+    }
+    const gainPct = f.curr && f.cost ? (((f.curr - f.cost) / f.cost) * 100).toFixed(1) + '%' : '—';
+    const isNew = f.curr === 0;
+    return groupRow + `<tr style="${isNew ? 'background:#eff6ff' : ''}">
+      <td><strong>${f.name}</strong>${isNew ? ' <span style="font-size:10px;color:#1d4e89;font-family:\'DM Mono\',monospace">NEW</span>' : ''}</td>
+      <td class="mono" style="font-size:11px;color:#6b7c93">${f.seg}</td>
+      <td class="num">${fmtINR(f.cost)}</td>
+      <td class="num">${fmtINR(f.curr)}</td>
+      <td class="num" style="color:${f.buyQ ? '#1d4e89' : '#6b7c93'}">${f.buyQ ? fmtINR(f.buyQ) : '—'}</td>
+      <td class="ctr mono">${f.tgt}</td>
+      <td class="ctr mono">${f.fin}</td>
+      <td class="ctr">${xirrSpan(f.xirr)}</td>
+      <td>${actionChip(f.act)} <span style="font-size:12px;color:#2c3e50;margin-left:4px">${f.action}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// TAB 3: Phases
+function renderPhases() {
+  const c = document.getElementById('phases-container');
+  c.innerHTML = phases.map(p => `
+    <div class="phase-card">
+      <div class="phase-header" style="background:${p.color}">${p.phase}</div>
+      <div class="phase-items">
+        ${p.items.map(item => `
+          <div class="phase-item">
+            <div><span class="chip chip-${item.priority.toLowerCase()}">${item.priority}</span></div>
+            <div class="pi-action">${item.action}</div>
+            <div class="pi-detail">${item.detail}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// TAB 4: Deployment
+function renderDeployment() {
+  const c = document.getElementById('deploy-container');
+  let runningTotal = 0;
+  c.innerHTML = deploySchedule.map(month => {
+    const monthTotal = month.entries.reduce((a, e) => a + e.amount, 0);
+    const entriesHtml = month.entries.map(e => {
+      runningTotal += e.amount;
+      const isLump = e.type.includes('Lump');
+      return `<div class="deploy-entry">
+        <div class="de-date">${e.date}</div>
+        <div class="de-fund">${e.fund}</div>
+        <div class="${isLump ? 'de-type-lump' : 'de-type-sip'}">${e.type}</div>
+        <div class="de-amt">${fmtINR(e.amount)}</div>
+        <div class="de-cum">${fmtINR(runningTotal)}</div>
+      </div>`;
+    }).join('');
+    return `<div class="deploy-month">
+      <div class="deploy-month-hdr" style="background:${month.color}">
+        <span>${month.month}</span>
+        <span class="month-total">${fmtINR(monthTotal)}</span>
+      </div>
+      ${entriesHtml}
+    </div>`;
+  }).join('');
+}
+
+// TAB 5: Principles
+function renderPrinciples() {
+  const c = document.getElementById('principles-container');
+  c.innerHTML = principles.map(p => `
+    <div class="principle-card">
+      <div class="principle-title">${p.title}</div>
+      <div class="principle-body">${p.body}</div>
+    </div>
+  `).join('');
+}
+
+// TAB 6: Rationale
+function renderRationale() {
+  const c = document.getElementById('rationale-container');
+  const emBullets = [
+    "Valuation: MSCI EM forward P/E 13.4x vs S&P 500 ~21x. Research Affiliates estimates EM is 41–60% cheaper than US across CAPE, P/B, P/S and Tobin's q — widest gap since 2005.",
+    "Earnings recovery: Forward P/E (13.4x) well below trailing (16.98x) — market pricing in strong 2026 earnings growth. Buying recovery at low multiple is the ideal EM setup.",
+    "Post-correction entry: Iran-related geopolitical tension in early 2026 created a technical correction. Entry prices remain better than 3 months prior.",
+    "EM cycle: When USD weakens and US rates fall — the 2026 macro direction — EM historically outperforms sharply. Portfolio currently zero-weighted in EM.",
+    "Taiwan/Korea tech: Exposure to global semiconductor supply chain (TSMC, Samsung) — no domestic Indian equivalent.",
+    "China optionality: P/E expanded 14.8x→18.06x in H2 2025 but remains below historical average. Consumer recovery provides further upside.",
+    "India overlap acceptable: ~15–20% India weight in fund, but valuation discount comes from ex-India holdings.",
+    "Sizing: Rs1.5L lump sum 1 Apr + Rs25k fortnightly (1st & 16th) Apr–Aug. Total ~Rs3.75L deployed by end of August 2026.",
+  ];
+  const dmBullets = [
+    "Valuation: Europe/Japan at 16–17x forward P/E. Cheaper than US (~21x) but not extreme enough to front-load over EM (~13x).",
+    "Currency hedge: INR depreciates structurally vs EUR and JPY. Complements existing USD exposure in Franklin US.",
+    "Europe catalyst: German fiscal expansion and EU defence spending are structural tailwinds — medium-term thesis, not immediate trigger.",
+    "Japan governance: Multi-year improvement in ROE, buybacks, unwinding of cross-shareholdings. 3–5 year structural tailwind.",
+    "Diversification: Franklin US is growth/tech heavy. Axis Global adds European industrials, financials, Japanese manufacturing — lower US tech correlation.",
+    "Sizing: Rs1L lump sum 1 May + Rs25k fortnightly (1st & 16th) May–Sep. Total ~Rs3L deployed by end of September 2026.",
+  ];
+  const valRows = [
+    { market:"S&P 500 (US)",    trailing:"24–26x", fwd:"~21x",  vs:"Baseline",   verdict:"Expensive",  cls:"val-expensive" },
+    { market:"MSCI World (DM)", trailing:"~24x",   fwd:"~20x",  vs:"~5% cheaper",verdict:"Moderate",   cls:"val-moderate"  },
+    { market:"MSCI EM",         trailing:"16.98x", fwd:"13.4x", vs:"36% cheaper",verdict:"Attractive", cls:"val-attractive" },
+  ];
+  c.innerHTML = `
+    <div class="rationale-card">
+      <div class="rationale-hdr">
+        <div class="r-label">Priority · Emerging Markets</div>
+        <div class="r-title">Kotak Global EM Overseas</div>
+      </div>
+      <div class="rationale-role"><strong>Role:</strong> Primary international allocation. EM exposure across China, Taiwan, Korea, Brazil with partial India (~15–20%). Most attractively valued major equity market globally as of March 2026.</div>
+      <div class="rationale-bullets">${emBullets.map(b => `<div class="rb"><div class="rb-dot"></div><div>${b}</div></div>`).join('')}</div>
+    </div>
+    <div class="rationale-card">
+      <div class="rationale-hdr" style="background:#2e5fa3">
+        <div class="r-label">Phase 2 · Developed Markets</div>
+        <div class="r-title">Axis Global Equity Alpha FoF</div>
+      </div>
+      <div class="rationale-role"><strong>Role:</strong> DM ex-India exposure (Europe, Japan) via actively managed FoF. Phase 2 initiation — valuation case exists, front-loading given open valuation window vs US.</div>
+      <div class="rationale-bullets">${dmBullets.map(b => `<div class="rb"><div class="rb-dot" style="background:#2e5fa3"></div><div>${b}</div></div>`).join('')}</div>
+    </div>
+    <div class="rationale-card val-table-wrap">
+      <div class="rationale-hdr" style="background:#374151">
+        <div class="r-label">Valuation Context</div>
+        <div class="r-title">EM vs DM vs US — March 2026</div>
+      </div>
+      <div style="padding:16px 20px">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Market</th>
+              <th class="ctr">Trailing P/E</th>
+              <th class="ctr">Forward P/E</th>
+              <th class="ctr">vs US (Forward)</th>
+              <th class="ctr">Verdict</th>
+            </tr></thead>
+            <tbody>
+              ${valRows.map(r => `<tr>
+                <td><strong>${r.market}</strong></td>
+                <td class="ctr mono">${r.trailing}</td>
+                <td class="ctr mono">${r.fwd}</td>
+                <td class="ctr mono">${r.vs}</td>
+                <td class="ctr"><span class="val-badge ${r.cls}">${r.verdict}</span></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="val-source">Source: MSCI, Research Affiliates, Cambridge Associates — March 2026. Forward P/E gap between EM and US is the widest since 2005.</div>
+      </div>
+    </div>
+  `;
+}
+
+// ── REVIEW GATES DATA ─────────────────────────────────────────────────────────
+
+const gateRows = [
+  {
+    group: "Active Domestic Equity",
+    name: "JM Flexicap", seg: "Flexi/Multi",
+    xirr: "+4.4% (1Y)", xirrNeg: false,
+    clock: "~Sep 2023", clockNote: "Estimate — confirm first SIP date in statement",
+    period: "18 months", periodNote: "Active manager needs bull + correction cycle",
+    reviewDate: "Mar 2026 ✓", reviewNote: "Due now — reviewed",
+    logic: `<strong>Fund Managers:</strong> Satish Ramanathan (lead, CFA+MBA), Asit Bhandarkar, Ruchi Fozdar, Deepak Gupta<br><strong>Top Holdings (Jan 2026):</strong> Reliance Industries 4.3%, L&T 4.3%, Bharti Airtel 4.2%, Godfrey Phillips 3.5%+, Tech Mahindra — 69 stocks, 52% largecap / 24% smallcap / 18% midcap<br><strong>AUM:</strong> ₹5,463 Cr (growing, no AUM concern)<br><br><strong>3-Condition Check (Mar 2026):</strong><ul><li>✅ 1Y return +4.4% — above 0%, below 8% threshold but improving sharply vs -5.6% in 2025</li><li>⚠️ vs Parag Parikh: JM 1Y = 4.4% vs PPFC 1Y = 8.4% → lagging by 4% (threshold: &gt;5%) — borderline</li><li>✅ Manager team intact — Satish Ramanathan still in place. Thesis unchanged.</li></ul><strong>Verdict: 2 of 3 conditions. Not a cut.</strong>`,
+    instrClass: "instr-watch", instrLabel: "Watch — 6 Month Extension",
+    instrText: "Gate reviewed Mar 2026. XIRR recovering (+4.4% 1Y vs -5.6% in 2025) but still lagging Parag Parikh. 3Y CAGR remains strong at 20.2%. Key: 2025 was a bad calendar year (-5.6%) — cyclical, not structural. Manager team unchanged. DECISION: Extend 6 months to Sep 2026. If 1Y return then still below 8% AND still lagging PPFC by &gt;5%, redeploy into Parag Parikh. Do not cut during a market correction — this is a recovery trade."
+  },
+  {
+    group: "Passive / Index Funds",
+    name: "DSP Nifty Top 10 EW", seg: "UltraLarge",
+    xirr: "+2.2% (1Y)", xirrNeg: false,
+    clock: "~Mar 2024", clockNote: "Estimate — confirm first purchase date",
+    period: "24 months", periodNote: "Index thesis needs full cycle — no manager skill to evaluate",
+    reviewDate: "Mar 2026 ✓", reviewNote: "Due now — reviewed",
+    logic: `<strong>Fund Managers:</strong> Anil Ghelani (CFA, CA) + Diipesh Shah — passive index trackers, no active calls<br><strong>Top Holdings (equal weight ~10% each):</strong> ICICI Bank, HDFC Bank, L&T, ITC, Bharti Airtel, TCS, Infosys, Kotak Mahindra Bank, Reliance, Axis Bank — rebalanced quarterly<br><strong>AUM:</strong> ₹1,467–1,625 Cr<br><br><strong>3-Condition Check (Mar 2026):</strong><ul><li>⚠️ 1Y return +2.2% — barely positive, but no longer negative</li><li>✅ DSP Nifty 50 EW 1Y = 14.4% vs Top 10 EW = 2.2% → severely lagging benchmark (12% gap)</li><li>✅ Thesis: top-10 concentration has NOT delivered alpha — equal weight of the top 10 is underperforming broader equal-weight index consistently. Thesis not validated.</li></ul><strong>Verdict: 2 of 3 conditions met. XIRR just turned positive — cut trigger requires negative XIRR.</strong> Marginally escaped cut on XIRR alone.`,
+    instrClass: "instr-watch", instrLabel: "Final Warning — 12 Months",
+    instrText: "Gate reviewed Mar 2026. XIRR +2.2% — just turned positive, so formal cut condition not met. However, the thesis has clearly not worked: DSP Nifty 50 EW returns 14.4% vs 2.2% here — an 12% annual gap. DECISION: Give 12 more months (Mar 2027). If 1Y return then is still below 8% AND lagging DSP 50 EW, consolidate into DSP Nifty 50 EW via the Bandhan harvest rotation. No new money into this fund from today. The Bandhan ₹1L/yr harvest already routes to DSP 50 EW — let that execution continue naturally."
+  },
+  {
+    group: null,
+    name: "Motilal Smallcap 250", seg: "Smallcap",
+    xirr: "+7.0% (1Y)", xirrNeg: false,
+    clock: "~Jun 2023", clockNote: "Estimate — confirm first purchase date",
+    period: "36 months", periodNote: "Smallcap index needs full cycle. Cutting now locks in losses at trough.",
+    reviewDate: "Jun 2026", reviewNote: "3 months away",
+    logic: `<strong>Fund Managers:</strong> Swapnil P. Mayekar (lead, since Sep 2019), Rakesh Shetty + Dishant Mehta — passive index trackers<br><strong>Top Holdings (Jan 2026):</strong> Multi Commodity Exchange 2.83%, Laurus Labs 2.14%, Radico Khaitan 1.29%, CDSL, Karur Vysya Bank — 250 stocks, diversified<br><strong>AUM:</strong> ₹984–1,021 Cr<br><br><strong>Pre-Gate Assessment (Jun 2026 review in 3 months):</strong><ul><li>✅ 1Y return +7.0% — recovered from deep negative, now clearly above 0%</li><li>✅ 3Y CAGR = 19.6% — strong long-term compounding</li><li>⚠️ 2026 YTD = -7.5% — market-wide smallcap correction, not fund-specific</li><li>✅ vs HDFC Small Cap 1Y = 9.9%: lagging by 2.9% (within normal tracking tolerance for passive vs active)</li></ul><strong>Verdict: No cut conditions met. Jun 2026 gate likely to confirm HOLD.</strong>`,
+    instrClass: "instr-hold", instrLabel: "Hold — Gate Jun 2026",
+    instrText: "1Y return now +7%, 3Y CAGR 19.6% — the position has recovered well. YTD 2026 decline is smallcap-market-wide, not fund failure. Gate review at Jun 2026 will almost certainly confirm hold. NO new additions (target already reduced). Passive dilution in progress as rest of portfolio grows. Review Jun 2026: if XIRR is >8% and 3Y CAGR beats HDFC Small Cap, remove from watch list entirely."
+  },
+  {
+    group: "Factor / Momentum Funds",
+    name: "HDFC NIFTY200 Momentum 30", seg: "Momentum",
+    xirr: "+10.3% (1Y)", xirrNeg: false,
+    clock: "~Sep 2023", clockNote: "Estimate — confirm first purchase date",
+    period: "24–36 months", periodNote: "Momentum underperforms rangebound markets by design — one complete trend cycle needed",
+    reviewDate: "Sep 2026", reviewNote: "6 months away",
+    logic: `<strong>Fund Managers:</strong> Arun Agarwal (lead) + Nandita Menezes — passive index trackers for Nifty200 Momentum 30 TRI<br><strong>Top Holdings:</strong> 30 stocks from Nifty 200 with highest risk-adjusted momentum scores — rebalanced semi-annually. Composition changes with market trends; currently tilted toward capex/PSU/infra following 2024 factor cycle.<br><strong>AUM (Index Fund):</strong> ₹703 Cr direct, ₹625 Cr regular<br><br><strong>Pre-Gate Assessment:</strong><ul><li>✅ 1Y return +10.3% — above 0%, well above cut threshold</li><li>✅ vs Nifty 50 1Y ~+9.6%: in-line — momentum fund not lagging benchmark</li><li>⚠️ 2025 calendar year = -5.2%, 2026 YTD = -3.1% — rangebound market hurts momentum factor by design</li><li>✅ No manager change — passive index tracker, no thesis break</li></ul><strong>Verdict: No cut conditions met. Sep 2026 gate likely HOLD.</strong>`,
+    instrClass: "instr-hold", instrLabel: "Hold — Gate Sep 2026",
+    instrText: "1Y return +10.3% and improving. Momentum factor underperformed in 2024–2025 rangebound phase — that is exactly how momentum funds are expected to behave. Now recovering. DECISION: Hold firmly to Sep 2026 gate. If by Sep 2026 the market has trended up 10%+ from current levels and HDFC Momentum is still flat, that would be failure. Currently no evidence of failure."
+  },
+  {
+    group: null,
+    name: "Edelweiss Midcap150 Momentum 50", seg: "Momentum",
+    xirr: "+14.3% (1Y)", xirrNeg: false,
+    clock: "~Dec 2023", clockNote: "Estimate — confirm first purchase date",
+    period: "36 months", periodNote: "Best-performing fund on watch list — not a concern",
+    reviewDate: "Dec 2026", reviewNote: "9 months away",
+    logic: `<strong>Fund Managers:</strong> Bhavesh Jain (lead, since inception Nov 2022) + Bharat Lahoti — passive tracker for Nifty Midcap150 Momentum 50 TRI<br><strong>Top Holdings (Feb 2026):</strong> Hero MotoCorp 5%, BSE Ltd 5%, Muthoot Finance 4.84%, AU Small Finance Bank, Cummins India 4.03% — 50 midcap momentum stocks, quarterly rebalanced<br><strong>AUM:</strong> ₹1,407 Cr<br><br><strong>Pre-Gate Assessment:</strong><ul><li>✅ 1Y return +14.3% — strong positive</li><li>✅ 3Y CAGR = 23.2% — best risk-adjusted return on watch list</li><li>✅ Sharpe 1Y = 1.27 (vs JM Flexicap 0.39, DSP Top 10 0.23) — best risk-adjusted on watch list</li><li>✅ Manager and fund structure unchanged</li></ul><strong>Verdict: REMOVE from active watch list. This fund is performing.</strong>`,
+    instrClass: "instr-hold", instrLabel: "Remove from Watch — Performing",
+    instrText: "1Y return +14.3%, 3Y CAGR 23.2%, best Sharpe ratio in the momentum sleeve. This fund does not belong on a watch list. Dec 2026 will be a routine check, not a gate review. DECISION: Downgrade to routine annual review alongside rest of portfolio. Only flag again if (a) annual return drops below 0% or (b) manager/structure change."
+  },
+  {
+    group: "International / New Positions",
+    name: "Kotak Global EM Overseas", seg: "Intl: EM",
+    xirr: "— (new)", xirrNeg: false,
+    clock: "1 Apr 2026", clockNote: "First lump sum date = clock start",
+    period: "36–60 months", periodNote: "EM macro cycles require a full cycle — minimum 3 years to assess valuation thesis",
+    reviewDate: "Apr 2028 (2Y)\nApr 2029 (3Y gate)", reviewNote: "3Y is primary cut gate",
+    logic: `<strong>Context:</strong> New position — no prior XIRR. Thesis-driven entry based on EM valuation discount.<br><strong>Thesis:</strong> MSCI EM forward P/E ~13.4x vs US ~21x — 41–60% cheaper. China, Taiwan, Korea, Brazil exposure with partial India (~15–20%). INR depreciation tailwind (~3–4%/yr) adds to INR returns.<br><br>Cut at 3Y gate if all true:<ul><li>XIRR below <strong>8% in INR</strong> (EM risk premium should deliver 8%+ over a full cycle)</li><li>Underperforms MSCI EM index in INR by &gt;3%</li><li>Valuation re-rating thesis has not progressed — EM P/E still at deep discount with no catalyst</li></ul>`,
+    instrClass: "instr-hold", instrLabel: "Hold 3Y Min",
+    instrText: "First lump sum 1 Apr 2026. Rs25k fortnightly on 1st & 16th Apr–Aug (9 instalments). Total ~Rs3.75L deployed by end of August 2026. EM valuation window was open at entry (13.4x forward P/E). Minimum hold is 3 years — EM cycles are long and volatile. No intermediate review unless (a) major EM structural event (e.g. China policy shock, EM debt crisis) or (b) manager/fund structure change. Apr 2029: if XIRR below 8% INR and lagging MSCI EM benchmark, redeploy into Kotak Arbitrage or DM sleeve."
+  },
+  {
+    group: null,
+    name: "Axis Global Equity Alpha (DM)", seg: "Intl: DM",
+    xirr: "— (new)", xirrNeg: false,
+    clock: "1 May 2026", clockNote: "First lump sum date = clock start",
+    period: "36–60 months", periodNote: "Europe/Japan structural thesis plays out over 3–5 years minimum",
+    reviewDate: "May 2028 (2Y)\nMay 2029 (3Y gate)", reviewNote: "3Y is primary cut gate",
+    logic: `<strong>Context:</strong> 1Y return = 23.1%, 3Y CAGR = 23.2% — strong recent track record before our entry<br><strong>Thesis:</strong> Global DM (ex-US) diversification — Japan governance reform, Europe value re-rating, INR depreciation tailwind (~3–4%/yr)<br><br>Cut at 3Y gate if all true:<ul><li>XIRR below <strong>8% in INR</strong> (INR depreciation gives 3–4% as base return)</li><li>Underperforms MSCI World ex-US index in INR by &gt;3%</li><li>Europe/Japan structural thesis has not progressed</li></ul>`,
+    instrClass: "instr-hold", instrLabel: "Hold 3Y Min",
+    instrText: "First lump sum May 2026. DM has a cleaner thesis than EM — 3 years sufficient to see whether Europe/Japan re-rates. Strong 1Y and 3Y track record before entry. If May 2029 XIRR below 8% INR and lagging benchmark, cut and consolidate into Franklin US. No intermediate reviews needed unless major DM structural event (e.g. eurozone crisis)."
+  },
+];
+
+const gatePrinciples = [
+  { title: "Mar 2026 Review — Summary Verdict", body: "Gates reviewed against live performance data (as of 06-Mar-2026). Verdict: ZERO funds meet all 3 cut conditions. JM Flexicap: 6-month extension to Sep 2026 — recovering (1Y +4.4%) but still lagging Parag Parikh; not a cut. DSP Top 10 EW: Final warning — 12 months to Mar 2027; XIRR turned positive but thesis not validated (12% annual gap vs DSP 50 EW); no new money. Motilal Smallcap 250: Gate Jun 2026 — 1Y +7%, 3Y 19.6%; cut conditions not met; pre-gate signal is HOLD. HDFC Momentum 30: Gate Sep 2026 — 1Y +10.3%, recovering; hold. Edelweiss Midcap150 Momentum: REMOVED from watch list — 1Y +14.3%, 3Y 23.2%, best Sharpe on list. Kotak EM: New position initiated Apr 2026 — Rs3.75L deployment Apr–Aug; 3Y gate Apr 2029." },
+  { title: "The 3-Condition Rule", body: "A fund should only be cut when three things are simultaneously true: (1) XIRR is below threshold for the minimum hold period, (2) it is underperforming its relevant benchmark or peer over the same period, and (3) the original thesis is broken or the manager has changed. Price alone, XIRR alone, or underperformance alone is never sufficient." },
+  { title: "Clock Starts at First Purchase", body: "The review clock starts from your first purchase date — not the average date across SIPs, not the last top-up. Subsequent SIPs are execution of the same thesis. If you have been investing for 14 months via fortnightly SIPs, your clock is 14 months old. Confirm exact dates from your account statement — estimates in this table are approximations." },
+  { title: "Minimum Periods by Fund Type", body: "Active domestic equity: 18–24 months. Passive/index fund: 24–36 months — only the thesis to evaluate, not manager skill. Factor funds (momentum, value): 24–36 months — one complete factor cycle required. International / thematic: 36–60 months — macro cycles are long. Arbitrage/liquid: not applicable." },
+  { title: "Thesis Break = Immediate Cut", body: "If the original thesis breaks — fund manager leaves an active fund, SEBI restricts the asset class, structural change in index methodology, or corporate governance failure in top holdings — cut immediately regardless of time held or XIRR. Price and time thresholds apply to normal underperformance, not structural changes." },
+  { title: "Do Not Cut to Realise Losses", body: "If a fund is in negative XIRR and you have no capital gains to offset, there is no tax benefit to cutting — you simply crystallise a loss. Hold until at least breakeven unless the thesis is fully broken. Exception: if you have capital gains elsewhere in the same financial year that need offsetting before 31 March." },
+  { title: "Passive Exit via Dilution", body: "For funds where target weight is reduced (Motilal Smallcap, UltraLarge sleeve) — preferred exit is passive dilution. Stop adding, let portfolio grow around the position, and its weight naturally falls to target. Only active sell if the position is so large that dilution would take more than 5 years, or cut conditions are met." },
+];
+
+function renderGates() {
+  const tb = document.getElementById('gates-tbody');
+  let lastGroup = null;
+  tb.innerHTML = gateRows.map(r => {
+    let groupRow = '';
+    if (r.group && r.group !== lastGroup) {
+      lastGroup = r.group;
+      groupRow = `<tr class="group-row"><td colspan="7">${r.group}</td></tr>`;
+    }
+    const xirrHtml = r.xirrNeg
+      ? `<span class="xirr-neg">${r.xirr}</span>`
+      : `<span class="xirr-neu">${r.xirr}</span>`;
+    return groupRow + `<tr>
+      <td><span class="fund-name">${r.name}</span><span class="fund-seg-label">${r.seg}</span></td>
+      <td>${xirrHtml}</td>
+      <td><span class="clock-date">${r.clock}</span><span class="clock-note">${r.clockNote}</span></td>
+      <td><span class="period">${r.period}</span><span class="period-note">${r.periodNote}</span></td>
+      <td><span class="rev-date">${r.reviewDate.replace(/\n/g,'<br>')}</span><span class="rev-months">${r.reviewNote}</span></td>
+      <td><div class="gate-logic">${r.logic}</div></td>
+      <td><span class="instr-chip ${r.instrClass}">${r.instrLabel}</span><div class="instr-text">${r.instrText}</div></td>
+    </tr>`;
+  }).join('');
+
+  const pc = document.getElementById('gate-principles');
+  pc.innerHTML = gatePrinciples.map(p => `
+    <div class="gate-principle">
+      <h3>${p.title}</h3>
+      <p>${p.body}</p>
+    </div>
+  `).join('');
+}
+
+// ── TAB SWITCHING ─────────────────────────────────────────────────────────────
+
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderAllocation();
+renderFunds();
+renderPhases();
+renderDeployment();
+renderPrinciples();
+renderRationale();
+renderGates();
+</script>
+</body>
+</html>
