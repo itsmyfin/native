@@ -28,27 +28,46 @@ from matplotlib.lines import Line2D
 # Replace each placeholder with your actual hex codes.
 # Naming convention is intentional — map to your brand guide as needed.
 
+# FIRM_COLORS = {
+#     # Primary series colors
+#     "esg":          "#PLACEHOLDER_01",   # ESG ETF — bars, lines
+#     "plain":        "#PLACEHOLDER_02",   # Plain ETF — bars, lines
+#     "accent":       "#PLACEHOLDER_03",   # Highlight / annotation
+#     "drift":        "#PLACEHOLDER_04",   # Mandate drift line (overlap %)
+#     "flows_pos":    "#PLACEHOLDER_05",   # Positive flow bars
+#     "flows_neg":    "#PLACEHOLDER_06",   # Negative flow bars
+#     "ref_line":     "#PLACEHOLDER_07",   # Reference / dashed lines
+
+#     # Semantic fill areas
+#     "outperform":   "#PLACEHOLDER_08",   # Shaded area — ESG ahead
+#     "underperform": "#PLACEHOLDER_09",   # Shaded area — ESG behind
+
+#     # Chart furniture
+#     "background":   "#PLACEHOLDER_10",   # Figure background
+#     "panel":        "#PLACEHOLDER_11",   # Axes background
+#     "grid":         "#PLACEHOLDER_12",   # Gridlines
+#     "axis_text":    "#PLACEHOLDER_13",   # Tick labels, axis titles
+#     "title_text":   "#PLACEHOLDER_14",   # Chart title
+#     "annotation":   "#PLACEHOLDER_15",   # Annotation text / callout boxes
+
+# }
+
 FIRM_COLORS = {
-    # Primary series colors
-    "esg":          "#PLACEHOLDER_01",   # ESG ETF — bars, lines
-    "plain":        "#PLACEHOLDER_02",   # Plain ETF — bars, lines
-    "accent":       "#PLACEHOLDER_03",   # Highlight / annotation
-    "drift":        "#PLACEHOLDER_04",   # Mandate drift line (overlap %)
-    "flows_pos":    "#PLACEHOLDER_05",   # Positive flow bars
-    "flows_neg":    "#PLACEHOLDER_06",   # Negative flow bars
-    "ref_line":     "#PLACEHOLDER_07",   # Reference / dashed lines
-
-    # Semantic fill areas
-    "outperform":   "#PLACEHOLDER_08",   # Shaded area — ESG ahead
-    "underperform": "#PLACEHOLDER_09",   # Shaded area — ESG behind
-
-    # Chart furniture
-    "background":   "#PLACEHOLDER_10",   # Figure background
-    "panel":        "#PLACEHOLDER_11",   # Axes background
-    "grid":         "#PLACEHOLDER_12",   # Gridlines
-    "axis_text":    "#PLACEHOLDER_13",   # Tick labels, axis titles
-    "title_text":   "#PLACEHOLDER_14",   # Chart title
-    "annotation":   "#PLACEHOLDER_15",   # Annotation text / callout boxes
+    "esg":          "#185FA5",
+    "plain":        "#888780",
+    "accent":       "#D85A30",
+    "drift":        "#534AB7",
+    "flows_pos":    "#378ADD",
+    "flows_neg":    "#993C1D",
+    "ref_line":     "#B4B2A9",
+    "outperform":   "#C8EDD8",
+    "underperform": "#FAD5C8",
+    "background":   "#FFFFFF",
+    "panel":        "#F7F6F2",
+    "grid":         "#E0DED8",
+    "axis_text":    "#5F5E5A",
+    "title_text":   "#1A1A18",
+    "annotation":   "#534AB7",
 }
 
 # ── 2. TYPOGRAPHY & GLOBAL STYLE ──────────────────────────────────────────
