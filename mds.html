@@ -101,7 +101,7 @@
           Overview
         </button>
         <button onclick="switchTab('funds')" id="tab-funds" class="tab-btn flex-1 py-1.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white bg-[#111723] border border-white/5 transition-all text-center">
-          My Funds (22)
+          My Funds
         </button>
         <button onclick="switchTab('lookthrough')" id="tab-lookthrough" class="tab-btn flex-1 py-1.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white bg-[#111723] border border-white/5 transition-all text-center">
           Holdings
@@ -119,22 +119,18 @@
         
         <!-- 1. PERFORMANCE: TABBED ARCHITECTURE (ONE SHOWN AT A TIME) -->
         <div>
-          <!-- Segmented Tab Switcher (2 Views: Yearly Return vs Rolling XIRR) -->
+          <!-- Segmented Tab Switcher (2 Views: Rolling XIRR vs Yearly Return) -->
           <div class="flex items-center justify-between bg-[#0e131d] border border-white/5 p-1 rounded-2xl mb-2.5">
-          <button id="btnPerfYearly" onclick="switchPerfTab('yearly')" class="flex-1 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-950 transition-all text-center">
-            📊 Yearly Return
-          </button>
-          <button id="btnPerfRolling" onclick="switchPerfTab('rolling')" class="flex-1 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all text-center">
-            📈 Rolling XIRR
-          </button>
-        </div>
-
-        <!-- VIEW 1: COMBINED YEARLY RETURN & NIFTY 50 SINGLE TABLE/VIEW -->
-        <div id="panel-perf-yearly" class="space-y-2">
-          <div class="px-1">
-            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Portfolio vs Nifty 50</h2>
+            <button id="btnPerfRolling" onclick="switchPerfTab('rolling')" class="flex-1 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-950 transition-all text-center">
+              📈 Rolling XIRR
+            </button>
+            <button id="btnPerfYearly" onclick="switchPerfTab('yearly')" class="flex-1 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all text-center">
+              📊 Yearly Return
+            </button>
           </div>
 
+        <!-- VIEW 1: COMBINED YEARLY RETURN & NIFTY 50 SINGLE TABLE/VIEW -->
+        <div id="panel-perf-yearly" class="space-y-2 hidden">
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl overflow-hidden shadow-sm">
             <table class="w-full text-left text-xs num">
               <thead class="bg-[#131b29] text-[10px] uppercase tracking-wider text-slate-400 border-b border-white/5">
@@ -182,11 +178,7 @@
         </div>
 
         <!-- 1C. TAB 3: ROLLING XIRR PLOT -->
-        <div id="panel-perf-rolling" class="space-y-2 hidden">
-          <div class="px-1">
-            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Cumulative Rolling XIRR Trend</h2>
-          </div>
-
+        <div id="panel-perf-rolling" class="space-y-2">
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-3.5 shadow-sm">
             <div class="flex justify-between items-center text-xs mb-2">
               <span class="text-[11px] text-slate-400 font-medium">Inception → End of Year</span>
@@ -242,7 +234,7 @@
                 <text x="111.0" y="132" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'23</text>
                 <text x="180.0" y="132" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'24</text>
                 <text x="249.0" y="132" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'25</text>
-                <text x="318.0" y="132" text-anchor="middle" class="text-[10px] fill-white font-bold font-mono">'26 (Now)</text>
+                <text x="318.0" y="132" text-anchor="middle" class="text-[10px] fill-white font-bold font-mono">'26 YTD</text>
 
                 <!-- Active Selection Pulse Ring (defaults to 2026 latest) -->
                 <circle id="rxActiveDot" cx="318.0" cy="88.0" r="7" fill="none" stroke="#38bdf8" stroke-width="2" class="animate-pulse" />
@@ -252,14 +244,14 @@
                 <circle cx="111.0" cy="38.0" r="4.5" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2023', 20.7, 23.6, 20.0, 3.6, 111.0, 38.0)" />
                 <circle cx="180.0" cy="52.7" r="4.5" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2024', 16.8, 10.5, 8.8, 1.7, 180.0, 52.7)" />
                 <circle cx="249.0" cy="53.3" r="4.5" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2025', 16.6, 16.2, 10.5, 5.7, 249.0, 53.3)" />
-                <circle cx="318.0" cy="88.0" r="5" fill="#ffffff" stroke="#38bdf8" stroke-width="2" class="cursor-pointer hover:r-6 transition-all" onclick="selectRollingPoint('2026 (Present)', 7.3, -2.5, -13.0, 10.5, 318.0, 88.0)" />
+                <circle cx="318.0" cy="88.0" r="5" fill="#ffffff" stroke="#38bdf8" stroke-width="2" class="cursor-pointer hover:r-6 transition-all" onclick="selectRollingPoint('2026 YTD', 7.3, -2.5, -13.0, 10.5, 318.0, 88.0)" />
               </svg>
             </div>
 
             <!-- Tap-to-Inspect Detail Strip -->
             <div id="rollingXirrDetail" class="mt-3 p-3 bg-[#131b29] rounded-xl flex items-center justify-between text-xs border border-white/5">
               <div>
-                <span id="rxYear" class="font-bold text-white whitespace-nowrap block">2026 (Present)</span>
+                <span id="rxYear" class="font-bold text-white whitespace-nowrap block">2026 YTD</span>
                 <span class="text-[10px] text-slate-400">Cumulative Milestone</span>
               </div>
               <div class="flex items-center gap-3 text-right num">
@@ -360,8 +352,7 @@
     <!-- TAB 2: MY FUNDS -->
     <!-- ========================================================================= -->
     <section id="panel-funds" class="p-4 space-y-2 hidden">
-      <div class="flex justify-between items-baseline mb-2 px-1">
-        <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">My Funds (22)</h2>
+      <div class="flex justify-end items-center mb-2 px-1">
         <span class="text-xs text-slate-500">Tap to inspect purchases</span>
       </div>
 
@@ -795,7 +786,7 @@
         <div>
           <div class="flex justify-between items-baseline mb-2 px-1">
             <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Target Allocation &amp; Drift</h2>
-            <span class="text-xs font-mono text-emerald-400 font-semibold">12 Segments</span>
+            <span class="text-xs font-mono text-emerald-400 font-semibold">12 Segments · Tap to view funds</span>
           </div>
 
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3.5 shadow-sm text-xs">
@@ -804,9 +795,12 @@
               <span>Actual vs Target (Drift)</span>
             </div>
             
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: UltraLarge')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#4f86f7; color:#4f86f7; background:#4f86f715">Equity: UltraLarge</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#4f86f7; color:#4f86f7; background:#4f86f715">Equity: UltraLarge</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹16.09L <span class="text-slate-400 font-normal text-[11px]">(16.3%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -819,9 +813,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">DSP Nifty Top 10 Equal Weight, Bandhan Nifty 50, DSP Nifty 50 Equal Weight, Bandhan Nifty 50 - Regular</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Commo: Gold/Silver')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#34d399; color:#34d399; background:#34d39915">Commo: Gold/Silver</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#34d399; color:#34d399; background:#34d39915">Commo: Gold/Silver</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹14.35L <span class="text-slate-400 font-normal text-[11px]">(14.6%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -834,9 +831,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">SBI Gold, SBI Silver, HDFC Silver</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Liquid')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#a78bfa; color:#a78bfa; background:#a78bfa15">Equity: Liquid</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#a78bfa; color:#a78bfa; background:#a78bfa15">Equity: Liquid</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹10.74L <span class="text-slate-400 font-normal text-[11px]">(10.9%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -849,9 +849,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">Kotak Arbitrage</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Hybrid')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#f59e0b; color:#f59e0b; background:#f59e0b15">Equity: Hybrid</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#f59e0b; color:#f59e0b; background:#f59e0b15">Equity: Hybrid</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹9.92L <span class="text-slate-400 font-normal text-[11px]">(10.1%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -864,9 +867,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">HDFC Balanced Advantage, ICICI Prudential Multi-Asset</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Flexi/Multi')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#f87171; color:#f87171; background:#f8717115">Equity: Flexi/Multi</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#f87171; color:#f87171; background:#f8717115">Equity: Flexi/Multi</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹7.97L <span class="text-slate-400 font-normal text-[11px]">(8.1%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -879,9 +885,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">Parag Parikh Flexi Cap, Nippon India Multi Cap</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Midcap')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#38bdf8; color:#38bdf8; background:#38bdf815">Equity: Midcap</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#38bdf8; color:#38bdf8; background:#38bdf815">Equity: Midcap</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹7.65L <span class="text-slate-400 font-normal text-[11px]">(7.8%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -894,9 +903,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">HDFC Mid-Cap, Motilal Oswal Nifty Midcap 150</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: US')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#fbbf24; color:#fbbf24; background:#fbbf2415">Equity: US</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#fbbf24; color:#fbbf24; background:#fbbf2415">Equity: US</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹7.22L <span class="text-slate-400 font-normal text-[11px]">(7.3%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -909,9 +921,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">Franklin US Opportunities</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Value')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#818cf8; color:#818cf8; background:#818cf815">Equity: Value</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#818cf8; color:#818cf8; background:#818cf815">Equity: Value</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹6.04L <span class="text-slate-400 font-normal text-[11px]">(6.1%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -924,9 +939,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">SBI Contra, UTI Nifty 500 Value 50</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Smallcap')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#2dd4bf; color:#2dd4bf; background:#2dd4bf15">Equity: Smallcap</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#2dd4bf; color:#2dd4bf; background:#2dd4bf15">Equity: Smallcap</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹5.70L <span class="text-slate-400 font-normal text-[11px]">(5.8%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -939,9 +957,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">HDFC Small Cap, Motilal Oswal Nifty Smallcap 250</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Largecap')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#fb923c; color:#fb923c; background:#fb923c15">Equity: Largecap</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#fb923c; color:#fb923c; background:#fb923c15">Equity: Largecap</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹4.96L <span class="text-slate-400 font-normal text-[11px]">(5.0%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -954,9 +975,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">Kotak Nifty Next 50</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Developed')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#60a5fa; color:#60a5fa; background:#60a5fa15">Equity: Developed</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#60a5fa; color:#60a5fa; background:#60a5fa15">Equity: Developed</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹4.18L <span class="text-slate-400 font-normal text-[11px]">(4.2%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -969,9 +993,12 @@
               </div>
               <div class="text-[10px] text-slate-500 truncate">Axis Global Equity Alpha</div>
             </div>
-            <div class="space-y-1.5 pt-1 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0">
+            <div onclick="openSegmentDetail('Equity: Emerging')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#c084fc; color:#c084fc; background:#c084fc15">Equity: Emerging</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#c084fc; color:#c084fc; background:#c084fc15">Equity: Emerging</span>
+                  <span class="text-[10px] text-slate-500 font-bold">›</span>
+                </div>
                 <span class="font-extrabold text-white num">₹3.66L <span class="text-slate-400 font-normal text-[11px]">(3.7%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
@@ -1203,7 +1230,7 @@
             <div class="flex items-center gap-2 text-xs font-mono">
               <span class="text-slate-400">Top 10: <b class="text-white font-semibold">28.4%</b></span>
               <span class="text-slate-600">·</span>
-              <span class="text-emerald-400 font-bold">248 Stocks</span>
+              <span class="text-emerald-400 font-bold" title="248 unique corporate equity holdings across all 22 funds after lookthrough deduplication">248 Unique Equities</span>
             </div>
           </div>
 
@@ -1247,7 +1274,7 @@
         <div>
           <div class="flex justify-between items-baseline mb-2 px-1">
             <h2 class="text-xs uppercase font-bold tracking-wider text-sky-400">Scheme Holdings</h2>
-            <span id="schHoldingsCount" class="text-xs font-mono font-bold text-emerald-400">68 Stocks</span>
+            <span class="text-xs text-slate-500">Scheme Lookthrough</span>
           </div>
 
           <!-- Scheme Selector Bar -->
@@ -1278,19 +1305,23 @@
               <option value="150141">HDFC Silver (₹1.14L)</option>
             </select>
 
-            <!-- Fund Snapshot Strip -->
-            <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/5 text-center text-xs">
-              <div>
-                <div class="text-[10px] text-slate-400 uppercase">Weight</div>
-                <div id="schWeightVal" class="font-bold text-white num mt-0.5">12.0%</div>
+            <!-- Fund Snapshot Strip (4 stats inline: Positions, Weight, Port Value, Top 10 Wt) -->
+            <div class="grid grid-cols-4 gap-1.5 mt-3 pt-3 border-t border-white/5 text-center text-xs">
+              <div class="bg-white/[0.02] p-1.5 rounded-xl border border-white/5">
+                <div class="text-[9px] text-slate-400 uppercase">Positions</div>
+                <div id="schHoldingsCount" class="font-bold text-sky-400 num mt-0.5 text-xs truncate">216 Pos</div>
               </div>
-              <div>
-                <div class="text-[10px] text-slate-400 uppercase">Port Value</div>
-                <div id="schPortVal" class="font-bold text-emerald-400 num mt-0.5">₹11.80L</div>
+              <div class="bg-white/[0.02] p-1.5 rounded-xl border border-white/5">
+                <div class="text-[9px] text-slate-400 uppercase">Weight</div>
+                <div id="schWeightVal" class="font-bold text-white num mt-0.5 text-xs">10.9%</div>
               </div>
-              <div>
-                <div class="text-[10px] text-slate-400 uppercase">Top 10 Weight</div>
-                <div id="schTop10Val" class="font-bold text-amber-400 num mt-0.5">32.8%</div>
+              <div class="bg-white/[0.02] p-1.5 rounded-xl border border-white/5">
+                <div class="text-[9px] text-slate-400 uppercase">Port Value</div>
+                <div id="schPortVal" class="font-bold text-emerald-400 num mt-0.5 text-xs">₹10.74L</div>
+              </div>
+              <div class="bg-white/[0.02] p-1.5 rounded-xl border border-white/5">
+                <div class="text-[9px] text-slate-400 uppercase">Top 10 Wt</div>
+                <div id="schTop10Val" class="font-bold text-amber-400 num mt-0.5 text-xs">37.3%</div>
               </div>
             </div>
 
@@ -1410,6 +1441,57 @@
 
       <!-- Close Button -->
       <button onclick="closeFundDetail()" class="w-full py-2 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 mt-1">
+        Done
+      </button>
+    </div>
+  </div>
+  <!-- ========================================================================= -->
+  <!-- SEGMENT CONSTITUENT FUNDS MODAL -->
+  <!-- ========================================================================= -->
+  <div id="segmentModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4">
+    <div class="bg-[#0e131d] border border-white/10 rounded-3xl max-w-md w-full p-4 sm:p-5 space-y-4 shadow-2xl relative max-h-[90vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-start border-b border-white/5 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="segModalBadge" class="px-2.5 py-1 rounded-lg text-xs font-bold border">Segment</span>
+          </div>
+          <p id="segModalDrift" class="text-[11px] text-slate-400 mt-1.5"></p>
+        </div>
+        <button onclick="closeSegmentDetail()" class="text-slate-400 hover:text-white p-1 rounded-lg text-lg leading-none font-bold">
+          ✕
+        </button>
+      </div>
+
+      <!-- Segment Totals Strip -->
+      <div class="grid grid-cols-3 gap-2 bg-[#131b29] p-3 rounded-2xl border border-white/5 text-center text-xs">
+        <div>
+          <span class="text-[10px] text-slate-400 uppercase block">Segment Val</span>
+          <span id="segModalTotalVal" class="font-bold text-white text-sm num mt-0.5 block">₹0.00L</span>
+        </div>
+        <div class="border-l border-white/10 pl-2">
+          <span class="text-[10px] text-slate-400 uppercase block">Port Weight</span>
+          <span id="segModalWeight" class="font-bold text-sky-400 text-sm num mt-0.5 block">0.0%</span>
+        </div>
+        <div class="border-l border-white/10 pl-2">
+          <span class="text-[10px] text-slate-400 uppercase block">Target</span>
+          <span id="segModalTarget" class="font-bold text-slate-300 text-sm num mt-0.5 block">0.0%</span>
+        </div>
+      </div>
+
+      <!-- Constituent Funds Table -->
+      <div class="flex-1 overflow-y-auto space-y-2">
+        <div class="text-[11px] font-semibold text-slate-400 px-1 flex justify-between">
+          <span>Constituent Funds (<span id="segModalFundCount">0</span>)</span>
+          <span>Port Wt · Value</span>
+        </div>
+        <div class="bg-[#131b29] border border-white/5 rounded-2xl overflow-hidden divide-y divide-white/5 text-xs" id="segModalFundList">
+          <!-- Dynamically populated rows via renderSegmentDetail() -->
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <button onclick="closeSegmentDetail()" class="w-full py-2.5 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 transition-all">
         Done
       </button>
     </div>
@@ -1662,7 +1744,7 @@
     let currentModalFundCode = '119771';
 
     // Fund Recent 5 Purchases DB
-    const FUND_PURCHASES_DB = {"119771":[{"date":"10 Apr 26","type":"Dip","nav":"\u20b942.10","units":"9499.7","amount":"\u20b93,99,980"},{"date":"08 Sep 25","type":"Dip","nav":"\u20b940.48","units":"2470.1","amount":"\u20b91,00,000"},{"date":"22 Apr 25","type":"Dip","nav":"\u20b939.57","units":"2527.2","amount":"\u20b91,00,000"},{"date":"15 Apr 25","type":"Dip","nav":"\u20b939.50","units":"5062.9","amount":"\u20b91,99,990"},{"date":"28 Mar 25","type":"Dip","nav":"\u20b939.35","units":"2541.5","amount":"\u20b91,00,000"}],"119788":[{"date":"14 Oct 26","type":"SIP","nav":"\u20b944.22","units":"339.2","amount":"\u20b915,000"},{"date":"01 Oct 26","type":"SIP","nav":"\u20b944.87","units":"222.9","amount":"\u20b910,000"},{"date":"09 Sep 26","type":"Dip","nav":"\u20b946.48","units":"1291.0","amount":"\u20b960,000"},{"date":"24 Jul 26","type":"Dip","nav":"\u20b943.55","units":"574.0","amount":"\u20b925,000"},{"date":"08 Jun 26","type":"Dip","nav":"\u20b945.89","units":"4358.1","amount":"\u20b91,99,990"}],"118551":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9108.14","units":"138.7","amount":"\u20b915,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9102.24","units":"146.7","amount":"\u20b915,000"},{"date":"03 Aug 26","type":"SIP","nav":"\u20b9103.11","units":"145.5","amount":"\u20b915,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9105.52","units":"142.2","amount":"\u20b915,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9106.65","units":"140.7","amount":"\u20b915,000"}],"120334":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b9863.92","units":"28.9","amount":"\u20b925,000"},{"date":"09 Sep 26","type":"Dip","nav":"\u20b9892.50","units":"235.3","amount":"\u20b92,09,990"},{"date":"01 Sep 26","type":"Dip","nav":"\u20b9903.75","units":"27.7","amount":"\u20b925,000"},{"date":"03 Aug 26","type":"Dip","nav":"\u20b9913.24","units":"27.4","amount":"\u20b925,000"},{"date":"24 Jul 26","type":"Dip","nav":"\u20b9887.96","units":"28.2","amount":"\u20b925,000"}],"148745":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b920.24","units":"1234.9","amount":"\u20b925,000"},{"date":"15 Sep 26","type":"SIP","nav":"\u20b920.63","units":"484.7","amount":"\u20b910,000"},{"date":"01 Sep 26","type":"Dip","nav":"\u20b921.39","units":"2337.3","amount":"\u20b950,000"},{"date":"12 May 26","type":"Dip","nav":"\u20b920.07","units":"996.7","amount":"\u20b920,000"},{"date":"11 May 26","type":"Dip","nav":"\u20b920.57","units":"972.5","amount":"\u20b920,000"}],"141877":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b925.58","units":"781.9","amount":"\u20b920,000"},{"date":"15 Sep 26","type":"SIP","nav":"\u20b926.43","units":"189.2","amount":"\u20b95,000"},{"date":"01 Sep 26","type":"Dip","nav":"\u20b927.49","units":"909.4","amount":"\u20b925,000"},{"date":"12 May 26","type":"SIP","nav":"\u20b926.49","units":"377.5","amount":"\u20b910,000"},{"date":"24 Apr 26","type":"SIP","nav":"\u20b926.75","units":"373.9","amount":"\u20b910,000"}],"148485":[{"date":"05 May 26","type":"Dip","nav":"\u20b925.25","units":"11879.5","amount":"\u20b92,99,980"},{"date":"23 Apr 26","type":"Dip","nav":"\u20b924.81","units":"1007.5","amount":"\u20b925,000"},{"date":"02 Apr 26","type":"SIP","nav":"\u20b922.45","units":"668.1","amount":"\u20b915,000"},{"date":"23 Mar 26","type":"SIP","nav":"\u20b923.19","units":"646.7","amount":"\u20b915,000"},{"date":"19 Mar 26","type":"SIP","nav":"\u20b922.79","units":"438.8","amount":"\u20b910,000"}],"118989":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9219.44","units":"45.6","amount":"\u20b910,000"},{"date":"28 Sep 26","type":"SIP","nav":"\u20b9223.17","units":"67.2","amount":"\u20b915,000"},{"date":"01 Sep 26","type":"Dip","nav":"\u20b9236.39","units":"105.8","amount":"\u20b925,000"},{"date":"09 Mar 26","type":"SIP","nav":"\u20b9210.94","units":"23.7","amount":"\u20b95,000"},{"date":"21 Jan 26","type":"SIP","nav":"\u20b9218.09","units":"22.9","amount":"\u20b95,000"}],"118650":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b9316.88","units":"78.9","amount":"\u20b925,000"},{"date":"09 Sep 26","type":"Dip","nav":"\u20b9330.45","units":"272.4","amount":"\u20b990,000"},{"date":"12 May 26","type":"SIP","nav":"\u20b9321.47","units":"31.1","amount":"\u20b910,000"},{"date":"24 Apr 26","type":"SIP","nav":"\u20b9326.04","units":"30.7","amount":"\u20b910,000"},{"date":"09 Mar 26","type":"SIP","nav":"\u20b9312.01","units":"32.0","amount":"\u20b910,000"}],"151739":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b920.86","units":"1198.7","amount":"\u20b925,000"},{"date":"09 Sep 26","type":"Dip","nav":"\u20b922.14","units":"6323.2","amount":"\u20b91,39,990"},{"date":"19 Mar 26","type":"Dip","nav":"\u20b921.17","units":"944.6","amount":"\u20b920,000"},{"date":"09 Mar 26","type":"Dip","nav":"\u20b921.89","units":"913.8","amount":"\u20b920,000"},{"date":"08 Jan 26","type":"SIP","nav":"\u20b921.35","units":"468.3","amount":"\u20b910,000"}],"122639":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b988.26","units":"226.6","amount":"\u20b920,000"},{"date":"11 Sep 26","type":"Dip","nav":"\u20b989.57","units":"223.3","amount":"\u20b920,000"},{"date":"25 Jun 26","type":"SIP","nav":"\u20b989.71","units":"55.7","amount":"\u20b95,000"},{"date":"25 May 26","type":"SIP","nav":"\u20b991.15","units":"54.9","amount":"\u20b95,000"},{"date":"27 Apr 26","type":"SIP","nav":"\u20b991.04","units":"54.9","amount":"\u20b95,000"}],"118482":[{"date":"26 Sep 25","type":"SIP","nav":"\u20b954.74","units":"182.7","amount":"\u20b910,000"},{"date":"28 Aug 25","type":"SIP","nav":"\u20b954.39","units":"183.9","amount":"\u20b910,000"},{"date":"25 Jul 25","type":"SIP","nav":"\u20b955.04","units":"181.7","amount":"\u20b910,000"},{"date":"11 Jul 25","type":"SIP","nav":"\u20b955.67","units":"179.6","amount":"\u20b910,000"},{"date":"13 Jun 25","type":"SIP","nav":"\u20b954.61","units":"91.6","amount":"\u20b95,000"}],"152814":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b98.44","units":"1185.0","amount":"\u20b910,000"},{"date":"10 Sep 26","type":"Dip","nav":"\u20b98.75","units":"4573.2","amount":"\u20b940,000"},{"date":"03 Jun 26","type":"Dip","nav":"\u20b98.78","units":"2277.3","amount":"\u20b920,000"},{"date":"12 May 26","type":"SIP","nav":"\u20b98.74","units":"1144.6","amount":"\u20b910,000"},{"date":"24 Apr 26","type":"SIP","nav":"\u20b99.00","units":"1334.0","amount":"\u20b912,000"}],"119779":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b943.71","units":"571.9","amount":"\u20b925,000"},{"date":"01 Sep 26","type":"Dip","nav":"\u20b943.39","units":"576.2","amount":"\u20b925,000"},{"date":"04 Aug 26","type":"Dip","nav":"\u20b941.74","units":"599.0","amount":"\u20b925,000"},{"date":"02 Jul 26","type":"Dip","nav":"\u20b943.29","units":"577.5","amount":"\u20b925,000"},{"date":"01 Jun 26","type":"Dip","nav":"\u20b945.70","units":"547.1","amount":"\u20b925,000"}],"152735":[{"date":"30 Dec 25","type":"Dip","nav":"\u20b924.39","units":"1024.8","amount":"\u20b925,000"},{"date":"19 Dec 25","type":"Dip","nav":"\u20b921.47","units":"1164.5","amount":"\u20b925,000"},{"date":"10 Oct 25","type":"Dip","nav":"\u20b917.07","units":"1464.5","amount":"\u20b925,000"},{"date":"08 Oct 25","type":"Dip","nav":"\u20b916.68","units":"2998.3","amount":"\u20b950,000"},{"date":"15 May 25","type":"SIP","nav":"\u20b910.16","units":"984.5","amount":"\u20b910,000"}],"147622":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b939.29","units":"636.3","amount":"\u20b925,000"},{"date":"28 Sep 26","type":"Dip","nav":"\u20b940.07","units":"873.4","amount":"\u20b935,000"},{"date":"15 Sep 26","type":"SIP","nav":"\u20b940.60","units":"246.3","amount":"\u20b910,000"},{"date":"01 Sep 26","type":"Dip","nav":"\u20b942.21","units":"1184.5","amount":"\u20b950,000"},{"date":"12 May 26","type":"SIP","nav":"\u20b939.77","units":"251.5","amount":"\u20b910,000"}],"130503":[{"date":"11 Sep 26","type":"Dip","nav":"\u20b9159.56","units":"125.3","amount":"\u20b920,000"},{"date":"12 May 26","type":"SIP","nav":"\u20b9151.94","units":"32.9","amount":"\u20b95,000"},{"date":"09 Mar 26","type":"SIP","nav":"\u20b9143.64","units":"34.8","amount":"\u20b95,000"},{"date":"21 Jan 26","type":"SIP","nav":"\u20b9148.81","units":"33.6","amount":"\u20b95,000"},{"date":"08 Jan 26","type":"SIP","nav":"\u20b9156.69","units":"31.9","amount":"\u20b95,000"}],"118968":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b9546.11","units":"45.8","amount":"\u20b925,000"},{"date":"11 Sep 26","type":"Dip","nav":"\u20b9561.38","units":"53.4","amount":"\u20b930,000"},{"date":"12 May 26","type":"Dip","nav":"\u20b9548.67","units":"36.5","amount":"\u20b920,000"},{"date":"13 Mar 26","type":"SIP","nav":"\u20b9540.98","units":"18.5","amount":"\u20b910,000"},{"date":"23 Jan 26","type":"SIP","nav":"\u20b9563.34","units":"8.9","amount":"\u20b95,000"}],"147623":[{"date":"15 Sep 26","type":"SIP","nav":"\u20b940.12","units":"249.3","amount":"\u20b910,000"},{"date":"09 Mar 26","type":"SIP","nav":"\u20b933.73","units":"148.2","amount":"\u20b95,000"},{"date":"21 Jan 26","type":"SIP","nav":"\u20b934.65","units":"144.3","amount":"\u20b95,000"},{"date":"08 Jan 26","type":"SIP","nav":"\u20b936.91","units":"135.5","amount":"\u20b95,000"},{"date":"08 Dec 25","type":"SIP","nav":"\u20b936.09","units":"277.1","amount":"\u20b910,000"}],"119835":[{"date":"01 Oct 26","type":"Dip","nav":"\u20b9394.32","units":"63.4","amount":"\u20b925,000"},{"date":"10 Sep 26","type":"Dip","nav":"\u20b9409.21","units":"73.3","amount":"\u20b930,000"},{"date":"09 Mar 26","type":"SIP","nav":"\u20b9408.29","units":"12.2","amount":"\u20b95,000"},{"date":"08 Jan 26","type":"SIP","nav":"\u20b9430.91","units":"23.2","amount":"\u20b910,000"},{"date":"08 Dec 25","type":"SIP","nav":"\u20b9429.00","units":"23.3","amount":"\u20b910,000"}],"150141":[{"date":"14 Oct 25","type":"Dip","nav":"\u20b930.77","units":"3250.1","amount":"\u20b91,00,000"}]};
+    const FUND_PURCHASES_DB = {"119771": [{"date": "10 Apr 26", "type": "Dip", "nav": "\u20b942.10", "units": "9499.7", "amount": "\u20b93,99,980"}, {"date": "08 Sep 25", "type": "Dip", "nav": "\u20b940.48", "units": "2470.1", "amount": "\u20b91,00,000"}, {"date": "22 Apr 25", "type": "Dip", "nav": "\u20b939.57", "units": "2527.2", "amount": "\u20b91,00,000"}, {"date": "15 Apr 25", "type": "Dip", "nav": "\u20b939.50", "units": "5062.9", "amount": "\u20b91,99,990"}, {"date": "28 Mar 25", "type": "Dip", "nav": "\u20b939.35", "units": "2541.5", "amount": "\u20b91,00,000"}], "119788": [{"date": "14 Oct 26", "type": "Dip", "nav": "\u20b944.22", "units": "339.2", "amount": "\u20b915,000"}, {"date": "01 Oct 26", "type": "SIP", "nav": "\u20b944.87", "units": "222.9", "amount": "\u20b910,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b946.48", "units": "1291.0", "amount": "\u20b960,000"}, {"date": "24 Jul 26", "type": "Dip", "nav": "\u20b943.55", "units": "574.0", "amount": "\u20b925,000"}, {"date": "08 Jun 26", "type": "Dip", "nav": "\u20b945.89", "units": "4358.1", "amount": "\u20b91,99,990"}], "118551": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9108.14", "units": "138.7", "amount": "\u20b915,000"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b9102.24", "units": "146.7", "amount": "\u20b915,000"}, {"date": "03 Aug 26", "type": "SIP", "nav": "\u20b9103.11", "units": "145.5", "amount": "\u20b915,000"}, {"date": "01 Jul 26", "type": "SIP", "nav": "\u20b9105.52", "units": "142.2", "amount": "\u20b915,000"}, {"date": "01 Jun 26", "type": "SIP", "nav": "\u20b9106.65", "units": "140.7", "amount": "\u20b915,000"}], "120334": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9863.92", "units": "28.9", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b9892.50", "units": "235.3", "amount": "\u20b92,09,990"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b9903.75", "units": "27.7", "amount": "\u20b925,000"}, {"date": "03 Aug 26", "type": "SIP", "nav": "\u20b9913.24", "units": "27.4", "amount": "\u20b925,000"}, {"date": "24 Jul 26", "type": "Dip", "nav": "\u20b9887.96", "units": "28.2", "amount": "\u20b925,000"}], "148745": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b920.24", "units": "1234.9", "amount": "\u20b925,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b920.63", "units": "484.7", "amount": "\u20b910,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b921.39", "units": "2337.3", "amount": "\u20b950,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b920.07", "units": "996.7", "amount": "\u20b920,000"}, {"date": "11 May 26", "type": "Dip", "nav": "\u20b920.57", "units": "972.5", "amount": "\u20b920,000"}], "141877": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b925.58", "units": "781.9", "amount": "\u20b920,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b926.43", "units": "189.2", "amount": "\u20b95,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b927.49", "units": "909.4", "amount": "\u20b925,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b926.49", "units": "377.5", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b926.75", "units": "373.9", "amount": "\u20b910,000"}], "148485": [{"date": "05 May 26", "type": "Dip", "nav": "\u20b925.25", "units": "11879.5", "amount": "\u20b92,99,980"}, {"date": "23 Apr 26", "type": "Dip", "nav": "\u20b924.81", "units": "1007.5", "amount": "\u20b925,000"}, {"date": "02 Apr 26", "type": "Dip", "nav": "\u20b922.45", "units": "668.1", "amount": "\u20b915,000"}, {"date": "23 Mar 26", "type": "Dip", "nav": "\u20b923.19", "units": "646.7", "amount": "\u20b915,000"}, {"date": "19 Mar 26", "type": "Dip", "nav": "\u20b922.79", "units": "438.8", "amount": "\u20b910,000"}], "118989": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9219.44", "units": "45.6", "amount": "\u20b910,000"}, {"date": "28 Sep 26", "type": "Dip", "nav": "\u20b9223.17", "units": "67.2", "amount": "\u20b915,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b9236.39", "units": "105.8", "amount": "\u20b925,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9210.94", "units": "23.7", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b9218.09", "units": "22.9", "amount": "\u20b95,000"}], "118650": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9316.88", "units": "78.9", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b9330.45", "units": "272.4", "amount": "\u20b990,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9321.47", "units": "31.1", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b9326.04", "units": "30.7", "amount": "\u20b910,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9312.01", "units": "32.0", "amount": "\u20b910,000"}], "151739": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b920.86", "units": "1198.7", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b922.14", "units": "6323.2", "amount": "\u20b91,39,990"}, {"date": "19 Mar 26", "type": "Dip", "nav": "\u20b921.17", "units": "944.6", "amount": "\u20b920,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b921.89", "units": "913.8", "amount": "\u20b920,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b921.35", "units": "468.3", "amount": "\u20b910,000"}], "122639": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b988.26", "units": "226.6", "amount": "\u20b920,000"}, {"date": "11 Sep 26", "type": "Dip", "nav": "\u20b989.57", "units": "223.3", "amount": "\u20b920,000"}, {"date": "25 Jun 26", "type": "SIP", "nav": "\u20b989.71", "units": "55.7", "amount": "\u20b95,000"}, {"date": "25 May 26", "type": "SIP", "nav": "\u20b991.15", "units": "54.9", "amount": "\u20b95,000"}, {"date": "27 Apr 26", "type": "SIP", "nav": "\u20b991.04", "units": "54.9", "amount": "\u20b95,000"}], "118482": [{"date": "26 Sep 25", "type": "Dip", "nav": "\u20b954.74", "units": "182.7", "amount": "\u20b910,000"}, {"date": "28 Aug 25", "type": "Dip", "nav": "\u20b954.39", "units": "183.9", "amount": "\u20b910,000"}, {"date": "25 Jul 25", "type": "Dip", "nav": "\u20b955.04", "units": "181.7", "amount": "\u20b910,000"}, {"date": "11 Jul 25", "type": "Dip", "nav": "\u20b955.67", "units": "179.6", "amount": "\u20b910,000"}, {"date": "13 Jun 25", "type": "Dip", "nav": "\u20b954.61", "units": "91.6", "amount": "\u20b95,000"}], "152814": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b98.44", "units": "1185.0", "amount": "\u20b910,000"}, {"date": "10 Sep 26", "type": "Dip", "nav": "\u20b98.75", "units": "4573.2", "amount": "\u20b940,000"}, {"date": "03 Jun 26", "type": "Dip", "nav": "\u20b98.78", "units": "2277.3", "amount": "\u20b920,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b98.74", "units": "1144.6", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b99.00", "units": "1334.0", "amount": "\u20b912,000"}], "119779": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b943.71", "units": "571.9", "amount": "\u20b925,000"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b943.39", "units": "576.2", "amount": "\u20b925,000"}, {"date": "04 Aug 26", "type": "SIP", "nav": "\u20b941.74", "units": "599.0", "amount": "\u20b925,000"}, {"date": "02 Jul 26", "type": "SIP", "nav": "\u20b943.29", "units": "577.5", "amount": "\u20b925,000"}, {"date": "01 Jun 26", "type": "SIP", "nav": "\u20b945.70", "units": "547.1", "amount": "\u20b925,000"}], "152735": [{"date": "30 Dec 25", "type": "Dip", "nav": "\u20b924.39", "units": "1024.8", "amount": "\u20b925,000"}, {"date": "19 Dec 25", "type": "Dip", "nav": "\u20b921.47", "units": "1164.5", "amount": "\u20b925,000"}, {"date": "10 Oct 25", "type": "Dip", "nav": "\u20b917.07", "units": "1464.5", "amount": "\u20b925,000"}, {"date": "08 Oct 25", "type": "Dip", "nav": "\u20b916.68", "units": "2998.3", "amount": "\u20b950,000"}, {"date": "15 May 25", "type": "Dip", "nav": "\u20b910.16", "units": "984.5", "amount": "\u20b910,000"}], "147622": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b939.29", "units": "636.3", "amount": "\u20b925,000"}, {"date": "28 Sep 26", "type": "Dip", "nav": "\u20b940.07", "units": "873.4", "amount": "\u20b935,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b940.60", "units": "246.3", "amount": "\u20b910,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b942.21", "units": "1184.5", "amount": "\u20b950,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b939.77", "units": "251.5", "amount": "\u20b910,000"}], "130503": [{"date": "11 Sep 26", "type": "Dip", "nav": "\u20b9159.56", "units": "125.3", "amount": "\u20b920,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9151.94", "units": "32.9", "amount": "\u20b95,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9143.64", "units": "34.8", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b9148.81", "units": "33.6", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b9156.69", "units": "31.9", "amount": "\u20b95,000"}], "118968": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9546.11", "units": "45.8", "amount": "\u20b925,000"}, {"date": "11 Sep 26", "type": "Dip", "nav": "\u20b9561.38", "units": "53.4", "amount": "\u20b930,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9548.67", "units": "36.5", "amount": "\u20b920,000"}, {"date": "13 Mar 26", "type": "Dip", "nav": "\u20b9540.98", "units": "18.5", "amount": "\u20b910,000"}, {"date": "23 Jan 26", "type": "Dip", "nav": "\u20b9563.34", "units": "8.9", "amount": "\u20b95,000"}], "147623": [{"date": "15 Sep 26", "type": "Dip", "nav": "\u20b940.12", "units": "249.3", "amount": "\u20b910,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b933.73", "units": "148.2", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b934.65", "units": "144.3", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b936.91", "units": "135.5", "amount": "\u20b95,000"}, {"date": "08 Dec 25", "type": "Dip", "nav": "\u20b936.09", "units": "277.1", "amount": "\u20b910,000"}], "119835": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9394.32", "units": "63.4", "amount": "\u20b925,000"}, {"date": "10 Sep 26", "type": "Dip", "nav": "\u20b9409.21", "units": "73.3", "amount": "\u20b930,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9408.29", "units": "12.2", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b9430.91", "units": "23.2", "amount": "\u20b910,000"}, {"date": "08 Dec 25", "type": "Dip", "nav": "\u20b9429.00", "units": "23.3", "amount": "\u20b910,000"}], "150141": [{"date": "14 Oct 25", "type": "Dip", "nav": "\u20b930.77", "units": "3250.1", "amount": "\u20b91,00,000"}]};
 
     function openFundDetail(name, code, val, wt, xirr, cost, category) {
       currentModalFundCode = code;
@@ -1868,6 +1950,84 @@
           r.style.display = 'none';
         }
       });
+    }
+
+    
+    // Segment Constituent Funds DB
+    const SEGMENT_CONSTITUENTS_DB = {"Equity: UltraLarge": {"color": "#4f86f7", "target": "15.0%", "actual": "16.3%", "drift": "+1.3%", "driftStatus": "Over (+1.3%)", "driftColor": "text-rose-400 bg-rose-500/10 border-rose-500/20", "totalVal": "\u20b916.09L", "funds": [{"name": "DSP Nifty 50 Equal Weight", "code": "141877", "weight": "4.4%", "val": "\u20b94.34L", "segWeight": "27.0%"}, {"name": "Bandhan Nifty 50 - Regular", "code": "118482", "weight": "4.0%", "val": "\u20b93.94L", "segWeight": "24.5%"}, {"name": "DSP Nifty Top 10 Equal Weight", "code": "152814", "weight": "4.0%", "val": "\u20b93.91L", "segWeight": "24.3%"}, {"name": "Bandhan Nifty 50", "code": "118482", "weight": "4.0%", "val": "\u20b93.89L", "segWeight": "24.2%"}]}, "Commo: Gold/Silver": {"color": "#34d399", "target": "15.0%", "actual": "14.6%", "drift": "-0.4%", "driftStatus": "Balanced (-0.4%)", "driftColor": "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", "totalVal": "\u20b914.35L", "funds": [{"name": "SBI Gold", "code": "119788", "weight": "9.8%", "val": "\u20b99.64L", "segWeight": "67.2%"}, {"name": "SBI Silver", "code": "152735", "weight": "3.6%", "val": "\u20b93.58L", "segWeight": "24.9%"}, {"name": "HDFC Silver", "code": "150141", "weight": "1.2%", "val": "\u20b91.14L", "segWeight": "7.9%"}]}, "Equity: Liquid": {"color": "#a78bfa", "target": "10.0%", "actual": "10.9%", "drift": "+0.9%", "driftStatus": "Over (+0.9%)", "driftColor": "text-rose-400 bg-rose-500/10 border-rose-500/20", "totalVal": "\u20b910.74L", "funds": [{"name": "Kotak Arbitrage", "code": "119771", "weight": "10.9%", "val": "\u20b910.74L", "segWeight": "100.0%"}]}, "Equity: Hybrid": {"color": "#f59e0b", "target": "10.0%", "actual": "10.1%", "drift": "+0.1%", "driftStatus": "Balanced (+0.1%)", "driftColor": "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", "totalVal": "\u20b99.92L", "funds": [{"name": "ICICI Prudential Multi-Asset", "code": "120334", "weight": "7.1%", "val": "\u20b96.95L", "segWeight": "70.1%"}, {"name": "HDFC Balanced Advantage", "code": "118968", "weight": "3.0%", "val": "\u20b92.97L", "segWeight": "29.9%"}]}, "Equity: Flexi/Multi": {"color": "#f87171", "target": "8.0%", "actual": "8.1%", "drift": "+0.1%", "driftStatus": "Balanced (+0.1%)", "driftColor": "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", "totalVal": "\u20b97.97L", "funds": [{"name": "Nippon India Multi Cap", "code": "118650", "weight": "4.1%", "val": "\u20b94.01L", "segWeight": "50.3%"}, {"name": "Parag Parikh Flexi Cap", "code": "122639", "weight": "4.0%", "val": "\u20b93.96L", "segWeight": "49.7%"}]}, "Equity: Midcap": {"color": "#38bdf8", "target": "10.0%", "actual": "7.8%", "drift": "-2.2%", "driftStatus": "Under (-2.2%)", "driftColor": "text-amber-400 bg-amber-500/10 border-amber-500/20", "totalVal": "\u20b97.65L", "funds": [{"name": "HDFC Mid-Cap", "code": "118989", "weight": "4.2%", "val": "\u20b94.13L", "segWeight": "54.0%"}, {"name": "Motilal Oswal Nifty Midcap 150", "code": "147622", "weight": "3.6%", "val": "\u20b93.52L", "segWeight": "46.0%"}]}, "Equity: US": {"color": "#fbbf24", "target": "7.0%", "actual": "7.3%", "drift": "+0.3%", "driftStatus": "Balanced (+0.3%)", "driftColor": "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", "totalVal": "\u20b97.22L", "funds": [{"name": "Franklin US Opportunities", "code": "118551", "weight": "7.3%", "val": "\u20b97.22L", "segWeight": "100.0%"}]}, "Equity: Value": {"color": "#818cf8", "target": "6.0%", "actual": "6.1%", "drift": "+0.1%", "driftStatus": "Balanced (+0.1%)", "driftColor": "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", "totalVal": "\u20b96.04L", "funds": [{"name": "UTI Nifty 500 Value 50", "code": "151739", "weight": "4.1%", "val": "\u20b93.99L", "segWeight": "66.1%"}, {"name": "SBI Contra", "code": "119835", "weight": "2.1%", "val": "\u20b92.05L", "segWeight": "33.9%"}]}, "Equity: Smallcap": {"color": "#2dd4bf", "target": "5.0%", "actual": "5.8%", "drift": "+0.8%", "driftStatus": "Over (+0.8%)", "driftColor": "text-rose-400 bg-rose-500/10 border-rose-500/20", "totalVal": "\u20b95.70L", "funds": [{"name": "HDFC Small Cap", "code": "130503", "weight": "3.4%", "val": "\u20b93.33L", "segWeight": "58.4%"}, {"name": "Motilal Oswal Nifty Smallcap 250", "code": "147623", "weight": "2.4%", "val": "\u20b92.38L", "segWeight": "41.6%"}]}, "Equity: Largecap": {"color": "#fb923c", "target": "5.0%", "actual": "5.0%", "drift": "+0.0%", "driftStatus": "Balanced (+0.0%)", "driftColor": "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", "totalVal": "\u20b94.96L", "funds": [{"name": "Kotak Nifty Next 50", "code": "148745", "weight": "5.0%", "val": "\u20b94.96L", "segWeight": "100.0%"}]}, "Equity: Developed": {"color": "#60a5fa", "target": "4.0%", "actual": "4.2%", "drift": "+0.2%", "driftStatus": "Balanced (+0.2%)", "driftColor": "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", "totalVal": "\u20b94.18L", "funds": [{"name": "Axis Global Equity Alpha", "code": "148485", "weight": "4.2%", "val": "\u20b94.18L", "segWeight": "100.0%"}]}, "Equity: Emerging": {"color": "#c084fc", "target": "5.0%", "actual": "3.7%", "drift": "-1.3%", "driftStatus": "Under (-1.3%)", "driftColor": "text-amber-400 bg-amber-500/10 border-amber-500/20", "totalVal": "\u20b93.66L", "funds": [{"name": "Kotak Global Emerging", "code": "119779", "weight": "3.7%", "val": "\u20b93.66L", "segWeight": "100.0%"}]}};
+
+    function openSegmentDetail(segName) {
+      const data = SEGMENT_CONSTITUENTS_DB[segName];
+      if (!data) return;
+
+      const badge = document.getElementById('segModalBadge');
+      if (badge) {
+        badge.textContent = segName;
+        badge.style.borderColor = data.color;
+        badge.style.color = data.color;
+        badge.style.backgroundColor = data.color + '18';
+      }
+
+      const driftEl = document.getElementById('segModalDrift');
+      if (driftEl) {
+        driftEl.innerHTML = `Target: <b class="text-white font-mono">${data.target}</b> · Actual: <b class="text-white font-mono">${data.actual}</b> · <span class="px-1.5 py-0.2 rounded font-mono font-semibold ${data.driftColor}">${data.driftStatus}</span>`;
+      }
+
+      const valEl = document.getElementById('segModalTotalVal');
+      if (valEl) valEl.textContent = data.totalVal;
+
+      const wtEl = document.getElementById('segModalWeight');
+      if (wtEl) wtEl.textContent = data.actual;
+
+      const tgtEl = document.getElementById('segModalTarget');
+      if (tgtEl) tgtEl.textContent = data.target;
+
+      const countEl = document.getElementById('segModalFundCount');
+      if (countEl) countEl.textContent = data.funds.length;
+
+      const listContainer = document.getElementById('segModalFundList');
+      if (listContainer) {
+        listContainer.innerHTML = '';
+        data.funds.forEach(f => {
+          const row = document.createElement('div');
+          row.className = 'p-3 flex justify-between items-center hover:bg-white/[0.04] transition-colors cursor-pointer';
+          row.onclick = () => {
+            closeSegmentDetail();
+            const card = document.querySelector(`[onclick*="'${f.code}'"]`);
+            if (card) card.click();
+          };
+          row.innerHTML = `
+            <div class="pr-2">
+              <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                <span>${f.name}</span>
+                <span class="text-[10px] text-sky-400">↗</span>
+              </div>
+              <div class="text-[10px] text-slate-400 mt-0.5">
+                <span>Share of segment: <b class="text-slate-300 font-mono">${f.segWeight}</b></span>
+              </div>
+            </div>
+            <div class="text-right num whitespace-nowrap">
+              <div class="font-extrabold text-white text-xs">${f.val}</div>
+              <div class="text-[10px] font-mono font-semibold text-emerald-400 mt-0.5">${f.weight} <span class="text-slate-500 font-normal">of port</span></div>
+            </div>
+          `;
+          listContainer.appendChild(row);
+        });
+      }
+
+      const modal = document.getElementById('segmentModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeSegmentDetail() {
+      const modal = document.getElementById('segmentModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
