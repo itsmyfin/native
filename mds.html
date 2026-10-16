@@ -50,6 +50,7 @@
         <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(23px, 3.2vw, 29px); line-height: 1; color: #f8fafc; letter-spacing: -0.01em; display: inline-flex; align-items: center;">
           <span style="color: #fbbf24; font-style: normal; margin-right: 5px;">◈</span>CapitalView
         </span>
+        <span id="headerAsOf" class="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-slate-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">As of 16 Oct 2026</span>
       </div>
 
       <!-- FONT INCREASE/DECREASE SLIDER (5% STEPS WITH + AND -) -->
@@ -68,7 +69,10 @@
 
     <!-- CLEAN, UNCLUTTERED HERO -->
     <section class="p-5 pb-3 border-b border-white/5 bg-gradient-to-b from-[#0e1422] to-[#06080d]">
-      <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">Total Portfolio</div>
+      <div class="flex items-center justify-between mb-1.5">
+        <span class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">Total Portfolio</span>
+        <span id="topAsOf" class="font-mono text-slate-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full flex items-center gap-1.5 text-[10px] sm:text-[11px]"><i class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block not-italic"></i>As of 16 Oct 2026</span>
+      </div>
       
       <div class="flex items-baseline justify-between gap-2">
         <div id="heroMarketValue" class="text-3xl font-extrabold text-white num tracking-tight">
@@ -1420,13 +1424,18 @@
 
     </section>
 
-        <!-- TASTEFUL FOOTER -->
-    <footer class="mt-auto px-4 py-6 sm:px-6 border-t border-white/5 text-center text-xs text-slate-500 font-mono">
-      <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 16px; color: #94a3b8;">
-        <span style="color: #fbbf24; font-style: normal;">◈</span> CapitalView
-      </span>
-      <span class="mx-2 opacity-40">·</span>
-      <span id="footerAsOf">As of 16 Oct 2026</span>
+        <!-- TASTEFUL FOOTER WITH DISCLAIMER -->
+    <footer class="mt-auto px-4 py-6 sm:px-6 border-t border-white/5 text-center text-xs text-slate-500 space-y-2.5">
+      <div class="flex items-center justify-center font-mono">
+        <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 16px; color: #94a3b8;">
+          <span style="color: #fbbf24; font-style: normal;">◈</span> CapitalView
+        </span>
+        <span class="mx-2 opacity-40">·</span>
+        <span id="footerAsOf">As of 16 Oct 2026</span>
+      </div>
+      <p class="text-[10px] text-slate-500 max-w-lg mx-auto leading-relaxed font-sans">
+        <span class="font-semibold text-slate-400">Disclaimer:</span> Analytics are provided for informational purposes only and do not constitute investment, tax, or legal advice. Past performance does not guarantee future results.
+      </p>
     </footer>
   </main>
 
