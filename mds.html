@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CapitalView · Mobile First Cockpit</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --bg: #06080d;
+      --surface: #0e131d;
+      --surface-hover: #151c2a;
+      --border: rgba(255, 255, 255, 0.07);
+      --text: #f8fafc;
+      --muted: #8492a6;
+      --brass: #fbbf24;
+      --gain: #22c55e;
+      --blue: #38bdf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background-color: #030407;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .num { font-variant-numeric: tabular-nums; font-family: -apple-system, BlinkMacSystemFont, "SF Mono", Menlo, monospace; }
+    
+    .tap-active:active { transform: scale(0.985); }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#030407] text-[#f8fafc] min-h-screen antialiased selection:bg-sky-500/30">
+
+  <!-- ========================================================================= -->
+  <!-- MAIN APP CONTAINER (RESPONSIVE AUTO-ADAPTIVE: FULL-BLEED MOBILE / CENTERED DESKTOP) -->
+  <!-- ========================================================================= -->
+  <main id="appContainer" class="w-full max-w-5xl mx-auto min-h-screen bg-[#06080d] sm:border-x border-white/5 sm:shadow-2xl flex flex-col">
+
+    <!-- CLEAN BRAND HEADER -->
+    <header class="px-4 py-3 sm:px-6 sm:py-3.5 flex items-center justify-between border-b border-white/5 bg-[#0e131d]/80 backdrop-blur-md sticky top-0 z-30">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+        <h1 class="text-xs sm:text-sm font-bold text-white tracking-wide uppercase">CapitalView</h1>
+        <span class="text-[10px] text-slate-400 bg-white/5 border border-white/5 px-2 py-0.5 rounded-full font-mono hidden sm:inline-block">Portfolio Cockpit</span>
+      </div>
+      <div class="text-[11px] text-slate-400 font-mono">
+        14 Oct 2026
+      </div>
+    </header>
+
+    <!-- CLEAN, UNCLUTTERED HERO -->
+    <section class="p-5 pb-3 border-b border-white/5 bg-gradient-to-b from-[#0e1422] to-[#06080d]">
+      <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">Total Portfolio</div>
+      
+      <div class="flex items-baseline justify-between gap-2">
+        <div class="text-3xl font-extrabold text-white num tracking-tight">
+          ₹98,48,624
+        </div>
+        <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-500/15 text-rose-400 border-rose-500/25 font-bold text-xs num border">
+          ▼ ₹51,517 <span class="opacity-75">(-0.52%)</span>
+        </div>
+      </div>
+
+      <!-- 3 Clean Whitespace Metrics -->
+      <div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-white/5 text-center">
+        <div>
+          <div class="text-[10px] uppercase font-bold text-slate-400">True XIRR</div>
+          <div class="text-sm font-bold text-amber-400 num mt-0.5">7.3%</div>
+        </div>
+        <div>
+          <div class="text-[10px] uppercase font-bold text-slate-400">Total Profit</div>
+          <div class="text-sm font-bold text-emerald-400 num mt-0.5">+₹8.14L</div>
+        </div>
+        <div>
+          <div class="text-[10px] uppercase font-bold text-slate-400">Net Invested</div>
+          <div class="text-sm font-bold text-slate-200 num mt-0.5">₹90.35L</div>
+        </div>
+      </div>
+
+      <!-- SPACIOUS NAVIGATION PILLS (3 CLEAN TABS) -->
+      <nav class="flex items-center gap-2 mt-4 pt-1">
+        <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn flex-1 py-1.5 rounded-full text-xs font-bold bg-white text-black shadow-md transition-all text-center">
+          Overview
+        </button>
+        <button onclick="switchTab('funds')" id="tab-funds" class="tab-btn flex-1 py-1.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white bg-[#111723] border border-white/5 transition-all text-center">
+          My Funds (22)
+        </button>
+        <button onclick="switchTab('lookthrough')" id="tab-lookthrough" class="tab-btn flex-1 py-1.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white bg-[#111723] border border-white/5 transition-all text-center">
+          Holdings
+        </button>
+      </nav>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: OVERVIEW -->
+    <!-- ========================================================================= -->
+    <section id="panel-overview" class="p-4 sm:p-6 space-y-6">
+      
+      <!-- RESPONSIVE 2-COLUMN GRID (1-COL ON MOBILE, 2-COL ON LAPTOP) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
+        
+        <!-- 1. PERFORMANCE: TABBED ARCHITECTURE (ONE SHOWN AT A TIME) -->
+        <div>
+          <!-- Segmented Tab Switcher (2 Views: Yearly Return vs Rolling XIRR) -->
+          <div class="flex items-center justify-between bg-[#0e131d] border border-white/5 p-1 rounded-2xl mb-2.5">
+          <button id="btnPerfYearly" onclick="switchPerfTab('yearly')" class="flex-1 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-950 transition-all text-center">
+            📊 Yearly Return
+          </button>
+          <button id="btnPerfRolling" onclick="switchPerfTab('rolling')" class="flex-1 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all text-center">
+            📈 Rolling XIRR
+          </button>
+        </div>
+
+        <!-- VIEW 1: COMBINED YEARLY RETURN & NIFTY 50 SINGLE TABLE/VIEW -->
+        <div id="panel-perf-yearly" class="space-y-2">
+          <div class="px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Portfolio vs Nifty 50</h2>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl overflow-hidden shadow-sm">
+            <table class="w-full text-left text-xs num">
+              <thead class="bg-[#131b29] text-[10px] uppercase tracking-wider text-slate-400 border-b border-white/5">
+                <tr>
+                  <th class="py-2.5 px-3.5 font-semibold">Year</th>
+                  <th class="py-2.5 px-2 text-right font-semibold text-emerald-400">Portfolio</th>
+                  <th class="py-2.5 px-2 text-right font-semibold text-slate-300">Nifty 50</th>
+                  <th class="py-2.5 px-3.5 text-right font-semibold text-sky-400">Alpha</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-white/[0.02]">
+                  <td class="py-2.5 px-3.5 font-bold text-white">2022</td>
+                  <td class="py-2.5 px-2 text-right font-bold text-emerald-400">+7.5%</td>
+                  <td class="py-2.5 px-2 text-right text-slate-400">+4.3%</td>
+                  <td class="py-2.5 px-3.5 text-right font-bold text-sky-400">+3.2%</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02]">
+                  <td class="py-2.5 px-3.5 font-bold text-white">2023</td>
+                  <td class="py-2.5 px-2 text-right font-bold text-emerald-400">+23.6%</td>
+                  <td class="py-2.5 px-2 text-right text-slate-400">+20.0%</td>
+                  <td class="py-2.5 px-3.5 text-right font-bold text-sky-400">+3.6%</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02]">
+                  <td class="py-2.5 px-3.5 font-bold text-white">2024</td>
+                  <td class="py-2.5 px-2 text-right font-bold text-emerald-400">+10.5%</td>
+                  <td class="py-2.5 px-2 text-right text-slate-400">+8.8%</td>
+                  <td class="py-2.5 px-3.5 text-right font-bold text-sky-400">+1.7%</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02]">
+                  <td class="py-2.5 px-3.5 font-bold text-white">2025</td>
+                  <td class="py-2.5 px-2 text-right font-bold text-emerald-400">+16.2%</td>
+                  <td class="py-2.5 px-2 text-right text-slate-400">+10.5%</td>
+                  <td class="py-2.5 px-3.5 text-right font-bold text-sky-400">+5.7%</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02]">
+                  <td class="py-2.5 px-3.5 font-bold text-white">2026 <span class="text-[10px] text-slate-500 font-normal">YTD</span></td>
+                  <td class="py-2.5 px-2 text-right font-bold text-rose-400">-2.5%</td>
+                  <td class="py-2.5 px-2 text-right text-slate-400">-13.0%</td>
+                  <td class="py-2.5 px-3.5 text-right font-bold text-sky-400">+10.5%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 1C. TAB 3: ROLLING XIRR PLOT -->
+        <div id="panel-perf-rolling" class="space-y-2 hidden">
+          <div class="px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Rolling XIRR</h2>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-3.5 shadow-sm">
+            <div class="flex justify-between items-center text-xs mb-2">
+              <span class="text-[11px] text-slate-400 font-medium">Inception → Present</span>
+              <div class="flex items-center gap-2.5 text-[10px] text-slate-400">
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-400"></span> Portfolio</span>
+                <span class="flex items-center gap-1 font-mono text-slate-500">┄ Nifty 50</span>
+              </div>
+            </div>
+
+            <!-- SVG Chart -->
+            <div class="w-full h-36 relative">
+              <svg id="rollingXirrSvg" viewBox="0 0 360 145" class="w-full h-full overflow-visible">
+                <defs>
+                  <linearGradient id="rollingXirrGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.30" />
+                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Horizontal Grid Lines & Y Labels -->
+                <line x1="32" y1="26" x2="350" y2="26" stroke="rgba(255,255,255,0.05)" />
+                <text x="28" y="29" text-anchor="end" class="text-[9px] fill-slate-500 font-mono">25%</text>
+
+                <line x1="32" y1="55" x2="350" y2="55" stroke="rgba(255,255,255,0.05)" />
+                <text x="28" y="58" text-anchor="end" class="text-[9px] fill-slate-500 font-mono">20%</text>
+
+                <line x1="32" y1="84" x2="350" y2="84" stroke="rgba(255,255,255,0.05)" />
+                <text x="28" y="87" text-anchor="end" class="text-[9px] fill-slate-500 font-mono">15%</text>
+
+                <line x1="32" y1="113" x2="350" y2="113" stroke="rgba(255,255,255,0.05)" />
+                <text x="28" y="116" text-anchor="end" class="text-[9px] fill-slate-500 font-mono">10%</text>
+
+                <!-- Benchmark Nifty 50 Dashed Line -->
+                <path d="M 35.0 106.0 L 85.8 89.0 L 136.7 103.0 L 187.5 91.0 L 238.3 84.0 L 289.2 88.0 L 340.0 86.0" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3" />
+
+                <!-- Portfolio Gradient Area Fill -->
+                <path d="M 35.0 125 L 35.0 93.0 L 85.8 65.0 L 136.7 82.0 L 187.5 57.0 L 238.3 41.0 L 289.2 48.0 L 340.0 44.0 L 340.0 125 Z" fill="url(#rollingXirrGrad)" />
+
+                <!-- Portfolio Solid Line -->
+                <path d="M 35.0 93.0 L 85.8 65.0 L 136.7 82.0 L 187.5 57.0 L 238.3 41.0 L 289.2 48.0 L 340.0 44.0" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+
+                <!-- X-Axis Year Labels -->
+                <text x="35.0" y="138" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'20</text>
+                <text x="85.8" y="138" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'21</text>
+                <text x="136.7" y="138" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'22</text>
+                <text x="187.5" y="138" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'23</text>
+                <text x="238.3" y="138" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'24</text>
+                <text x="289.2" y="138" text-anchor="middle" class="text-[10px] fill-slate-400 font-mono">'25</text>
+                <text x="340.0" y="138" text-anchor="middle" class="text-[10px] fill-white font-bold font-mono">'26</text>
+
+                <!-- Active Selection Pulse Ring -->
+                <circle id="rxActiveDot" cx="340.0" cy="44.0" r="7" fill="none" stroke="#38bdf8" stroke-width="2" class="animate-pulse" />
+
+                <!-- Interactive Data Points -->
+                <circle cx="35.0" cy="93.0" r="4" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2020', 13.5, 11.2, 2.3, 35.0, 93.0)" />
+                <circle cx="85.8" cy="65.0" r="4" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2021', 18.2, 14.1, 4.1, 85.8, 65.0)" />
+                <circle cx="136.7" cy="82.0" r="4" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2022', 15.4, 11.8, 3.6, 136.7, 82.0)" />
+                <circle cx="187.5" cy="57.0" r="4" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2023', 19.6, 13.9, 5.7, 187.5, 57.0)" />
+                <circle cx="238.3" cy="41.0" r="4" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2024', 22.4, 15.1, 7.3, 238.3, 41.0)" />
+                <circle cx="289.2" cy="48.0" r="4" fill="#38bdf8" stroke="#06080d" stroke-width="1.5" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2025', 21.2, 14.4, 6.8, 289.2, 48.0)" />
+                <circle cx="340.0" cy="44.0" r="4.5" fill="#ffffff" stroke="#38bdf8" stroke-width="2" class="cursor-pointer hover:r-5 transition-all" onclick="selectRollingPoint('2026 YTD', 21.8, 14.6, 7.2, 340.0, 44.0)" />
+              </svg>
+            </div>
+
+            <!-- Tap-to-Inspect Detail Strip -->
+            <div id="rollingXirrDetail" class="mt-3 p-2.5 bg-[#131b29] rounded-xl flex items-center justify-between text-xs border border-white/5">
+              <span id="rxYear" class="font-bold text-white whitespace-nowrap">2026 YTD</span>
+              <div class="flex items-center gap-2.5 text-right num">
+                <div>
+                  <span class="text-[10px] text-slate-400 mr-0.5">Port:</span>
+                  <span id="rxPf" class="font-bold text-emerald-400">+21.8%</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 mr-0.5">Nifty:</span>
+                  <span id="rxBmk" class="text-slate-400">+14.6%</span>
+                </div>
+                <span id="rxAlpha" class="text-[10px] text-sky-400 font-semibold bg-sky-500/10 px-1.5 py-0.5 rounded font-mono whitespace-nowrap">+7.2% Alpha</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 2. PURCHASE HISTORY (CUMULATIVE PURCHASES BY MONTH) -->
+      <div>
+        <div class="flex justify-between items-center mb-2 px-1">
+          <div>
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Purchase History</h2>
+            <p class="text-[11px] text-slate-500">Cumulative purchases by month</p>
+          </div>
+          
+          <!-- Fund Dropdown with Overall default and all funds kept -->
+          <select id="purchaseFundSelect" onchange="renderMonthlyPurchases(this.value)" class="bg-[#111723] text-xs font-semibold text-white border border-white/10 rounded-xl px-2.5 py-1.5 focus:outline-hidden">
+            <option value="OVERALL" selected>Overall (All Funds)</option>
+            <option value="118989">HDFC Mid-Cap Opp.</option>
+            <option value="122639">Parag Parikh Flexi Cap</option>
+            <option value="119771">Kotak Equity Arbitrage</option>
+            <option value="119788">SBI Gold Fund</option>
+            <option value="148745">Kotak Nifty Next 50</option>
+            <option value="120334">ICICI Multi-Asset</option>
+          </select>
+        </div>
+
+        <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-3.5 shadow-sm">
+          <div class="flex justify-between items-center text-xs mb-2">
+            <span id="purchFundTitle" class="font-semibold text-white">Monthly Inflows &amp; Cum. Capital</span>
+            <span id="purchTotalBadge" class="text-[11px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full">Net Invested: ₹74.50L</span>
+          </div>
+
+          <!-- Dynamic SVG Monthly Chart -->
+          <div class="w-full h-36 relative">
+            <svg id="monthlyPurchasesSvg" viewBox="0 0 360 145" class="w-full h-full overflow-visible"></svg>
+          </div>
+
+          <!-- Interactive Month Inspector Strip -->
+          <div id="monthlyPurchasesDetail" class="mt-3 p-2.5 bg-[#131b29] rounded-xl flex items-center justify-between text-xs border border-white/5">
+            <div class="flex items-center gap-1.5">
+              <span id="pMonthDate" class="font-bold text-white">Oct 2026</span>
+              <span id="pInflowType" class="text-[10px] text-amber-300 font-semibold bg-amber-400/10 px-1.5 py-0.5 rounded">SIP</span>
+            </div>
+            <div class="flex items-center gap-3 text-right num">
+              <div>
+                <span class="text-[10px] text-slate-400 mr-1">Added:</span>
+                <span id="pMonthlyAdd" class="font-bold text-sky-400">+₹25k</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 mr-1">Cum Invested:</span>
+                <span id="pCumInvested" class="font-bold text-emerald-400">₹74.50L</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: MY FUNDS -->
+    <!-- ========================================================================= -->
+    <section id="panel-funds" class="p-4 space-y-2 hidden">
+      <div class="flex justify-between items-baseline mb-2 px-1">
+        <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">My Funds (22)</h2>
+        <span class="text-xs text-slate-500">Tap to inspect purchases</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
+      <!-- Fund Row: Kotak Arbitrage -->
+      <div onclick="openFundDetail('Kotak Arbitrage', '119771', '₹10.74L', '10.9%', '6.6%', '₹10.00L', 'Equity: Liquid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Kotak Arbitrage</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Liquid</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">6.6% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹10.74L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.74L (+7.4%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: SBI Gold -->
+      <div onclick="openFundDetail('SBI Gold', '119788', '₹9.64L', '9.8%', '17.5%', '₹8.55L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>SBI Gold</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Commo: Gold/Silver</span>
+            <span>•</span>
+            <span class="text-emerald-400 font-semibold num">17.5% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹9.64L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹1.09L (+12.7%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Franklin US Opportunities -->
+      <div onclick="openFundDetail('Franklin US Opportunities', '118551', '₹7.22L', '7.3%', '15.9%', '₹6.35L', 'Equity: US')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Franklin US Opportunities</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: US</span>
+            <span>•</span>
+            <span class="text-emerald-400 font-semibold num">15.9% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹7.22L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.87L (+13.6%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: ICICI Prudential Multi-Asset -->
+      <div onclick="openFundDetail('ICICI Prudential Multi-Asset', '120334', '₹6.95L', '7.1%', '2.0%', '₹6.85L', 'Equity: Hybrid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>ICICI Prudential Multi-Asset</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Hybrid</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">2.0% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹6.95L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.10L (+1.5%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Kotak Nifty Next 50 -->
+      <div onclick="openFundDetail('Kotak Nifty Next 50', '148745', '₹4.96L', '5.0%', '4.1%', '₹4.80L', 'Equity: Largecap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Kotak Nifty Next 50</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Largecap</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">4.1% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.96L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.16L (+3.3%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: DSP Nifty 50 Equal Weight -->
+      <div onclick="openFundDetail('DSP Nifty 50 Equal Weight', '141877', '₹4.34L', '4.4%', '0.8%', '₹4.30L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>DSP Nifty 50 Equal Weight</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: UltraLarge</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">0.8% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.34L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.04L (+0.9%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Axis Global Equity Alpha -->
+      <div onclick="openFundDetail('Axis Global Equity Alpha', '148485', '₹4.18L', '4.2%', '16.1%', '₹3.90L', 'Equity: Developed')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Axis Global Equity Alpha</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Developed</span>
+            <span>•</span>
+            <span class="text-emerald-400 font-semibold num">16.1% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.18L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.28L (+7.2%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: HDFC Mid-Cap -->
+      <div onclick="openFundDetail('HDFC Mid-Cap', '118989', '₹4.13L', '4.2%', '10.6%', '₹3.40L', 'Equity: Midcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>HDFC Mid-Cap</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Midcap</span>
+            <span>•</span>
+            <span class="text-amber-400 font-semibold num">10.6% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.13L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.73L (+21.5%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Nippon India Multi Cap -->
+      <div onclick="openFundDetail('Nippon India Multi Cap', '118650', '₹4.01L', '4.1%', '-1.1%', '₹4.05L', 'Equity: Flexi/Multi')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Nippon India Multi Cap</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Flexi/Multi</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">-1.1% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.01L</div>
+          <div class="text-xs text-rose-400 font-semibold mt-0.5">₹0.04L (-1.0%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: UTI Nifty 500 Value 50 -->
+      <div onclick="openFundDetail('UTI Nifty 500 Value 50', '151739', '₹3.99L', '4.1%', '2.5%', '₹3.92L', 'Equity: Value')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>UTI Nifty 500 Value 50</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Value</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">2.5% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.99L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.07L (+1.9%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Parag Parikh Flexi Cap -->
+      <div onclick="openFundDetail('Parag Parikh Flexi Cap', '122639', '₹3.96L', '4.0%', '0.4%', '₹3.95L', 'Equity: Flexi/Multi')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Parag Parikh Flexi Cap</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Flexi/Multi</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">0.4% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.96L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.01L (+0.3%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Bandhan Nifty 50 - Regular -->
+      <div onclick="openFundDetail('Bandhan Nifty 50 - Regular', '118482', '₹3.94L', '4.0%', '11.4%', '₹1.63L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Bandhan Nifty 50 - Regular</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: UltraLarge</span>
+            <span>•</span>
+            <span class="text-amber-400 font-semibold num">11.4% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.94L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹2.31L (+142.0%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: DSP Nifty Top 10 Equal Weight -->
+      <div onclick="openFundDetail('DSP Nifty Top 10 Equal Weight', '152814', '₹3.91L', '4.0%', '-8.7%', '₹4.32L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>DSP Nifty Top 10 Equal Weight</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: UltraLarge</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">-8.7% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.91L</div>
+          <div class="text-xs text-rose-400 font-semibold mt-0.5">₹0.41L (-9.5%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Bandhan Nifty 50 -->
+      <div onclick="openFundDetail('Bandhan Nifty 50', '118482', '₹3.89L', '4.0%', '0.5%', '₹3.85L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Bandhan Nifty 50</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: UltraLarge</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">0.5% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.89L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.04L (+1.1%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Kotak Global Emerging -->
+      <div onclick="openFundDetail('Kotak Global Emerging', '119779', '₹3.66L', '3.7%', '8.1%', '₹3.55L', 'Equity: Emerging')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Kotak Global Emerging</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Emerging</span>
+            <span>•</span>
+            <span class="text-amber-400 font-semibold num">8.1% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.66L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.11L (+3.1%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: SBI Silver -->
+      <div onclick="openFundDetail('SBI Silver', '152735', '₹3.58L', '3.6%', '49.0%', '₹2.15L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-emerald-500/20 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>SBI Silver</span>
+            <span class='w-1.5 h-1.5 rounded-full bg-emerald-400'></span>
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Commo: Gold/Silver</span>
+            <span>•</span>
+            <span class="text-emerald-400 font-semibold num">49.0% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.58L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹1.43L (+66.6%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Motilal Oswal Nifty Midcap 150 -->
+      <div onclick="openFundDetail('Motilal Oswal Nifty Midcap 150', '147622', '₹3.52L', '3.6%', '2.2%', '₹3.45L', 'Equity: Midcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Motilal Oswal Nifty Midcap 150</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Midcap</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">2.2% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.52L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.07L (+2.1%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: HDFC Small Cap -->
+      <div onclick="openFundDetail('HDFC Small Cap', '130503', '₹3.33L', '3.4%', '5.1%', '₹3.03L', 'Equity: Smallcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>HDFC Small Cap</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Smallcap</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">5.1% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹3.33L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.30L (+9.8%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: HDFC Balanced Advantage -->
+      <div onclick="openFundDetail('HDFC Balanced Advantage', '118968', '₹2.97L', '3.0%', '0.6%', '₹2.95L', 'Equity: Hybrid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>HDFC Balanced Advantage</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Hybrid</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">0.6% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹2.97L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.02L (+0.7%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Motilal Oswal Nifty Smallcap 250 -->
+      <div onclick="openFundDetail('Motilal Oswal Nifty Smallcap 250', '147623', '₹2.38L', '2.4%', '3.7%', '₹2.25L', 'Equity: Smallcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Motilal Oswal Nifty Smallcap 250</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Smallcap</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">3.7% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹2.38L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.13L (+5.6%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: SBI Contra -->
+      <div onclick="openFundDetail('SBI Contra', '119835', '₹2.05L', '2.1%', '-2.5%', '₹2.10L', 'Equity: Value')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>SBI Contra</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Value</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">-2.5% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹2.05L</div>
+          <div class="text-xs text-rose-400 font-semibold mt-0.5">₹0.05L (-2.4%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: HDFC Silver -->
+      <div onclick="openFundDetail('HDFC Silver', '150141', '₹1.14L', '1.2%', '13.6%', '₹1.00L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>HDFC Silver</span>
+            
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Commo: Gold/Silver</span>
+            <span>•</span>
+            <span class="text-amber-400 font-semibold num">13.6% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹1.14L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.14L (+13.6%)</div>
+        </div>
+      </div>
+      </div>
+      <div class="text-center pt-3 pb-1">
+        <span class="text-xs text-slate-500">Showing all 22 portfolio funds</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: LOOKTHROUGH (UNIFIED MACRO DRIFT, STOCK OVERLAP & SCHEME DRILLDOWN) -->
+    <!-- ========================================================================= -->
+    <section id="panel-lookthrough" class="p-4 space-y-4 hidden">
+      
+      <!-- 3-WAY SUB-TAB TOGGLE BAR -->
+      <div class="flex items-center justify-between bg-[#0e131d] border border-white/5 p-1 rounded-2xl">
+        <button id="btnLt-macro" onclick="switchLookthroughSubTab('macro')" class="flex-1 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold bg-white text-slate-950 transition-all text-center">
+          🎯 Allocation
+        </button>
+        <button id="btnLt-stocks" onclick="switchLookthroughSubTab('stocks')" class="flex-1 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold text-slate-400 hover:text-white transition-all text-center">
+          🔍 All Stocks
+        </button>
+        <button id="btnLt-scheme" onclick="switchLookthroughSubTab('scheme')" class="flex-1 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold text-slate-400 hover:text-white transition-all text-center">
+          🏛️ By Scheme
+        </button>
+      </div>
+
+      <!-- ===================================================================== -->
+      <!-- SUB-VIEW 1: MACRO DRIFT & SECTORS -->
+      <!-- ===================================================================== -->
+      <div id="ltView-macro" class="space-y-4">
+        
+        <!-- 1. ASSET ALLOCATION & DRIFT -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2 px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Asset Allocation &amp; Drift</h2>
+            <span class="text-xs font-mono text-emerald-400 font-semibold">₹98.42L Total</span>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 shadow-sm">
+            <div class="w-full h-3 bg-slate-800 rounded-full flex overflow-hidden mb-3">
+              <div class="bg-sky-400 h-full" style="width: 68.5%" title="Core Equity: 68.5%"></div>
+              <div class="bg-emerald-400 h-full" style="width: 12.8%" title="Cash & Arb: 12.8%"></div>
+              <div class="bg-amber-400 h-full" style="width: 11.2%" title="Gold & Silver: 11.2%"></div>
+              <div class="bg-purple-400 h-full" style="width: 7.5%" title="Global: 7.5%"></div>
+            </div>
+
+            <!-- 2x2 Clean Drift Cards -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <!-- Core Equity -->
+              <div class="bg-[#131b29] p-2.5 rounded-xl border border-white/5">
+                <div class="flex items-center justify-between text-[11px] mb-1">
+                  <span class="font-bold text-sky-400">Core Equity</span>
+                  <span class="text-[10px] font-mono text-rose-400 font-semibold bg-rose-500/10 px-1.5 rounded">+3.5% Over</span>
+                </div>
+                <div class="text-sm font-extrabold text-white num">68.5% <span class="text-[10px] text-slate-400 font-normal">/ 65% tgt</span></div>
+                <div class="text-[10px] text-slate-400 mt-0.5">₹67.42 Lakh</div>
+              </div>
+
+              <!-- Cash & Arb -->
+              <div class="bg-[#131b29] p-2.5 rounded-xl border border-white/5">
+                <div class="flex items-center justify-between text-[11px] mb-1">
+                  <span class="font-bold text-emerald-400">Liquid / Arb</span>
+                  <span class="text-[10px] font-mono text-amber-400 font-semibold bg-amber-500/10 px-1.5 rounded">-2.2% Under</span>
+                </div>
+                <div class="text-sm font-extrabold text-white num">12.8% <span class="text-[10px] text-slate-400 font-normal">/ 15% tgt</span></div>
+                <div class="text-[10px] text-slate-400 mt-0.5">₹12.60 Lakh</div>
+              </div>
+
+              <!-- Gold & Silver -->
+              <div class="bg-[#131b29] p-2.5 rounded-xl border border-white/5">
+                <div class="flex items-center justify-between text-[11px] mb-1">
+                  <span class="font-bold text-amber-400">Gold &amp; Silver</span>
+                  <span class="text-[10px] font-mono text-emerald-400 font-semibold bg-emerald-500/10 px-1.5 rounded">+1.2% Balanced</span>
+                </div>
+                <div class="text-sm font-extrabold text-white num">11.2% <span class="text-[10px] text-slate-400 font-normal">/ 10% tgt</span></div>
+                <div class="text-[10px] text-slate-400 mt-0.5">₹11.02 Lakh</div>
+              </div>
+
+              <!-- Global Equity -->
+              <div class="bg-[#131b29] p-2.5 rounded-xl border border-white/5">
+                <div class="flex items-center justify-between text-[11px] mb-1">
+                  <span class="font-bold text-purple-400">Global FoF</span>
+                  <span class="text-[10px] font-mono text-sky-400 font-semibold bg-sky-500/10 px-1.5 rounded">-2.5% Under</span>
+                </div>
+                <div class="text-sm font-extrabold text-white num">7.5% <span class="text-[10px] text-slate-400 font-normal">/ 10% tgt</span></div>
+                <div class="text-[10px] text-slate-400 mt-0.5">₹7.38 Lakh</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. EQUITY SECTOR WEIGHTS (CLEAN, SCANNABLE BARS) -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2 px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Equity Sectors</h2>
+            <span class="text-xs text-sky-400 font-mono font-semibold">₹67.4L Equity</span>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3 shadow-sm text-xs">
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                  <span class="font-bold text-white">Financial Services</span>
+                </div>
+                <span class="font-extrabold text-white num">31.4% <span class="text-slate-400 font-normal text-[11px]">(₹21.2L)</span></span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-400 rounded-full" style="width: 31.4%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span class="font-bold text-white">Technology &amp; Software</span>
+                </div>
+                <span class="font-extrabold text-white num">14.2% <span class="text-slate-400 font-normal text-[11px]">(₹9.6L)</span></span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-400 rounded-full" style="width: 14.2%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                  <span class="font-bold text-white">Energy &amp; Power</span>
+                </div>
+                <span class="font-extrabold text-white num">9.8% <span class="text-slate-400 font-normal text-[11px]">(₹6.6L)</span></span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-400 rounded-full" style="width: 9.8%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                  <span class="font-bold text-white">Engineering &amp; Capital Goods</span>
+                </div>
+                <span class="font-extrabold text-white num">8.4% <span class="text-slate-400 font-normal text-[11px]">(₹5.7L)</span></span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-purple-400 rounded-full" style="width: 8.4%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+                  <span class="font-bold text-white">Healthcare &amp; Pharma</span>
+                </div>
+                <span class="font-extrabold text-white num">7.2% <span class="text-slate-400 font-normal text-[11px]">(₹4.9L)</span></span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-rose-400 rounded-full" style="width: 7.2%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                  <span class="font-bold text-white">Consumer FMCG &amp; Retail</span>
+                </div>
+                <span class="font-extrabold text-white num">6.8% <span class="text-slate-400 font-normal text-[11px]">(₹4.6L)</span></span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-sky-400 rounded-full" style="width: 6.8%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. STRATEGY BUCKETS (BY FUND) -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2 px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Strategy Buckets</h2>
+            <span class="text-xs text-slate-400 font-mono">22 Funds</span>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3.5 shadow-sm text-xs">
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="font-bold text-white">Large &amp; Flexi Cap Core</span>
+                <span class="font-bold text-emerald-400 num">27.2% (₹26.8L)</span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-400 rounded-full" style="width: 27.2%"></div>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-1">Parag Parikh Flexi (10.7%), Kotak Next 50 (7.3%), DSP Top 10 (4.8%), Bandhan (4.4%)</div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="font-bold text-white">Mid &amp; Small Cap Active</span>
+                <span class="font-bold text-sky-400 num">26.6% (₹26.2L)</span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-sky-400 rounded-full" style="width: 26.6%"></div>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-1">HDFC Mid-Cap (12.0%), MOswal Midcap 150 (7.8%), HDFC Small (6.8%)</div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="font-bold text-white">Defensive Arbitrage &amp; Cash</span>
+                <span class="font-bold text-amber-400 num">12.8% (₹12.6L)</span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-400 rounded-full" style="width: 12.8%"></div>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-1">Kotak Equity Arbitrage (12.7%) · Zero beta liquidity buffer</div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="font-bold text-white">Multi-Asset &amp; Hybrid</span>
+                <span class="font-bold text-purple-400 num">14.7% (₹14.5L)</span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-purple-400 rounded-full" style="width: 14.7%"></div>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-1">ICICI Prudential Multi-Asset (8.2%), HDFC Balanced Advantage (6.5%)</div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="font-bold text-white">Precious Metals (Gold / Silver)</span>
+                <span class="font-bold text-yellow-400 num">11.2% (₹11.0L)</span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-yellow-400 rounded-full" style="width: 11.2%"></div>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-1">SBI Gold Fund (9.1%), SBI Silver (2.1%)</div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="font-bold text-white">Global Equity FoF</span>
+                <span class="font-bold text-rose-400 num">7.5% (₹7.4L)</span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-rose-400 rounded-full" style="width: 7.5%"></div>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-1">Franklin US Opp (4.2%), Kotak Global EM (3.3%)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===================================================================== -->
+      <!-- SUB-VIEW 2: CONSOLIDATED STOCK OVERLAP & MARKET-CAP TIERS -->
+      <!-- ===================================================================== -->
+      <div id="ltView-stocks" class="space-y-4 hidden">
+        
+        <!-- Market Cap Tiers & Concentration Header -->
+        <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 shadow-sm text-xs">
+          <div class="flex justify-between items-baseline mb-2">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Equity Tiers</span>
+            <div class="flex items-center gap-2 text-xs font-mono">
+              <span class="text-slate-400">Top 10: <b class="text-white font-semibold">28.4%</b></span>
+              <span class="text-slate-600">·</span>
+              <span class="text-emerald-400 font-bold">248 Stocks</span>
+            </div>
+          </div>
+
+          <div class="w-full h-2.5 bg-slate-800 rounded-full flex overflow-hidden mb-2">
+            <div class="bg-emerald-400 h-full" style="width: 54.2%" title="Large Cap: 54.2%"></div>
+            <div class="bg-amber-400 h-full" style="width: 28.6%" title="Mid Cap: 28.6%"></div>
+            <div class="bg-purple-400 h-full" style="width: 17.2%" title="Small Cap: 17.2%"></div>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] text-slate-300 font-mono pt-1">
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Large: <b>54.2%</b></span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Mid: <b>28.6%</b></span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Small: <b>17.2%</b></span>
+          </div>
+        </div>
+
+        <!-- Live Stock Search Bar -->
+        <div class="relative">
+          <input type="text" id="ltStockSearch" placeholder="Search company, sector or overlap (e.g. HDFC, IT)..." oninput="filterLtStocks(this.value)" class="w-full bg-[#0e131d] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-sky-400 shadow-sm" />
+        </div>
+
+        <!-- Master Stock Table with Overlap Tags -->
+        <div class="bg-[#0e131d] border border-white/5 rounded-2xl overflow-hidden shadow-sm">
+          <div class="bg-[#131b29] px-3.5 py-2 text-[10px] uppercase font-bold tracking-wider text-slate-400 flex justify-between border-b border-white/5">
+            <span>Company / Sector</span>
+            <span>Weight · Value · Overlap</span>
+          </div>
+
+          <div id="ltStocksMasterList" class="divide-y divide-white/5 text-xs">
+            <!-- Dynamically populated rows via renderLtStocks() -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===================================================================== -->
+      <!-- SUB-VIEW 3: SCHEME DRILLDOWN -->
+      <!-- ===================================================================== -->
+      <div id="ltView-scheme" class="space-y-4 hidden">
+        
+        <div>
+          <div class="flex justify-between items-baseline mb-2 px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-sky-400">Scheme Holdings</h2>
+            <span id="schHoldingsCount" class="text-xs font-mono font-bold text-emerald-400">68 Stocks</span>
+          </div>
+
+          <!-- Scheme Selector Bar -->
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 mb-3 shadow-sm">
+            <label for="schemeSelect" class="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Select Scheme to Inspect:</label>
+            <select id="schemeSelect" onchange="onSchemeSelectChange(this.value)" class="w-full bg-[#131b29] text-xs font-bold text-white border border-white/10 rounded-xl px-3 py-2.5 focus:outline-hidden">
+              <option value="119771">Kotak Arbitrage (₹10.74L)</option>
+              <option value="119788">SBI Gold (₹9.64L)</option>
+              <option value="118551">Franklin US Opportunities (₹7.22L)</option>
+              <option value="120334">ICICI Prudential Multi-Asset (₹6.95L)</option>
+              <option value="148745">Kotak Nifty Next 50 (₹4.96L)</option>
+              <option value="141877">DSP Nifty 50 Equal Weight (₹4.34L)</option>
+              <option value="148485">Axis Global Equity Alpha (₹4.18L)</option>
+              <option value="118989">HDFC Mid-Cap (₹4.13L)</option>
+              <option value="118650">Nippon India Multi Cap (₹4.01L)</option>
+              <option value="151739">UTI Nifty 500 Value 50 (₹3.99L)</option>
+              <option value="122639">Parag Parikh Flexi Cap (₹3.96L)</option>
+              <option value="118482">Bandhan Nifty 50 - Regular (₹3.94L)</option>
+              <option value="152814">DSP Nifty Top 10 Equal Weight (₹3.91L)</option>
+              <option value="118482">Bandhan Nifty 50 (₹3.89L)</option>
+              <option value="119779">Kotak Global Emerging (₹3.66L)</option>
+              <option value="152735">SBI Silver (₹3.58L)</option>
+              <option value="147622">Motilal Oswal Nifty Midcap 150 (₹3.52L)</option>
+              <option value="130503">HDFC Small Cap (₹3.33L)</option>
+              <option value="118968">HDFC Balanced Advantage (₹2.97L)</option>
+              <option value="147623">Motilal Oswal Nifty Smallcap 250 (₹2.38L)</option>
+              <option value="119835">SBI Contra (₹2.05L)</option>
+              <option value="150141">HDFC Silver (₹1.14L)</option>
+            </select>
+
+            <!-- Fund Snapshot Strip -->
+            <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/5 text-center text-xs">
+              <div>
+                <div class="text-[10px] text-slate-400 uppercase">Weight</div>
+                <div id="schWeightVal" class="font-bold text-white num mt-0.5">12.0%</div>
+              </div>
+              <div>
+                <div class="text-[10px] text-slate-400 uppercase">Port Value</div>
+                <div id="schPortVal" class="font-bold text-emerald-400 num mt-0.5">₹11.80L</div>
+              </div>
+              <div>
+                <div class="text-[10px] text-slate-400 uppercase">Top 10 Weight</div>
+                <div id="schTop10Val" class="font-bold text-amber-400 num mt-0.5">32.8%</div>
+              </div>
+            </div>
+
+            <!-- DUAL BREAKDOWNS -->
+            <div class="space-y-3 mt-3 pt-3 border-t border-white/5 text-xs">
+              <!-- 1. ASSET CLASS BREAKDOWN -->
+              <div>
+                <div class="text-[11px] font-semibold text-slate-300 mb-1.5">Asset Breakdown</div>
+                <div class="w-full h-2 bg-slate-800 rounded-full flex overflow-hidden mb-1.5" id="schAssetBar"></div>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-slate-400 font-mono" id="schAssetChips"></div>
+              </div>
+
+              <!-- 2. EQUITY TIERS BREAKDOWN -->
+              <div id="schTierBox">
+                <div class="text-[11px] font-semibold text-slate-300 mb-1.5">Equity Tiers</div>
+                <div class="w-full h-2 bg-slate-800 rounded-full flex overflow-hidden mb-1.5" id="schTierBar"></div>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-slate-400 font-mono" id="schTierChips"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Search within Selected Scheme -->
+          <div class="relative mb-3">
+            <input type="text" id="schemeStockSearch" placeholder="Search stock within this fund..." oninput="filterSchemeStocks(this.value)" class="w-full bg-[#0e131d] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-sky-400" />
+          </div>
+
+          <!-- Clean Holdings List -->
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl overflow-hidden shadow-sm">
+            <div class="bg-[#131b29] px-3.5 py-2 text-[10px] uppercase font-bold tracking-wider text-slate-400 flex justify-between border-b border-white/5">
+              <span>Company / Sector</span>
+              <span>Weight · Value · Overlap</span>
+            </div>
+
+            <div id="schemeHoldingsList" class="divide-y divide-white/5 text-xs">
+              <!-- Dynamically populated rows via renderSchemeHoldings() -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TASTEFUL FOOTER -->
+    <footer class="mt-auto px-4 py-6 sm:px-6 border-t border-white/5 text-center text-xs text-slate-500 font-mono">
+      CapitalView · Standalone Dashboard · As of 14 Oct 2026
+    </footer>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- COMPACT FUND DETAIL MODAL (PLOT DROPPED, CLEAN RECENT 5 PURCHASES TABLE) -->
+  <!-- ========================================================================= -->
+  <div id="fundModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4">
+    <div class="w-[92%] max-w-[340px] bg-[#0e131d] border border-white/10 rounded-3xl p-4 shadow-2xl flex flex-col max-h-[85vh]">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-start pb-2.5 border-b border-white/5">
+        <div>
+          <h3 id="fModalTitle" class="text-sm font-bold text-white">HDFC Mid-Cap Opp.</h3>
+          <p id="fModalSub" class="text-[11px] text-slate-400 mt-0.5">India Core · Mid Cap Active</p>
+        </div>
+        <button onclick="closeFundDetail()" class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs font-bold">✕</button>
+      </div>
+
+      <div class="py-2.5 space-y-2.5 flex-1 overflow-y-auto">
+        <!-- 3 Key Stats -->
+        <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
+          <div class="bg-[#131b29] p-2 rounded-xl">
+            <div class="text-[9px] text-slate-400 uppercase font-bold">Value</div>
+            <div id="fModalValue" class="text-xs font-extrabold text-white num mt-0.5">₹11.80L</div>
+          </div>
+          <div class="bg-[#131b29] p-2 rounded-xl">
+            <div class="text-[9px] text-slate-400 uppercase font-bold">XIRR</div>
+            <div id="fModalXirr" class="text-xs font-extrabold text-emerald-400 num mt-0.5">26.8%</div>
+          </div>
+          <div class="bg-[#131b29] p-2 rounded-xl">
+            <div class="text-[9px] text-slate-400 uppercase font-bold">Invested</div>
+            <div id="fModalCost" class="text-xs font-extrabold text-slate-300 num mt-0.5">₹8.40L</div>
+          </div>
+        </div>
+
+        <!-- RECENT 5 PURCHASES TABLE -->
+        <div>
+          <div class="flex justify-between items-baseline mb-1 px-0.5">
+            <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Recent 5 Purchases</div>
+            <span class="text-[9px] text-slate-500 font-mono">Ledger</span>
+          </div>
+
+          <div class="bg-[#131b29] rounded-xl overflow-hidden border border-white/5">
+            <table class="w-full text-left text-[10px] num">
+              <thead class="bg-[#182234] text-[9px] uppercase text-slate-400 border-b border-white/5">
+                <tr>
+                  <th class="py-1.5 px-2 font-semibold">Date</th>
+                  <th class="py-1.5 px-1 font-semibold">Type</th>
+                  <th class="py-1.5 px-1.5 text-right font-semibold">NAV</th>
+                  <th class="py-1.5 px-1.5 text-right font-semibold">Units</th>
+                  <th class="py-1.5 px-2 text-right font-semibold">Amount</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5" id="fModalPurchasesList">
+                <!-- Dynamically populated 5 rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 1-Tap Shortcut to Holdings -->
+        <button onclick="jumpToSchemeHoldingsFromModal()" class="w-full py-2 px-2.5 rounded-xl bg-sky-500/10 border border-sky-500/25 text-sky-400 font-bold text-xs flex items-center justify-between hover:bg-sky-500/20 transition-all">
+          <span>📑 View Scheme Holdings &amp; Stocks</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- Close Button -->
+      <button onclick="closeFundDetail()" class="w-full py-2 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 mt-1">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT CONTROLLERS -->
+  <!-- ========================================================================= -->
+  <script>
+    function switchTab(tabId) {
+      const panels = ['overview', 'funds', 'lookthrough'];
+      panels.forEach(p => {
+        const el = document.getElementById('panel-' + p);
+        const btn = document.getElementById('tab-' + p);
+        if (p === tabId) {
+          if (el) el.classList.remove('hidden');
+          if (btn) {
+            btn.className = 'tab-btn flex-1 py-1.5 rounded-full text-xs font-bold bg-white text-black shadow-md transition-all text-center';
+          }
+        } else {
+          if (el) el.classList.add('hidden');
+          if (btn) {
+            btn.className = 'tab-btn flex-1 py-1.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white bg-[#111723] border border-white/5 transition-all text-center';
+          }
+        }
+      });
+      if (tabId === 'lookthrough') {
+        renderLtStocks();
+      }
+    }
+
+    let currentLtSubTab = 'macro';
+    function switchLookthroughSubTab(subTab) {
+      currentLtSubTab = subTab;
+      const subTabs = ['macro', 'stocks', 'scheme'];
+      subTabs.forEach(s => {
+        const viewEl = document.getElementById('ltView-' + s);
+        const btnEl = document.getElementById('btnLt-' + s);
+        if (s === subTab) {
+          if (viewEl) viewEl.classList.remove('hidden');
+          if (btnEl) {
+            btnEl.className = 'flex-1 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold bg-white text-slate-950 transition-all text-center';
+          }
+        } else {
+          if (viewEl) viewEl.classList.add('hidden');
+          if (btnEl) {
+            btnEl.className = 'flex-1 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold text-slate-400 hover:text-white transition-all text-center';
+          }
+        }
+      });
+      if (subTab === 'stocks') {
+        renderLtStocks();
+      } else if (subTab === 'scheme') {
+        const sel = document.getElementById('schemeSelect');
+        const code = sel ? sel.value : '118989';
+        renderSchemeHoldings(code);
+      }
+    }
+
+
+
+    function switchPerfTab(tabId) {
+      const tabs = ['yearly', 'rolling'];
+      tabs.forEach(t => {
+        const panel = document.getElementById('panel-perf-' + t);
+        const btn = document.getElementById('btnPerf' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (t === tabId) {
+          if (panel) panel.classList.remove('hidden');
+          if (btn) {
+            btn.className = 'flex-1 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-950 transition-all text-center';
+          }
+        } else {
+          if (panel) panel.classList.add('hidden');
+          if (btn) {
+            btn.className = 'flex-1 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all text-center';
+          }
+        }
+      });
+    }
+
+    // Monthly Cumulative Purchases Database
+    const MONTHLY_PURCHASES_DB = {"OVERALL":{"name":"Overall (All Funds)","totalInvested":"\u20b990.35L","months":["Nov 25","Dec 25","Jan 26","Feb 26","Mar 26","Apr 26","May 26","Jun 26","Jul 26","Aug 26","Sep 26","Oct 26"],"monthly":["\u20b91.9L","\u20b92.8L","\u20b92.3L","\u20b91.1L","\u20b94.6L","\u20b95.8L","\u20b97.2L","\u20b92.6L","\u20b990k","\u20b965k","\u20b99.4L","\u20b93.0L"],"monthlyVals":[190,275,229,115,460,582,725,265,90,65,940,300],"cumVals":[49.89,52.64,54.93,56.08,60.68,66.5,73.75,76.4,77.3,77.95,87.35,90.35],"type":["SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip","SIP + Dip"]}};
+
+    function renderMonthlyPurchases(fundKey) {
+      const d = MONTHLY_PURCHASES_DB[fundKey] || MONTHLY_PURCHASES_DB['OVERALL'];
+      const totalBadge = document.getElementById('purchTotalBadge');
+      if (totalBadge) totalBadge.textContent = 'Net Invested: ' + d.totalInvested;
+      
+      const fundTitle = document.getElementById('purchFundTitle');
+      if (fundTitle) fundTitle.textContent = d.name;
+
+      const svg = document.getElementById('monthlyPurchasesSvg');
+      if (!svg) return;
+
+      const minVal = Math.min(...d.cumVals) * 0.98;
+      const maxVal = Math.max(...d.cumVals) * 1.01;
+      const maxBar = Math.max(...d.monthlyVals) || 1;
+
+      const left = 32, right = 16, top = 20, h = 88, barMaxH = 34;
+      const w = 360 - left - right;
+      const step = w / (d.months.length - 1);
+
+      let pts = [];
+      let barsHtml = '';
+      let dotsHtml = '';
+      let labelsHtml = '';
+
+      d.months.forEach((m, i) => {
+        const x = left + i * step;
+        const y = top + h * (maxVal - d.cumVals[i]) / (maxVal - minVal || 1);
+        pts.push({ x, y, m, cum: d.cumVals[i], add: d.monthly[i], type: d.type[i] });
+
+        // Monthly addition bar
+        const barH = (d.monthlyVals[i] / maxBar) * barMaxH;
+        const barY = top + h - barH;
+        barsHtml += `<rect x="${(x - 4).toFixed(1)}" y="${barY.toFixed(1)}" width="8" height="${barH.toFixed(1)}" rx="2" fill="rgba(56, 189, 248, 0.25)" />`;
+
+        // X label (short month)
+        const shortM = m.split(' ')[0];
+        const isLatest = i === d.months.length - 1;
+        labelsHtml += `<text x="${x.toFixed(1)}" y="${(top + h + 18).toFixed(1)}" text-anchor="middle" class="text-[9px] ${isLatest ? 'fill-white font-bold' : 'fill-slate-400'} font-mono">${shortM}</text>`;
+      });
+
+      const lineD = 'M ' + pts.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' L ');
+      const areaD = `M ${pts[0].x.toFixed(1)} ${(top + h).toFixed(1)} ` + pts.map(p => `L ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ') + ` L ${pts[pts.length-1].x.toFixed(1)} ${(top + h).toFixed(1)} Z`;
+
+      pts.forEach((p, idx) => {
+        const isLatest = idx === pts.length - 1;
+        dotsHtml += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${isLatest ? 4.5 : 3.5}" fill="${isLatest ? '#38bdf8' : '#22c55e'}" stroke="#06080d" stroke-width="1.5" class="cursor-pointer" onclick="selectMonthlyPoint('${p.m}', '${p.add}', '${p.cum}L', '${p.type}', ${p.x.toFixed(1)}, ${p.y.toFixed(1)})" />`;
+      });
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="cumPurchGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#22c55e" stop-opacity="0.30" />
+            <stop offset="100%" stop-color="#22c55e" stop-opacity="0.0" />
+          </linearGradient>
+        </defs>
+        <!-- Background Gridlines -->
+        <line x1="${left}" y1="${top}" x2="${360 - right}" y2="${top}" stroke="rgba(255,255,255,0.05)" />
+        <line x1="${left}" y1="${(top + h/2).toFixed(1)}" x2="${360 - right}" y2="${(top + h/2).toFixed(1)}" stroke="rgba(255,255,255,0.05)" />
+        <line x1="${left}" y1="${(top + h).toFixed(1)}" x2="${360 - right}" y2="${(top + h).toFixed(1)}" stroke="rgba(255,255,255,0.08)" />
+
+        <!-- Monthly addition bars -->
+        ${barsHtml}
+
+        <!-- Cumulative Area & Line -->
+        <path d="${areaD}" fill="url(#cumPurchGrad)" />
+        <path d="${lineD}" fill="none" stroke="#22c55e" stroke-width="2.5" />
+
+        <!-- Active Selected Pulse Ring -->
+        <circle id="purchActiveDot" cx="${pts[pts.length-1].x.toFixed(1)}" cy="${pts[pts.length-1].y.toFixed(1)}" r="7" fill="none" stroke="#38bdf8" stroke-width="2" class="animate-pulse" />
+
+        <!-- Interactive Dots -->
+        ${dotsHtml}
+
+        <!-- Month Labels -->
+        ${labelsHtml}
+      `;
+
+      // Set default inspector to latest month
+      const last = pts[pts.length - 1];
+      selectMonthlyPoint(last.m, last.add, last.cum + 'L', last.type, last.x, last.y);
+    }
+
+    function selectMonthlyPoint(month, monthlyAdd, cumInvested, type, cx, cy) {
+      const elM = document.getElementById('pMonthDate');
+      const elA = document.getElementById('pMonthlyAdd');
+      const elC = document.getElementById('pCumInvested');
+      const elT = document.getElementById('pInflowType');
+      
+      if (elM) elM.textContent = month;
+      if (elA) elA.textContent = '+' + monthlyAdd;
+      if (elC) elC.textContent = '₹' + cumInvested;
+      if (elT) elT.textContent = type;
+
+      const ring = document.getElementById('purchActiveDot');
+      if (ring && cx != null && cy != null) {
+        ring.setAttribute('cx', cx);
+        ring.setAttribute('cy', cy);
+      }
+    }
+
+    function selectRollingPoint(yr, pf, bmk, alpha, cx, cy) {
+      document.getElementById('rxYear').textContent = yr;
+      document.getElementById('rxPf').textContent = (pf >= 0 ? '+' : '') + pf + '%';
+      document.getElementById('rxBmk').textContent = (bmk >= 0 ? '+' : '') + bmk + '%';
+      document.getElementById('rxAlpha').textContent = (alpha >= 0 ? '+' : '') + alpha + '% Alpha';
+      
+      const activeDot = document.getElementById('rxActiveDot');
+      if (activeDot) {
+        activeDot.setAttribute('cx', cx);
+        activeDot.setAttribute('cy', cy);
+      }
+    }
+
+    function toggleSector(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    let currentModalFundCode = '119771';
+
+    // Fund Recent 5 Purchases DB
+    const FUND_PURCHASES_DB = {"119771":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"137.0","amount":"\u20b925,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"139.6","amount":"\u20b925,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"143.3","amount":"\u20b925,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"146.0","amount":"\u20b925,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"148.8","amount":"\u20b925,000"}],"119788":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"131.5","amount":"\u20b924,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"134.0","amount":"\u20b924,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"137.6","amount":"\u20b924,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"140.2","amount":"\u20b924,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"142.9","amount":"\u20b924,000"}],"118551":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"98.6","amount":"\u20b918,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"100.5","amount":"\u20b918,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"103.2","amount":"\u20b918,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"105.1","amount":"\u20b918,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"107.1","amount":"\u20b918,000"}],"120334":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"104.1","amount":"\u20b919,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"106.1","amount":"\u20b919,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"108.9","amount":"\u20b919,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"111.0","amount":"\u20b919,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"113.1","amount":"\u20b919,000"}],"148745":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"71.2","amount":"\u20b913,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"72.6","amount":"\u20b913,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"74.5","amount":"\u20b913,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"75.9","amount":"\u20b913,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"77.4","amount":"\u20b913,000"}],"141877":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"65.8","amount":"\u20b912,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"67.0","amount":"\u20b912,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"68.8","amount":"\u20b912,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"70.1","amount":"\u20b912,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"71.4","amount":"\u20b912,000"}],"148485":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"60.3","amount":"\u20b911,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"61.4","amount":"\u20b911,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"63.1","amount":"\u20b911,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"64.3","amount":"\u20b911,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"65.5","amount":"\u20b911,000"}],"118989":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"49.3","amount":"\u20b99,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"50.3","amount":"\u20b99,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"51.6","amount":"\u20b99,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"52.6","amount":"\u20b99,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"53.6","amount":"\u20b99,000"}],"118650":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"60.3","amount":"\u20b911,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"61.4","amount":"\u20b911,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"63.1","amount":"\u20b911,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"64.3","amount":"\u20b911,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"65.5","amount":"\u20b911,000"}],"151739":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"60.3","amount":"\u20b911,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"61.4","amount":"\u20b911,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"63.1","amount":"\u20b911,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"64.3","amount":"\u20b911,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"65.5","amount":"\u20b911,000"}],"122639":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"60.3","amount":"\u20b911,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"61.4","amount":"\u20b911,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"63.1","amount":"\u20b911,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"64.3","amount":"\u20b911,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"65.5","amount":"\u20b911,000"}],"118482":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"60.3","amount":"\u20b911,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"61.4","amount":"\u20b911,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"63.1","amount":"\u20b911,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"64.3","amount":"\u20b911,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"65.5","amount":"\u20b911,000"}],"152814":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"65.8","amount":"\u20b912,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"67.0","amount":"\u20b912,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"68.8","amount":"\u20b912,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"70.1","amount":"\u20b912,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"71.4","amount":"\u20b912,000"}],"119779":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"54.8","amount":"\u20b910,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"55.8","amount":"\u20b910,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"57.3","amount":"\u20b910,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"58.4","amount":"\u20b910,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"59.5","amount":"\u20b910,000"}],"152735":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"32.9","amount":"\u20b96,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"33.5","amount":"\u20b96,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"34.4","amount":"\u20b96,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"35.0","amount":"\u20b96,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"35.7","amount":"\u20b96,000"}],"147622":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"54.8","amount":"\u20b910,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"55.8","amount":"\u20b910,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"57.3","amount":"\u20b910,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"58.4","amount":"\u20b910,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"59.5","amount":"\u20b910,000"}],"130503":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"43.8","amount":"\u20b98,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"44.7","amount":"\u20b98,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"45.9","amount":"\u20b98,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"46.7","amount":"\u20b98,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"47.6","amount":"\u20b98,000"}],"118968":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"43.8","amount":"\u20b98,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"44.7","amount":"\u20b98,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"45.9","amount":"\u20b98,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"46.7","amount":"\u20b98,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"47.6","amount":"\u20b98,000"}],"147623":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"32.9","amount":"\u20b96,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"33.5","amount":"\u20b96,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"34.4","amount":"\u20b96,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"35.0","amount":"\u20b96,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"35.7","amount":"\u20b96,000"}],"119835":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"32.9","amount":"\u20b96,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"33.5","amount":"\u20b96,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"34.4","amount":"\u20b96,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"35.0","amount":"\u20b96,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"35.7","amount":"\u20b96,000"}],"150141":[{"date":"01 Oct 26","type":"SIP","nav":"\u20b9182.50","units":"27.4","amount":"\u20b95,000"},{"date":"01 Sep 26","type":"SIP","nav":"\u20b9179.10","units":"27.9","amount":"\u20b95,000"},{"date":"01 Aug 26","type":"SIP","nav":"\u20b9174.40","units":"28.7","amount":"\u20b95,000"},{"date":"01 Jul 26","type":"SIP","nav":"\u20b9171.20","units":"29.2","amount":"\u20b95,000"},{"date":"01 Jun 26","type":"SIP","nav":"\u20b9168.00","units":"29.8","amount":"\u20b95,000"}]};
+
+    function openFundDetail(name, code, val, wt, xirr, cost, category) {
+      currentModalFundCode = code;
+      document.getElementById('fModalTitle').textContent = name;
+      document.getElementById('fModalSub').textContent = category;
+      document.getElementById('fModalValue').textContent = val;
+      document.getElementById('fModalCost').textContent = cost;
+      document.getElementById('fModalXirr').textContent = xirr;
+
+      // Populate Recent 5 Purchases Table
+      const tbody = document.getElementById('fModalPurchasesList');
+      tbody.innerHTML = '';
+      const purchases = FUND_PURCHASES_DB[code] || FUND_PURCHASES_DB['118989'];
+      purchases.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-white/[0.02]';
+        tr.innerHTML = `
+          <td class="py-1.5 px-2 text-[10px] font-semibold text-white whitespace-nowrap">${p.date}</td>
+          <td class="py-1.5 px-1 whitespace-nowrap"><span class="text-[9px] px-1 py-0.2 rounded font-semibold ${p.type === 'Dip' ? 'bg-amber-400/20 text-amber-300' : 'bg-sky-500/20 text-sky-400'}">${p.type}</span></td>
+          <td class="py-1.5 px-1.5 text-right text-[10px] text-slate-400 whitespace-nowrap">${p.nav}</td>
+          <td class="py-1.5 px-1.5 text-right text-[10px] text-slate-400 whitespace-nowrap">${p.units}</td>
+          <td class="py-1.5 px-2 text-right text-[10px] font-bold text-white whitespace-nowrap">${p.amount}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      
+      const modal = document.getElementById('fundModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeFundDetail() {
+      const modal = document.getElementById('fundModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function jumpToSchemeHoldingsFromModal() {
+      closeFundDetail();
+      switchTab('lookthrough');
+      switchLookthroughSubTab('scheme');
+      const sel = document.getElementById('schemeSelect');
+      if (sel) {
+        sel.value = currentModalFundCode;
+        renderSchemeHoldings(currentModalFundCode);
+      }
+    }
+
+    // =========================================================================
+    // SECTION 13.2 DATA
+    // =========================================================================
+    const SCHEME_HOLDINGS_DB = {"OVERALL":{"name":"Entire Portfolio","count":"657 Stocks","weight":"100.0%","val":"\u20b998.49L","top10":"16.3%","assets":{"equity":54.7,"debt":4.1,"cash":2.6,"arb":8.4,"commodity":15.3},"tiers":{"large":63.7,"mid":20.3,"small":16.1},"stocks":[{"name":"HDFC Bank","sector":"Banks","weight":2.75,"val":"\u20b92.71L","overlap":"Across 10 funds"},{"name":"ICICI Bank","sector":"Banks","weight":2.47,"val":"\u20b92.44L","overlap":"Across 10 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":1.89,"val":"\u20b91.87L","overlap":"Across 10 funds"},{"name":"Axis Bank","sector":"Banks","weight":1.66,"val":"\u20b91.64L","overlap":"Across 10 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":1.38,"val":"\u20b91.36L","overlap":"Across 9 funds"},{"name":"State Bank of India","sector":"Banks","weight":1.38,"val":"\u20b91.36L","overlap":"Across 11 funds"},{"name":"Infosys","sector":"IT - Software","weight":1.26,"val":"\u20b91.25L","overlap":"Across 10 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":1.23,"val":"\u20b91.21L","overlap":"Across 10 funds"},{"name":"Kotak Mahindra Bank","sector":"Banks","weight":1.17,"val":"\u20b91.15L","overlap":"Across 9 funds"},{"name":"Larsen & Toubro","sector":"Construction","weight":1.06,"val":"\u20b91.04L","overlap":"Across 9 funds"},{"name":"Coal India","sector":"Consumable Fuels","weight":0.8,"val":"\u20b90.79L","overlap":"Across 8 funds"},{"name":"NTPC","sector":"Power","weight":0.7,"val":"\u20b90.69L","overlap":"Across 8 funds"},{"name":"Mahindra & Mahindra","sector":"Automobiles","weight":0.62,"val":"\u20b90.61L","overlap":"Across 8 funds"},{"name":"Power Grid Corporation of India","sector":"Power","weight":0.6,"val":"\u20b90.59L","overlap":"Across 6 funds"},{"name":"Hindalco Industries","sector":"Non - Ferrous Metals","weight":0.59,"val":"\u20b90.58L","overlap":"Across 8 funds"},{"name":"Maruti Suzuki India","sector":"Automobiles","weight":0.53,"val":"\u20b90.52L","overlap":"Across 8 funds"},{"name":"Tata Consultancy Services","sector":"IT - Software","weight":0.53,"val":"\u20b90.52L","overlap":"Across 9 funds"},{"name":"Tata Steel","sector":"Ferrous Metals","weight":0.51,"val":"\u20b90.50L","overlap":"Across 9 funds"},{"name":"Bajaj Finance","sector":"Finance","weight":0.49,"val":"\u20b90.49L","overlap":"Across 7 funds"},{"name":"HCL Technologies","sector":"IT - Software","weight":0.46,"val":"\u20b90.45L","overlap":"Across 9 funds"},{"name":"Oil & Natural Gas Corporation","sector":"Oil","weight":0.45,"val":"\u20b90.44L","overlap":"Across 9 funds"},{"name":"Eternal","sector":"Retailing","weight":0.42,"val":"\u20b90.42L","overlap":"Across 7 funds"},{"name":"Tata Motors Passenger Vehicles","sector":"Automobiles","weight":0.42,"val":"\u20b90.41L","overlap":"Across 8 funds"},{"name":"Divis Laboratories","sector":"Pharmaceuticals and Biotechnology","weight":0.42,"val":"\u20b90.41L","overlap":"Across 5 funds"},{"name":"Grasim Industries","sector":"Cement & Cement Products","weight":0.41,"val":"\u20b90.41L","overlap":"Across 7 funds"},{"name":"Sun Pharmaceutical Industries","sector":"Pharmaceuticals & Biotechnology","weight":0.41,"val":"\u20b90.40L","overlap":"Across 8 funds"},{"name":"Hindustan UNILever","sector":"Diversified FMCG","weight":0.39,"val":"\u20b90.38L","overlap":"Across 7 funds"},{"name":"InterGlobe Aviation","sector":"Transport Services","weight":0.38,"val":"\u20b90.37L","overlap":"Across 6 funds"},{"name":"Bajaj Finserv","sector":"Finance","weight":0.37,"val":"\u20b90.37L","overlap":"Across 7 funds"},{"name":"BHARAT PETROLEUM CORPORATION","sector":"Petroleum Products","weight":0.37,"val":"\u20b90.36L","overlap":"Across 5 funds"}]},"119771":{"name":"Kotak Arbitrage","count":"216 Positions","weight":"10.9%","val":"\u20b910.74L","top10":"37.3%","assets":{"equity":0.0,"debt":18.6,"cash":4.6,"arb":76.8,"commodity":0.0},"tiers":{"large":0.0,"mid":0.0,"small":0.0},"stocks":[{"name":"Kotak Money Market Fund Direct Growth","sector":"Mutual Fund","weight":9.75,"val":"\u20b91,04,730","overlap":"Exclusive"},{"name":"Kotak Savings Fund Direct Growth","sector":"Mutual Fund","weight":4.97,"val":"\u20b953,329","overlap":"Exclusive"},{"name":"ICICI BANK","sector":"Banks","weight":4.16,"val":"\u20b944,655","overlap":"Across 10 funds"},{"name":"Kotak Ultra Short to Short Term Fund","sector":"Mutual Fund","weight":3.85,"val":"\u20b941,335","overlap":"Exclusive"},{"name":"Kotak Liquid Direct Growth","sector":"Mutual Fund","weight":3.12,"val":"\u20b933,518","overlap":"Exclusive"},{"name":"RELIANCE INDUSTRIES","sector":"Petroleum Products","weight":3.05,"val":"\u20b932,768","overlap":"Across 10 funds"},{"name":"AXIS BANK","sector":"Banks","weight":2.93,"val":"\u20b931,483","overlap":"Across 10 funds"},{"name":"HDFC BANK","sector":"Banks","weight":2.02,"val":"\u20b921,738","overlap":"Across 10 funds"},{"name":"CD","sector":"CARE A1+","weight":1.93,"val":"\u20b920,775","overlap":"Across 2 funds"},{"name":"Cash","sector":"Cash","weight":1.53,"val":"\u20b916,399","overlap":"Across 27 funds"},{"name":"Tata Steel","sector":"Ferrous Metals","weight":1.53,"val":"\u20b916,384","overlap":"Across 9 funds"},{"name":"BHARTI AIRTEL","sector":"Telecom - Services","weight":1.45,"val":"\u20b915,527","overlap":"Across 9 funds"},{"name":"ADANI POWER","sector":"Power","weight":1.43,"val":"\u20b915,313","overlap":"Across 2 funds"},{"name":"CD","sector":"CARE A1+","weight":1.36,"val":"\u20b914,564","overlap":"Exclusive"},{"name":"STATE BANK OF INDIA","sector":"Banks","weight":1.35,"val":"\u20b914,457","overlap":"Across 11 funds"},{"name":"Hindalco Industries","sector":"Non - Ferrous Metals","weight":1.31,"val":"\u20b914,028","overlap":"Across 8 funds"},{"name":"Vodafone Idea","sector":"Telecom - Services","weight":1.3,"val":"\u20b913,921","overlap":"Across 3 funds"},{"name":"Infosys","sector":"IT - Software","weight":1.25,"val":"\u20b913,386","overlap":"Across 10 funds"},{"name":"BAJAJ FINANCE","sector":"Finance","weight":1.2,"val":"\u20b912,850","overlap":"Across 7 funds"},{"name":"Coal India","sector":"Consumable Fuels","weight":1.18,"val":"\u20b912,636","overlap":"Across 8 funds"},{"name":"CD","sector":"FITCH A1+","weight":0.97,"val":"\u20b910,387","overlap":"Exclusive"},{"name":"Divis Laboratories","sector":"Pharmaceuticals and Biotechnology","weight":0.96,"val":"\u20b910,280","overlap":"Across 5 funds"},{"name":"TVS Motor Company","sector":"Automobiles","weight":0.94,"val":"\u20b910,066","overlap":"Across 5 funds"},{"name":"CHOLAMANDALAM INVESTMENT AND FINANCE COMPANY","sector":"Finance","weight":0.88,"val":"\u20b99,424","overlap":"Across 4 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":0.85,"val":"\u20b99,102","overlap":"Across 10 funds"}]},"119788":{"name":"SBI Gold","count":"2 Positions","weight":"9.8%","val":"\u20b99.64L","top10":"100.0%","assets":{"equity":0.0,"debt":0.0,"cash":0.3,"arb":0.0,"commodity":99.7},"tiers":{"large":0.0,"mid":0.0,"small":0.0},"stocks":[{"name":"SBI Gold ETF","sector":"Mutual Fund/ETF","weight":99.71,"val":"\u20b99,60,929","overlap":"Exclusive"},{"name":"Cash","sector":"Cash","weight":0.29,"val":"\u20b92,782","overlap":"Across 27 funds"}]},"118551":{"name":"Franklin US Opportunities","count":"2 Positions","weight":"7.3%","val":"\u20b97.22L","top10":"100.0%","assets":{"equity":95.8,"debt":0.0,"cash":4.2,"arb":0.0,"commodity":0.0},"tiers":{"large":0.0,"mid":0.0,"small":0.0},"stocks":[{"name":"Franklin U.S. Opportunities Fund, Class I (Acc)","sector":"Diversified","weight":95.83,"val":"\u20b96,91,496","overlap":"Exclusive"},{"name":"Call, Cash & Other Assets","sector":"Diversified","weight":4.17,"val":"\u20b930,080","overlap":"Exclusive"}]},"120334":{"name":"ICICI Prudential Multi-Asset","count":"242 Positions","weight":"7.1%","val":"\u20b96.95L","top10":"40.4%","assets":{"equity":67.5,"debt":14.4,"cash":6.6,"arb":0.0,"commodity":11.4},"tiers":{"large":43.4,"mid":15.7,"small":8.3},"stocks":[{"name":"ICICI Prudential Gold ETF","sector":"Mutual Fund","weight":9.56,"val":"\u20b966,504","overlap":"Exclusive"},{"name":"Cash","sector":"Cash","weight":6.62,"val":"\u20b946,022","overlap":"Across 27 funds"},{"name":"HDFC Bank","sector":"Banks","weight":5.77,"val":"\u20b940,110","overlap":"Across 10 funds"},{"name":"Life Insurance Corporation of India","sector":"Insurance","weight":3.58,"val":"\u20b924,860","overlap":"Across 5 funds"},{"name":"ICICI Bank","sector":"Banks","weight":3.39,"val":"\u20b923,592","overlap":"Across 10 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":3.01,"val":"\u20b920,909","overlap":"Across 10 funds"},{"name":"Bajaj Finserv","sector":"Finance","weight":2.42,"val":"\u20b916,851","overlap":"Across 7 funds"},{"name":"Axis Bank","sector":"Banks","weight":2.22,"val":"\u20b915,469","overlap":"Across 10 funds"},{"name":"Government Securities","sector":"SOV","weight":2.0,"val":"\u20b913,909","overlap":"Across 2 funds"},{"name":"Gold (1 KG-1000 GMS) Commodity December 2026 Future $$","sector":"Gold","weight":1.85,"val":"\u20b912,873","overlap":"Exclusive"},{"name":"Interglobe Aviation","sector":"Transport Services","weight":1.8,"val":"\u20b912,497","overlap":"Across 6 funds"},{"name":"ITC","sector":"Diversified Fmcg","weight":1.54,"val":"\u20b910,729","overlap":"Across 10 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":1.47,"val":"\u20b910,208","overlap":"Across 9 funds"},{"name":"Hindustan Unilever","sector":"Diversified Fmcg","weight":1.43,"val":"\u20b99,955","overlap":"Across 7 funds"},{"name":"SBI Cards & Payment Services","sector":"Finance","weight":1.37,"val":"\u20b99,491","overlap":"Across 5 funds"},{"name":"NTPC","sector":"Power","weight":1.34,"val":"\u20b99,305","overlap":"Across 8 funds"},{"name":"Maruti Suzuki India","sector":"Automobiles","weight":1.3,"val":"\u20b99,056","overlap":"Across 8 funds"},{"name":"HDFC Bank","sector":"CRISIL A1+","weight":1.27,"val":"\u20b98,806","overlap":"Across 2 funds"},{"name":"Kotak Mahindra Bank","sector":"Banks","weight":1.24,"val":"\u20b98,607","overlap":"Across 9 funds"},{"name":"INTEREST RATE SWAPS (At Notional Value)","sector":"Units of an Alternative Investment Fund (AIF)","weight":1.19,"val":"\u20b98,245","overlap":"Exclusive"},{"name":"IndusInd Bank","sector":"Banks","weight":1.16,"val":"\u20b98,089","overlap":"Across 7 funds"},{"name":"Infosys","sector":"It - Software","weight":1.08,"val":"\u20b97,523","overlap":"Across 10 funds"},{"name":"Avenue Supermarts","sector":"Retailing","weight":1.08,"val":"\u20b97,504","overlap":"Across 5 funds"},{"name":"Sun Pharmaceutical Industries","sector":"Pharmaceuticals & Biotechnology","weight":0.96,"val":"\u20b96,681","overlap":"Across 8 funds"},{"name":"State Bank Of India","sector":"Banks","weight":0.93,"val":"\u20b96,468","overlap":"Across 11 funds"}]},"148745":{"name":"Kotak Nifty Next 50","count":"51 Positions","weight":"5.0%","val":"\u20b94.96L","top10":"33.3%","assets":{"equity":98.7,"debt":0.0,"cash":1.3,"arb":0.0,"commodity":0.0},"tiers":{"large":98.7,"mid":0.0,"small":0.0},"stocks":[{"name":"Divis Laboratories","sector":"Pharmaceuticals and Biotechnology","weight":4.78,"val":"\u20b923,694","overlap":"Across 5 funds"},{"name":"TVS Motor Company","sector":"Automobiles","weight":3.9,"val":"\u20b919,315","overlap":"Across 5 funds"},{"name":"Hindustan Aeronautics","sector":"Aerospace and Defense","weight":3.58,"val":"\u20b917,758","overlap":"Across 4 funds"},{"name":"TML COMMERCIAL VEHICLES","sector":"Agricultural, Commercial and Construction Vehicles","weight":3.56,"val":"\u20b917,661","overlap":"Across 4 funds"},{"name":"ADANI POWER","sector":"Power","weight":3.43,"val":"\u20b917,028","overlap":"Across 2 funds"},{"name":"SAMVARDHANA MOTHERSON INTERNATIONAL","sector":"Auto Components","weight":2.91,"val":"\u20b914,450","overlap":"Across 4 funds"},{"name":"TORRENT PHARMACEUTICALS","sector":"Pharmaceuticals and Biotechnology","weight":2.86,"val":"\u20b914,158","overlap":"Across 2 funds"},{"name":"CHOLAMANDALAM INVESTMENT AND FINANCE COMPANY","sector":"Finance","weight":2.85,"val":"\u20b914,109","overlap":"Across 4 funds"},{"name":"VEDANTA ALUMINIUM METAL","sector":"Non - Ferrous Metals","weight":2.83,"val":"\u20b914,012","overlap":"Across 3 funds"},{"name":"Cummins India","sector":"Industrial Products","weight":2.6,"val":"\u20b912,893","overlap":"Across 4 funds"},{"name":"Avenue Supermarts","sector":"Retailing","weight":2.48,"val":"\u20b912,309","overlap":"Across 5 funds"},{"name":"BHARAT PETROLEUM CORPORATION","sector":"Petroleum Products","weight":2.46,"val":"\u20b912,212","overlap":"Across 5 funds"},{"name":"Tata Power Company","sector":"Power","weight":2.43,"val":"\u20b912,066","overlap":"Across 3 funds"},{"name":"Varun Beverages","sector":"Beverages","weight":2.38,"val":"\u20b911,823","overlap":"Across 3 funds"},{"name":"CG Power and Industrial Solutions","sector":"Electrical Equipment","weight":2.36,"val":"\u20b911,725","overlap":"Across 4 funds"},{"name":"Britannia Industries","sector":"Food Products","weight":2.3,"val":"\u20b911,385","overlap":"Across 4 funds"},{"name":"INDIAN OIL CORPORATION","sector":"Petroleum Products","weight":2.04,"val":"\u20b910,120","overlap":"Across 4 funds"},{"name":"Solar Industries India","sector":"Chemicals and Petrochemicals","weight":1.94,"val":"\u20b99,633","overlap":"Across 2 funds"},{"name":"Power Finance Corporation","sector":"Finance","weight":1.91,"val":"\u20b99,487","overlap":"Across 5 funds"},{"name":"Bajaj Holdings and Investment","sector":"Finance","weight":1.89,"val":"\u20b99,390","overlap":"Across 3 funds"},{"name":"HDFC ASSET MANAGEMENT COMPANY","sector":"Capital Markets","weight":1.88,"val":"\u20b99,341","overlap":"Across 3 funds"},{"name":"GAIL (India)","sector":"Gas","weight":1.86,"val":"\u20b99,244","overlap":"Across 5 funds"},{"name":"VEDANTA","sector":"Diversified Metals","weight":1.84,"val":"\u20b99,147","overlap":"Across 3 funds"},{"name":"Pidilite Industries","sector":"Chemicals and Petrochemicals","weight":1.84,"val":"\u20b99,147","overlap":"Across 3 funds"},{"name":"DLF","sector":"Realty","weight":1.75,"val":"\u20b98,660","overlap":"Across 4 funds"}]},"141877":{"name":"DSP Nifty 50 Equal Weight","count":"51 Positions","weight":"4.4%","val":"\u20b94.34L","top10":"20.6%","assets":{"equity":99.8,"debt":0.0,"cash":0.2,"arb":0.0,"commodity":0.0},"tiers":{"large":99.8,"mid":0.0,"small":0.0},"stocks":[{"name":"Kotak Mahindra Bank","sector":"Banks","weight":2.11,"val":"\u20b99,149","overlap":"Across 9 funds"},{"name":"Dr. Reddy's Laboratories","sector":"Pharmaceuticals & Biotechnology","weight":2.1,"val":"\u20b99,105","overlap":"Across 6 funds"},{"name":"Interglobe Aviation","sector":"Transport Services","weight":2.06,"val":"\u20b98,932","overlap":"Across 6 funds"},{"name":"Adani Ports and Special Economic Zone","sector":"Transport Infrastructure","weight":2.06,"val":"\u20b98,932","overlap":"Across 6 funds"},{"name":"Axis Bank","sector":"Banks","weight":2.05,"val":"\u20b98,888","overlap":"Across 10 funds"},{"name":"Coal India","sector":"Consumable Fuels","weight":2.04,"val":"\u20b98,845","overlap":"Across 8 funds"},{"name":"ICICI Bank","sector":"Banks","weight":2.04,"val":"\u20b98,845","overlap":"Across 10 funds"},{"name":"Adani Enterprises","sector":"Metals & Minerals Trading","weight":2.04,"val":"\u20b98,845","overlap":"Across 4 funds"},{"name":"Infosys","sector":"IT - Software","weight":2.03,"val":"\u20b98,802","overlap":"Across 10 funds"},{"name":"Maruti Suzuki India","sector":"Automobiles","weight":2.03,"val":"\u20b98,802","overlap":"Across 8 funds"},{"name":"Shriram Finance","sector":"Finance","weight":2.02,"val":"\u20b98,758","overlap":"Across 5 funds"},{"name":"NTPC","sector":"Power","weight":2.02,"val":"\u20b98,758","overlap":"Across 8 funds"},{"name":"Bharat Electronics","sector":"Aerospace & Defense","weight":2.02,"val":"\u20b98,758","overlap":"Across 6 funds"},{"name":"Tata Consultancy Services","sector":"IT - Software","weight":2.01,"val":"\u20b98,715","overlap":"Across 9 funds"},{"name":"Tech Mahindra","sector":"IT - Software","weight":2.01,"val":"\u20b98,715","overlap":"Across 7 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":2.01,"val":"\u20b98,715","overlap":"Across 9 funds"},{"name":"Asian Paints","sector":"Consumer Durables","weight":2.01,"val":"\u20b98,715","overlap":"Across 6 funds"},{"name":"Ultratech Cement","sector":"Cement & Cement Products","weight":2.01,"val":"\u20b98,715","overlap":"Across 7 funds"},{"name":"Trent","sector":"Retailing","weight":2.01,"val":"\u20b98,715","overlap":"Across 7 funds"},{"name":"HDFC Life Insurance Co","sector":"Insurance","weight":2.01,"val":"\u20b98,715","overlap":"Across 6 funds"},{"name":"JSW Steel","sector":"Ferrous Metals","weight":2.01,"val":"\u20b98,715","overlap":"Across 7 funds"},{"name":"Sun Pharmaceutical Industries","sector":"Pharmaceuticals & Biotechnology","weight":2.01,"val":"\u20b98,715","overlap":"Across 8 funds"},{"name":"Tata Steel","sector":"Ferrous Metals","weight":2.01,"val":"\u20b98,715","overlap":"Across 9 funds"},{"name":"HCL Technologies","sector":"IT - Software","weight":2.0,"val":"\u20b98,672","overlap":"Across 9 funds"},{"name":"Bajaj Finserv","sector":"Finance","weight":2.0,"val":"\u20b98,672","overlap":"Across 7 funds"}]},"148485":{"name":"Axis Global Equity Alpha","count":"2 Positions","weight":"4.2%","val":"\u20b94.18L","top10":"100.0%","assets":{"equity":99.0,"debt":0.0,"cash":1.0,"arb":0.0,"commodity":0.0},"tiers":{"large":0.0,"mid":0.0,"small":0.0},"stocks":[{"name":"Schroder ISF Global Equity Alpha Class X1 Acc","sector":"Diversified","weight":98.95,"val":"\u20b94,13,680","overlap":"Exclusive"},{"name":"Cash","sector":"Cash","weight":1.05,"val":"\u20b94,385","overlap":"Across 27 funds"}]},"118989":{"name":"HDFC Mid-Cap","count":"80 Positions","weight":"4.2%","val":"\u20b94.13L","top10":"37.3%","assets":{"equity":91.6,"debt":0.0,"cash":8.4,"arb":0.0,"commodity":0.0},"tiers":{"large":8.7,"mid":65.7,"small":17.2},"stocks":[{"name":"Cash","sector":"Cash","weight":8.36,"val":"\u20b934,539","overlap":"Across 27 funds"},{"name":"The Federal Bank","sector":"Banks","weight":3.98,"val":"\u20b916,424","overlap":"Across 4 funds"},{"name":"Au Small Finance Bank","sector":"Banks","weight":3.94,"val":"\u20b916,258","overlap":"Across 4 funds"},{"name":"Max Financial Services","sector":"Insurance","weight":3.52,"val":"\u20b914,525","overlap":"Across 4 funds"},{"name":"Ipca Laboratories","sector":"Pharmaceuticals & Biotechnology","weight":3.43,"val":"\u20b914,154","overlap":"Across 4 funds"},{"name":"Glenmark Pharmaceuticals","sector":"Pharmaceuticals & Biotechnology","weight":3.07,"val":"\u20b912,668","overlap":"Across 4 funds"},{"name":"Balkrishna Industries","sector":"Auto Components","weight":2.98,"val":"\u20b912,297","overlap":"Across 4 funds"},{"name":"Indian Bank","sector":"Banks","weight":2.92,"val":"\u20b912,049","overlap":"Across 5 funds"},{"name":"Coforge","sector":"IT - Software","weight":2.68,"val":"\u20b911,059","overlap":"Across 3 funds"},{"name":"Fortis Healthcare","sector":"Healthcare Services","weight":2.4,"val":"\u20b99,904","overlap":"Across 4 funds"},{"name":"Marico","sector":"Agricultural Food & Other Products","weight":2.37,"val":"\u20b99,780","overlap":"Across 3 funds"},{"name":"Vishal Mega Mart","sector":"Retailing","weight":2.24,"val":"\u20b99,243","overlap":"Across 6 funds"},{"name":"Aurobindo Pharma","sector":"Pharmaceuticals & Biotechnology","weight":2.19,"val":"\u20b99,037","overlap":"Across 5 funds"},{"name":"Mahindra & Mahindra Financial Services","sector":"Finance","weight":2.11,"val":"\u20b98,707","overlap":"Across 3 funds"},{"name":"Hindustan Petroleum Corp","sector":"Petroleum Products","weight":2.09,"val":"\u20b98,624","overlap":"Across 6 funds"},{"name":"United Spirits","sector":"Beverages","weight":1.9,"val":"\u20b97,840","overlap":"Across 5 funds"},{"name":"Cummins India","sector":"Industrial Products","weight":1.82,"val":"\u20b97,510","overlap":"Across 4 funds"},{"name":"Tata Communications","sector":"Telecom - Services","weight":1.81,"val":"\u20b97,469","overlap":"Across 2 funds"},{"name":"Persistent Systems","sector":"IT - Software","weight":1.78,"val":"\u20b97,345","overlap":"Across 4 funds"},{"name":"Gland Pharma","sector":"Pharmaceuticals & Biotechnology","weight":1.73,"val":"\u20b97,139","overlap":"Across 4 funds"},{"name":"Alkem Laboratories","sector":"Pharmaceuticals & Biotechnology","weight":1.72,"val":"\u20b97,098","overlap":"Across 5 funds"},{"name":"Apollo Tyres","sector":"Auto Components","weight":1.66,"val":"\u20b96,850","overlap":"Across 3 funds"},{"name":"Dabur India","sector":"Personal Products","weight":1.66,"val":"\u20b96,850","overlap":"Across 5 funds"},{"name":"Jindal Steel","sector":"Ferrous Metals","weight":1.64,"val":"\u20b96,767","overlap":"Across 5 funds"},{"name":"MphasiS","sector":"IT - Software","weight":1.55,"val":"\u20b96,396","overlap":"Across 4 funds"}]},"118650":{"name":"Nippon India Multi Cap","count":"121 Positions","weight":"4.1%","val":"\u20b94.01L","top10":"28.4%","assets":{"equity":99.2,"debt":0.0,"cash":0.8,"arb":0.0,"commodity":0.0},"tiers":{"large":44.0,"mid":30.0,"small":25.1},"stocks":[{"name":"HDFC Bank","sector":"Banks","weight":7.05,"val":"\u20b928,250","overlap":"Across 10 funds"},{"name":"Axis Bank","sector":"Banks","weight":5.06,"val":"\u20b920,287","overlap":"Across 10 funds"},{"name":"Infosys","sector":"IT - Software","weight":3.06,"val":"\u20b912,244","overlap":"Across 10 funds"},{"name":"ICICI Bank","sector":"Banks","weight":2.97,"val":"\u20b911,884","overlap":"Across 10 funds"},{"name":"Linde India","sector":"Chemicals & Petrochemicals","weight":1.79,"val":"\u20b97,163","overlap":"Across 2 funds"},{"name":"NTPC","sector":"Power","weight":1.79,"val":"\u20b97,163","overlap":"Across 8 funds"},{"name":"Larsen & Toubro","sector":"Construction","weight":1.74,"val":"\u20b96,963","overlap":"Across 9 funds"},{"name":"Samvardhana Motherson International","sector":"Auto Components","weight":1.7,"val":"\u20b96,802","overlap":"Across 4 funds"},{"name":"Bajaj Finance","sector":"Finance","weight":1.63,"val":"\u20b96,522","overlap":"Across 7 funds"},{"name":"Swiggy","sector":"Retailing","weight":1.63,"val":"\u20b96,522","overlap":"Across 6 funds"},{"name":"Avenue Supermarts","sector":"Retailing","weight":1.63,"val":"\u20b96,522","overlap":"Across 5 funds"},{"name":"GE Vernova T&D India","sector":"Electrical Equipment","weight":1.58,"val":"\u20b96,322","overlap":"Across 3 funds"},{"name":"Max Financial Services","sector":"Insurance","weight":1.51,"val":"\u20b96,042","overlap":"Across 4 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":1.49,"val":"\u20b95,962","overlap":"Across 10 funds"},{"name":"Jubilant Foodworks","sector":"Leisure Services","weight":1.49,"val":"\u20b95,962","overlap":"Across 4 funds"},{"name":"Kennametal India","sector":"Industrial Manufacturing","weight":1.4,"val":"\u20b95,602","overlap":"Exclusive"},{"name":"Mahindra & Mahindra","sector":"Automobiles","weight":1.35,"val":"\u20b95,402","overlap":"Across 8 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":1.34,"val":"\u20b95,362","overlap":"Across 10 funds"},{"name":"AU Small Finance Bank","sector":"Banks","weight":1.27,"val":"\u20b95,082","overlap":"Across 4 funds"},{"name":"Multi Commodity Exchange of India","sector":"Capital Markets","weight":1.27,"val":"\u20b95,082","overlap":"Across 2 funds"},{"name":"State Bank of India","sector":"Banks","weight":1.23,"val":"\u20b94,922","overlap":"Across 11 funds"},{"name":"Vesuvius India","sector":"Industrial Products","weight":1.19,"val":"\u20b94,762","overlap":"Across 3 funds"},{"name":"FSN E-Commerce Ventures","sector":"Retailing","weight":1.19,"val":"\u20b94,762","overlap":"Across 5 funds"},{"name":"Divi's Laboratories","sector":"Pharmaceuticals & Biotechnology","weight":1.15,"val":"\u20b94,602","overlap":"Across 5 funds"},{"name":"Sai Life Sciences","sector":"Pharmaceuticals & Biotechnology","weight":1.13,"val":"\u20b94,522","overlap":"Across 2 funds"}]},"151739":{"name":"UTI Nifty 500 Value 50","count":"50 Positions","weight":"4.1%","val":"\u20b93.99L","top10":"49.0%","assets":{"equity":100.0,"debt":0.0,"cash":0.0,"arb":0.0,"commodity":0.0},"tiers":{"large":64.2,"mid":21.9,"small":13.9},"stocks":[{"name":"EQ- GRASIM INDUSTRIES","sector":"Cement & Cement Products","weight":5.27,"val":"\u20b921,050","overlap":"Across 7 funds"},{"name":"EQ- HINDALCO INDUSTRIES","sector":"Non - Ferrous Metals","weight":5.19,"val":"\u20b920,731","overlap":"Across 8 funds"},{"name":"EQ- COAL INDIA","sector":"Consumable Fuels","weight":5.18,"val":"\u20b920,691","overlap":"Across 8 funds"},{"name":"EQ- OIL & NATURAL GAS CORPORATION","sector":"Oil","weight":5.07,"val":"\u20b920,253","overlap":"Across 9 funds"},{"name":"EQ- STATE BANK OF INDIA","sector":"Banks","weight":4.99,"val":"\u20b919,934","overlap":"Across 11 funds"},{"name":"EQ- VEDANTA","sector":"Diversified Metals","weight":4.94,"val":"\u20b919,735","overlap":"Across 3 funds"},{"name":"EQ- NTPC","sector":"Power","weight":4.87,"val":"\u20b919,455","overlap":"Across 8 funds"},{"name":"EQ- POWER GRID CORPORATION OF INDI","sector":"Power","weight":4.82,"val":"\u20b919,256","overlap":"Across 6 funds"},{"name":"EQ- TATA MOTORS PASSENGER VEHICLES","sector":"Automobiles","weight":4.36,"val":"\u20b917,422","overlap":"Across 8 funds"},{"name":"EQ- BHARAT PETROLEUM CORPN","sector":"Petroleum Products","weight":4.26,"val":"\u20b917,024","overlap":"Across 5 funds"},{"name":"EQ- INDIAN OIL CORPORATION","sector":"Petroleum Products","weight":3.62,"val":"\u20b914,472","overlap":"Across 4 funds"},{"name":"EQ- REDINGTON","sector":"Commercial Services & Supplies","weight":3.25,"val":"\u20b912,957","overlap":"Across 4 funds"},{"name":"EQ- POWER FINANCE CORPORATION","sector":"Finance","weight":2.48,"val":"\u20b99,887","overlap":"Across 5 funds"},{"name":"EQ- HINDUSTAN PETROLEUM CORPN","sector":"Petroleum Products","weight":2.48,"val":"\u20b99,887","overlap":"Across 6 funds"},{"name":"EQ- ASTER DM QUALITY CARE","sector":"Healthcare Services","weight":2.37,"val":"\u20b99,449","overlap":"Across 6 funds"},{"name":"EQ- GAIL ( INDIA )","sector":"Gas","weight":2.29,"val":"\u20b99,130","overlap":"Across 5 funds"},{"name":"EQ- BANK OF BARODA","sector":"Banks","weight":1.94,"val":"\u20b97,734","overlap":"Across 5 funds"},{"name":"EQ- REC","sector":"Finance","weight":1.9,"val":"\u20b97,575","overlap":"Across 3 funds"},{"name":"EQ- NMDC","sector":"Minerals & Mining","weight":1.88,"val":"\u20b97,495","overlap":"Across 4 funds"},{"name":"EQ- UPL","sector":"Fertilizers & Agrochemicals","weight":1.82,"val":"\u20b97,256","overlap":"Across 5 funds"},{"name":"EQ- CANARA BANK","sector":"Banks","weight":1.77,"val":"\u20b97,057","overlap":"Across 4 funds"},{"name":"EQ- PUNJAB NATIONAL BANK","sector":"Banks","weight":1.76,"val":"\u20b97,017","overlap":"Across 4 funds"},{"name":"EQ- INDUSIND BANK","sector":"Banks","weight":1.74,"val":"\u20b96,937","overlap":"Across 7 funds"},{"name":"EQ- STEEL AUTHORITY OF INDIA","sector":"Ferrous Metals","weight":1.73,"val":"\u20b96,897","overlap":"Across 3 funds"},{"name":"EQ- NATIONAL ALUMINIUM CO","sector":"Non - Ferrous Metals","weight":1.64,"val":"\u20b96,538","overlap":"Across 3 funds"}]},"122639":{"name":"Parag Parikh Flexi Cap","count":"101 Positions","weight":"4.0%","val":"\u20b93.96L","top10":"51.1%","assets":{"equity":90.0,"debt":3.9,"cash":4.7,"arb":1.4,"commodity":0.0},"tiers":{"large":66.7,"mid":3.5,"small":7.9},"stocks":[{"name":"HDFC Bank","sector":"Banks","weight":7.73,"val":"\u20b930,641","overlap":"Across 10 funds"},{"name":"Power Grid Corporation of India","sector":"Power","weight":5.59,"val":"\u20b922,141","overlap":"Across 6 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":5.48,"val":"\u20b921,706","overlap":"Across 10 funds"},{"name":"Coal India","sector":"Consumable Fuels","weight":5.38,"val":"\u20b921,310","overlap":"Across 8 funds"},{"name":"ICICI Bank","sector":"Banks","weight":5.23,"val":"\u20b920,717","overlap":"Across 10 funds"},{"name":"Bajaj Holdings & Investment","sector":"Finance","weight":4.95,"val":"\u20b919,610","overlap":"Across 3 funds"},{"name":"Kotak Mahindra Bank","sector":"Banks","weight":4.43,"val":"\u20b917,554","overlap":"Across 9 funds"},{"name":"Alphabet Inc A","sector":"Computer Software: Programming, Data Processing","weight":4.28,"val":"\u20b916,961","overlap":"Exclusive"},{"name":"Cash","sector":"Cash","weight":4.08,"val":"\u20b916,170","overlap":"Across 27 funds"},{"name":"HCL Technologies","sector":"IT - Software","weight":3.95,"val":"\u20b915,657","overlap":"Across 9 funds"},{"name":"Mahindra & Mahindra","sector":"Automobiles","weight":3.88,"val":"\u20b915,380","overlap":"Across 8 funds"},{"name":"Infosys","sector":"IT - Software","weight":2.92,"val":"\u20b911,584","overlap":"Across 10 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":2.9,"val":"\u20b911,505","overlap":"Across 9 funds"},{"name":"Axis Bank","sector":"Banks","weight":2.84,"val":"\u20b911,268","overlap":"Across 10 funds"},{"name":"Meta Platforms Registered Shares A","sector":"Computer Software: Programming, Data Processing","weight":2.82,"val":"\u20b911,189","overlap":"Exclusive"},{"name":"Tata Consultancy Services","sector":"IT - Software","weight":2.49,"val":"\u20b99,884","overlap":"Across 9 funds"},{"name":"Embassy Office Parks REIT","sector":"Realty","weight":2.48,"val":"\u20b99,845","overlap":"Across 5 funds"},{"name":"Microsoft Corp","sector":"Computer Software: Prepackaged Software","weight":2.47,"val":"\u20b99,805","overlap":"Exclusive"},{"name":"DLF","sector":"Realty","weight":2.44,"val":"\u20b99,686","overlap":"Across 4 funds"},{"name":"Maruti Suzuki India","sector":"Automobiles","weight":2.39,"val":"\u20b99,489","overlap":"Across 8 funds"},{"name":"Amazon Com Inc","sector":"Catalog/Specialty Distribution","weight":2.29,"val":"\u20b99,093","overlap":"Exclusive"},{"name":"Knowledge Realty Trust","sector":"Realty","weight":2.17,"val":"\u20b98,619","overlap":"Exclusive"},{"name":"Brookfield India Real Estate Trust","sector":"Realty","weight":1.6,"val":"\u20b96,326","overlap":"Across 4 funds"},{"name":"Zydus Lifesciences","sector":"Pharmaceuticals & Biotechnology","weight":1.54,"val":"\u20b96,089","overlap":"Across 3 funds"},{"name":"Cipla","sector":"Pharmaceuticals & Biotechnology","weight":1.33,"val":"\u20b95,258","overlap":"Across 9 funds"}]},"118482":{"name":"Bandhan Nifty 50","count":"51 Positions","weight":"4.0%","val":"\u20b93.89L","top10":"52.1%","assets":{"equity":99.6,"debt":0.0,"cash":0.4,"arb":0.0,"commodity":0.0},"tiers":{"large":99.6,"mid":0.0,"small":0.0},"stocks":[{"name":"HDFC Bank","sector":"Banks","weight":10.34,"val":"\u20b940,232","overlap":"Across 10 funds"},{"name":"ICICI Bank","sector":"Banks","weight":9.01,"val":"\u20b935,077","overlap":"Across 10 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":7.55,"val":"\u20b929,379","overlap":"Across 10 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":5.09,"val":"\u20b919,806","overlap":"Across 9 funds"},{"name":"Larsen & Toubro","sector":"Construction","weight":4.19,"val":"\u20b916,317","overlap":"Across 9 funds"},{"name":"State Bank of India","sector":"Banks","weight":3.78,"val":"\u20b914,690","overlap":"Across 11 funds"},{"name":"Axis Bank","sector":"Banks","weight":3.36,"val":"\u20b913,062","overlap":"Across 10 funds"},{"name":"Infosys","sector":"IT - Software","weight":3.35,"val":"\u20b913,023","overlap":"Across 10 funds"},{"name":"Kotak Mahindra Bank","sector":"Banks","weight":2.92,"val":"\u20b911,356","overlap":"Across 9 funds"},{"name":"Mahindra & Mahindra","sector":"Automobiles","weight":2.51,"val":"\u20b99,767","overlap":"Across 8 funds"},{"name":"Bajaj Finance","sector":"Finance","weight":2.49,"val":"\u20b99,690","overlap":"Across 7 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":2.41,"val":"\u20b99,380","overlap":"Across 10 funds"},{"name":"Eternal","sector":"Retailing","weight":2.21,"val":"\u20b98,604","overlap":"Across 7 funds"},{"name":"Tata Consultancy Services","sector":"IT - Software","weight":1.99,"val":"\u20b97,752","overlap":"Across 9 funds"},{"name":"Sun Pharmaceutical Industries","sector":"Pharmaceuticals & Biotechnology","weight":1.83,"val":"\u20b97,132","overlap":"Across 8 funds"},{"name":"Titan Company","sector":"Consumer Durables","weight":1.8,"val":"\u20b97,015","overlap":"Across 6 funds"},{"name":"Hindustan UNILever","sector":"Diversified FMCG","weight":1.58,"val":"\u20b96,163","overlap":"Across 7 funds"},{"name":"Maruti Suzuki India","sector":"Automobiles","weight":1.48,"val":"\u20b95,775","overlap":"Across 8 funds"},{"name":"NTPC","sector":"Power","weight":1.46,"val":"\u20b95,698","overlap":"Across 8 funds"},{"name":"Tata Steel","sector":"Ferrous Metals","weight":1.45,"val":"\u20b95,659","overlap":"Across 9 funds"},{"name":"Adani Ports and Special Economic Zone","sector":"Transport Infrastructure","weight":1.34,"val":"\u20b95,232","overlap":"Across 6 funds"},{"name":"Bharat Electronics","sector":"Aerospace & Defense","weight":1.32,"val":"\u20b95,155","overlap":"Across 6 funds"},{"name":"Shriram Finance","sector":"Finance","weight":1.31,"val":"\u20b95,116","overlap":"Across 5 funds"},{"name":"Hindalco Industries","sector":"Non - Ferrous Metals","weight":1.29,"val":"\u20b95,039","overlap":"Across 8 funds"},{"name":"UltraTech Cement","sector":"Cement & Cement Products","weight":1.24,"val":"\u20b94,806","overlap":"Across 7 funds"}]},"152814":{"name":"DSP Nifty Top 10 Equal Weight","count":"11 Positions","weight":"4.0%","val":"\u20b93.91L","top10":"99.8%","assets":{"equity":99.8,"debt":0.0,"cash":0.2,"arb":0.0,"commodity":0.0},"tiers":{"large":99.8,"mid":0.0,"small":0.0},"stocks":[{"name":"Kotak Mahindra Bank","sector":"Banks","weight":10.44,"val":"\u20b940,813","overlap":"Across 9 funds"},{"name":"Axis Bank","sector":"Banks","weight":10.14,"val":"\u20b939,642","overlap":"Across 10 funds"},{"name":"ICICI Bank","sector":"Banks","weight":10.08,"val":"\u20b939,407","overlap":"Across 10 funds"},{"name":"Infosys","sector":"IT - Software","weight":10.05,"val":"\u20b939,290","overlap":"Across 10 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":9.95,"val":"\u20b938,900","overlap":"Across 9 funds"},{"name":"State Bank of India","sector":"Banks","weight":9.89,"val":"\u20b938,665","overlap":"Across 11 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":9.88,"val":"\u20b938,626","overlap":"Across 10 funds"},{"name":"Larsen & Toubro","sector":"Construction","weight":9.81,"val":"\u20b938,353","overlap":"Across 9 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":9.79,"val":"\u20b938,275","overlap":"Across 10 funds"},{"name":"HDFC Bank","sector":"Banks","weight":9.74,"val":"\u20b938,079","overlap":"Across 10 funds"},{"name":"Cash","sector":"Cash","weight":0.25,"val":"\u20b9976","overlap":"Across 27 funds"}]},"119779":{"name":"Kotak Global Emerging","count":"2 Positions","weight":"3.7%","val":"\u20b93.66L","top10":"100.0%","assets":{"equity":97.9,"debt":0.0,"cash":2.1,"arb":0.0,"commodity":0.0},"tiers":{"large":0.0,"mid":0.0,"small":0.0},"stocks":[{"name":"CI Emerging Markets Fund I- 974","sector":"Overseas Mutual Fund","weight":97.93,"val":"\u20b93,58,520","overlap":"Exclusive"},{"name":"Cash","sector":"Cash","weight":2.07,"val":"\u20b97,567","overlap":"Across 27 funds"}]},"152735":{"name":"SBI Silver","count":"2 Positions","weight":"3.6%","val":"\u20b93.58L","top10":"100.0%","assets":{"equity":0.0,"debt":0.0,"cash":0.3,"arb":0.0,"commodity":99.7},"tiers":{"large":0.0,"mid":0.0,"small":0.0},"stocks":[{"name":"SBI Silver ETF","sector":"Mutual Fund/ETF","weight":99.67,"val":"\u20b93,56,957","overlap":"Exclusive"},{"name":"Cash","sector":"Cash","weight":0.33,"val":"\u20b91,176","overlap":"Across 27 funds"}]},"147622":{"name":"Motilal Oswal Nifty Midcap 150","count":"151 Positions","weight":"3.6%","val":"\u20b93.52L","top10":"16.7%","assets":{"equity":99.3,"debt":0.0,"cash":0.7,"arb":0.0,"commodity":0.0},"tiers":{"large":0.0,"mid":99.3,"small":0.0},"stocks":[{"name":"Multi Commodity Exchange of India","sector":"Capital Markets","weight":2.06,"val":"\u20b97,270","overlap":"Across 2 funds"},{"name":"The Federal Bank","sector":"Banks","weight":1.91,"val":"\u20b96,746","overlap":"Across 4 funds"},{"name":"Laurus Labs","sector":"Pharmaceuticals & Biotechnology","weight":1.88,"val":"\u20b96,641","overlap":"Across 2 funds"},{"name":"One 97 Communications","sector":"Financial Technology (Fintech)","weight":1.77,"val":"\u20b96,222","overlap":"Across 3 funds"},{"name":"Hero MotoCorp","sector":"Automobiles","weight":1.67,"val":"\u20b95,872","overlap":"Across 4 funds"},{"name":"The Indian Hotels Company","sector":"Leisure Services","weight":1.57,"val":"\u20b95,523","overlap":"Across 4 funds"},{"name":"Coforge","sector":"IT - Software","weight":1.49,"val":"\u20b95,243","overlap":"Across 3 funds"},{"name":"Bharat Heavy Electricals","sector":"Electrical Equipment","weight":1.48,"val":"\u20b95,208","overlap":"Across 2 funds"},{"name":"IndusInd Bank","sector":"Banks","weight":1.45,"val":"\u20b95,103","overlap":"Across 7 funds"},{"name":"AU Small Finance Bank","sector":"Banks","weight":1.44,"val":"\u20b95,068","overlap":"Across 4 funds"},{"name":"Persistent Systems","sector":"IT - Software","weight":1.41,"val":"\u20b94,963","overlap":"Across 4 funds"},{"name":"Dixon Technologies (India)","sector":"Consumer Durables","weight":1.33,"val":"\u20b94,684","overlap":"Across 4 funds"},{"name":"IDFC First Bank","sector":"Banks","weight":1.32,"val":"\u20b94,649","overlap":"Across 3 funds"},{"name":"Bharat Forge","sector":"Auto Components","weight":1.31,"val":"\u20b94,614","overlap":"Across 4 funds"},{"name":"GE Vernova T&D India","sector":"Electrical Equipment","weight":1.27,"val":"\u20b94,474","overlap":"Across 3 funds"},{"name":"Lenskart Solutions","sector":"Retailing","weight":1.23,"val":"\u20b94,334","overlap":"Exclusive"},{"name":"Life Insurance Corporation Of India","sector":"Insurance","weight":1.23,"val":"\u20b94,334","overlap":"Across 5 funds"},{"name":"Lupin","sector":"Pharmaceuticals & Biotechnology","weight":1.21,"val":"\u20b94,264","overlap":"Across 5 funds"},{"name":"Suzlon Energy","sector":"Electrical Equipment","weight":1.17,"val":"\u20b94,125","overlap":"Across 2 funds"},{"name":"Indus Towers","sector":"Telecom - Services","weight":1.17,"val":"\u20b94,125","overlap":"Across 5 funds"},{"name":"Info Edge India","sector":"Retailing","weight":1.15,"val":"\u20b94,055","overlap":"Across 5 funds"},{"name":"Aurobindo Pharma","sector":"Pharmaceuticals & Biotechnology","weight":1.13,"val":"\u20b93,985","overlap":"Across 5 funds"},{"name":"Ashok Leyland","sector":"Agricultural, Commercial & Construction Vehicles","weight":1.08,"val":"\u20b93,810","overlap":"Across 4 funds"},{"name":"FSN E-Commerce Ventures","sector":"Retailing","weight":1.07,"val":"\u20b93,775","overlap":"Across 5 funds"},{"name":"Marico","sector":"Agricultural Food & other Products","weight":1.02,"val":"\u20b93,600","overlap":"Across 3 funds"}]},"130503":{"name":"HDFC Small Cap","count":"86 Positions","weight":"3.4%","val":"\u20b93.33L","top10":"33.5%","assets":{"equity":90.0,"debt":0.0,"cash":10.0,"arb":0.0,"commodity":0.0},"tiers":{"large":4.6,"mid":11.1,"small":74.3},"stocks":[{"name":"Cash","sector":"Cash","weight":10.02,"val":"\u20b933,333","overlap":"Across 27 funds"},{"name":"Firstsource Solutions","sector":"Commercial Services & Supplies","weight":3.68,"val":"\u20b912,230","overlap":"Across 2 funds"},{"name":"Aster DM Quality Care","sector":"Healthcare Services","weight":3.37,"val":"\u20b911,199","overlap":"Across 6 funds"},{"name":"Gabriel India","sector":"Auto Components","weight":3.09,"val":"\u20b910,269","overlap":"Across 2 funds"},{"name":"eClerx Services","sector":"Commercial Services & Supplies","weight":2.92,"val":"\u20b99,704","overlap":"Across 2 funds"},{"name":"Bank of Baroda","sector":"Banks","weight":2.65,"val":"\u20b98,807","overlap":"Across 5 funds"},{"name":"Krishna Institute Of Medical Sciences","sector":"Healthcare Services","weight":2.04,"val":"\u20b96,780","overlap":"Across 2 funds"},{"name":"Apar Industries","sector":"Electrical Equipment","weight":1.92,"val":"\u20b96,381","overlap":"Across 4 funds"},{"name":"Indian Bank","sector":"Banks","weight":1.91,"val":"\u20b96,347","overlap":"Across 5 funds"},{"name":"PEARL GLOBAL INDUSTRIES","sector":"Textiles & Apparels","weight":1.9,"val":"\u20b96,314","overlap":"Exclusive"},{"name":"Eris Lifesciences","sector":"Pharmaceuticals & Biotechnology","weight":1.89,"val":"\u20b96,281","overlap":"Exclusive"},{"name":"Home First Finance Company India","sector":"Finance","weight":1.76,"val":"\u20b95,849","overlap":"Across 3 funds"},{"name":"PVR","sector":"Entertainment","weight":1.75,"val":"\u20b95,816","overlap":"Across 4 funds"},{"name":"Great Eastern Shipping Company","sector":"Transport Services","weight":1.73,"val":"\u20b95,749","overlap":"Across 3 funds"},{"name":"Sudarshan Chemical Industries","sector":"Chemicals & Petrochemicals","weight":1.71,"val":"\u20b95,683","overlap":"Exclusive"},{"name":"Vijaya Diagnostic Centre","sector":"Healthcare Services","weight":1.63,"val":"\u20b95,417","overlap":"Across 3 funds"},{"name":"Chalet Hotels","sector":"Leisure Services","weight":1.62,"val":"\u20b95,384","overlap":"Exclusive"},{"name":"The Federal Bank","sector":"Banks","weight":1.61,"val":"\u20b95,350","overlap":"Across 4 funds"},{"name":"Kalpataru Projects International","sector":"Construction","weight":1.57,"val":"\u20b95,218","overlap":"Across 5 funds"},{"name":"City Union Bank","sector":"Banks","weight":1.48,"val":"\u20b94,918","overlap":"Across 3 funds"},{"name":"Suprajit Engineering","sector":"Auto Components","weight":1.4,"val":"\u20b94,653","overlap":"Exclusive"},{"name":"Redington","sector":"Commercial Services & Supplies","weight":1.35,"val":"\u20b94,486","overlap":"Across 4 funds"},{"name":"Power Mech Projects","sector":"Construction","weight":1.34,"val":"\u20b94,453","overlap":"Exclusive"},{"name":"Timken India","sector":"Industrial Products","weight":1.34,"val":"\u20b94,453","overlap":"Across 5 funds"},{"name":"JSW Dulux","sector":"Consumer Durables","weight":1.32,"val":"\u20b94,387","overlap":"Across 2 funds"}]},"118968":{"name":"HDFC Balanced Advantage","count":"326 Positions","weight":"3.0%","val":"\u20b92.97L","top10":"30.3%","assets":{"equity":74.8,"debt":24.0,"cash":1.3,"arb":0.0,"commodity":0.0},"tiers":{"large":53.4,"mid":11.6,"small":9.8},"stocks":[{"name":"ICICI Bank","sector":"Banks","weight":5.06,"val":"\u20b915,032","overlap":"Across 10 funds"},{"name":"HDFC Bank","sector":"Banks","weight":4.32,"val":"\u20b912,833","overlap":"Across 10 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":3.64,"val":"\u20b910,813","overlap":"Across 10 funds"},{"name":"State Bank of India","sector":"Banks","weight":3.28,"val":"\u20b99,744","overlap":"Across 11 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":3.05,"val":"\u20b99,061","overlap":"Across 9 funds"},{"name":"Axis Bank","sector":"Banks","weight":2.65,"val":"\u20b97,872","overlap":"Across 10 funds"},{"name":"Larsen and Toubro","sector":"Construction","weight":2.52,"val":"\u20b97,486","overlap":"Across 9 funds"},{"name":"7.18% GOI MAT 140833","sector":"Sovereign","weight":2.04,"val":"\u20b96,060","overlap":"Exclusive"},{"name":"NTPC","sector":"Power","weight":2.0,"val":"\u20b95,941","overlap":"Across 8 funds"},{"name":"Coal India","sector":"Consumable Fuels","weight":1.77,"val":"\u20b95,258","overlap":"Across 8 funds"},{"name":"Eternal","sector":"Retailing","weight":1.68,"val":"\u20b94,991","overlap":"Across 7 funds"},{"name":"Kotak Mahindra Bank","sector":"Banks","weight":1.58,"val":"\u20b94,694","overlap":"Across 9 funds"},{"name":"Sun Pharmaceutical Industries","sector":"Pharmaceuticals & Biotechnology","weight":1.55,"val":"\u20b94,605","overlap":"Across 8 funds"},{"name":"Infosys","sector":"IT - Software","weight":1.45,"val":"\u20b94,307","overlap":"Across 10 funds"},{"name":"Maruti Suzuki India","sector":"Automobiles","weight":1.42,"val":"\u20b94,218","overlap":"Across 8 funds"},{"name":"Cash","sector":"Cash","weight":1.28,"val":"\u20b93,802","overlap":"Across 27 funds"},{"name":"HCL Technologies","sector":"IT - Software","weight":1.21,"val":"\u20b93,595","overlap":"Across 9 funds"},{"name":"InterGlobe Aviation","sector":"Transport Services","weight":1.18,"val":"\u20b93,505","overlap":"Across 6 funds"},{"name":"Life Insurance Corporation of India","sector":"Insurance","weight":1.17,"val":"\u20b93,476","overlap":"Across 5 funds"},{"name":"Lupin","sector":"Pharmaceuticals & Biotechnology","weight":1.13,"val":"\u20b93,357","overlap":"Across 5 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":1.1,"val":"\u20b93,268","overlap":"Across 10 funds"},{"name":"Tata Consultancy Services","sector":"IT - Software","weight":1.08,"val":"\u20b93,208","overlap":"Across 9 funds"},{"name":"SBI Life Insurance Company","sector":"Insurance","weight":0.88,"val":"\u20b92,614","overlap":"Across 7 funds"},{"name":"Embassy Office Parks REIT","sector":"Realty","weight":0.83,"val":"\u20b92,466","overlap":"Across 5 funds"},{"name":"GAIL (India)","sector":"Gas","weight":0.82,"val":"\u20b92,436","overlap":"Across 5 funds"}]},"147623":{"name":"Motilal Oswal Nifty Smallcap 250","count":"252 Positions","weight":"2.4%","val":"\u20b92.38L","top10":"12.7%","assets":{"equity":99.6,"debt":0.0,"cash":0.4,"arb":0.0,"commodity":0.0},"tiers":{"large":0.0,"mid":0.0,"small":99.6},"stocks":[{"name":"Sona BLW Precision Forgings","sector":"Auto Components","weight":1.66,"val":"\u20b93,946","overlap":"Across 4 funds"},{"name":"Welspun Corp","sector":"Industrial Products","weight":1.59,"val":"\u20b93,780","overlap":"Exclusive"},{"name":"Karur Vysya Bank","sector":"Banks","weight":1.37,"val":"\u20b93,261","overlap":"Across 3 funds"},{"name":"Navin Fluorine International","sector":"Chemicals & Petrochemicals","weight":1.35,"val":"\u20b93,213","overlap":"Exclusive"},{"name":"Ather Energy","sector":"Automobiles","weight":1.2,"val":"\u20b92,859","overlap":"Across 2 funds"},{"name":"Sterlite Technologies","sector":"Telecom - Equipment & Accessories","weight":1.18,"val":"\u20b92,812","overlap":"Exclusive"},{"name":"RBL Bank","sector":"Banks","weight":1.11,"val":"\u20b92,646","overlap":"Across 2 funds"},{"name":"Delhivery","sector":"Transport Services","weight":1.1,"val":"\u20b92,623","overlap":"Across 5 funds"},{"name":"Redington","sector":"Commercial Services & Supplies","weight":1.07,"val":"\u20b92,552","overlap":"Across 4 funds"},{"name":"HFCL","sector":"Telecom - Services","weight":1.03,"val":"\u20b92,457","overlap":"Exclusive"},{"name":"Gland Pharma","sector":"Pharmaceuticals & Biotechnology","weight":1.03,"val":"\u20b92,457","overlap":"Across 4 funds"},{"name":"Central Depository Services (India)","sector":"Capital Markets","weight":1.0,"val":"\u20b92,386","overlap":"Across 3 funds"},{"name":"Brookfield India Real Estate Trust","sector":"(c)","weight":1.0,"val":"\u20b92,386","overlap":"Across 4 funds"},{"name":"City Union Bank","sector":"Banks","weight":0.97,"val":"\u20b92,315","overlap":"Across 3 funds"},{"name":"Sai Life Sciences","sector":"Pharmaceuticals & Biotechnology","weight":0.95,"val":"\u20b92,245","overlap":"Across 2 funds"},{"name":"PNB Housing Finance","sector":"Finance","weight":0.94,"val":"\u20b92,221","overlap":"Across 2 funds"},{"name":"Cupid","sector":"Personal Products","weight":0.94,"val":"\u20b92,221","overlap":"Exclusive"},{"name":"Sansera Engineering","sector":"Auto Components","weight":0.9,"val":"\u20b92,126","overlap":"Exclusive"},{"name":"Krishna Institute Of Medical Sciences","sector":"Healthcare Services","weight":0.89,"val":"\u20b92,103","overlap":"Across 2 funds"},{"name":"Anand Rathi Wealth","sector":"Capital Markets","weight":0.87,"val":"\u20b92,056","overlap":"Across 2 funds"},{"name":"Kirloskar Oil Engines","sector":"Industrial Products","weight":0.86,"val":"\u20b92,032","overlap":"Exclusive"},{"name":"Neuland Laboratories","sector":"Pharmaceuticals & Biotechnology","weight":0.83,"val":"\u20b91,961","overlap":"Exclusive"},{"name":"TD Power Systems","sector":"Electrical Equipment","weight":0.8,"val":"\u20b91,890","overlap":"Exclusive"},{"name":"Angel One","sector":"Capital Markets","weight":0.8,"val":"\u20b91,890","overlap":"Across 2 funds"},{"name":"Bandhan Bank","sector":"Banks","weight":0.79,"val":"\u20b91,867","overlap":"Across 5 funds"}]},"119835":{"name":"SBI Contra","count":"95 Positions","weight":"2.1%","val":"\u20b92.05L","top10":"36.8%","assets":{"equity":91.4,"debt":2.2,"cash":6.4,"arb":0.0,"commodity":0.0},"tiers":{"large":46.7,"mid":29.0,"small":13.3},"stocks":[{"name":"Cash","sector":"Cash","weight":6.36,"val":"\u20b913,036","overlap":"Across 27 funds"},{"name":"HDFC Bank","sector":"Banks","weight":4.76,"val":"\u20b99,756","overlap":"Across 10 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":4.64,"val":"\u20b99,512","overlap":"Across 10 funds"},{"name":"ICICI Bank","sector":"Banks","weight":4.33,"val":"\u20b98,881","overlap":"Across 10 funds"},{"name":"Biocon","sector":"Pharmaceuticals & Biotechnology","weight":3.27,"val":"\u20b96,701","overlap":"Across 4 funds"},{"name":"Kotak Mahindra Bank","sector":"Banks","weight":3.13,"val":"\u20b96,416","overlap":"Across 9 funds"},{"name":"Punjab National Bank","sector":"Banks","weight":2.89,"val":"\u20b95,927","overlap":"Across 4 funds"},{"name":"Indus Towers","sector":"Telecom - Services","weight":2.64,"val":"\u20b95,418","overlap":"Across 5 funds"},{"name":"Torrent Power","sector":"Power","weight":2.46,"val":"\u20b95,051","overlap":"Across 3 funds"},{"name":"GAIL (India)","sector":"Gas","weight":2.32,"val":"\u20b94,746","overlap":"Across 5 funds"},{"name":"Tata Steel","sector":"Ferrous Metals","weight":2.12,"val":"\u20b94,338","overlap":"Across 9 funds"},{"name":"Mahindra & Mahindra Financial Services","sector":"Finance","weight":1.94,"val":"\u20b93,972","overlap":"Across 3 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":1.8,"val":"\u20b93,687","overlap":"Across 10 funds"},{"name":"Tech Mahindra","sector":"IT - Software","weight":1.78,"val":"\u20b93,646","overlap":"Across 7 funds"},{"name":"State Bank of India","sector":"Banks","weight":1.59,"val":"\u20b93,259","overlap":"Across 11 funds"},{"name":"Dabur India","sector":"Personal Products","weight":1.58,"val":"\u20b93,239","overlap":"Across 5 funds"},{"name":"JSW Infrastructure","sector":"Transport Infrastructure","weight":1.57,"val":"\u20b93,218","overlap":"Across 3 funds"},{"name":"FSN E-Commerce Ventures","sector":"Retailing","weight":1.57,"val":"\u20b93,218","overlap":"Across 5 funds"},{"name":"Bandhan Bank","sector":"Banks","weight":1.45,"val":"\u20b92,974","overlap":"Across 5 funds"},{"name":"Aster DM Quality Care","sector":"Healthcare Services","weight":1.41,"val":"\u20b92,892","overlap":"Across 6 funds"},{"name":"Bajaj Auto","sector":"Automobiles","weight":1.34,"val":"\u20b92,750","overlap":"Across 7 funds"},{"name":"Axis Bank","sector":"Banks","weight":1.32,"val":"\u20b92,709","overlap":"Across 10 funds"},{"name":"Cognizant Technology Solutions Corporation","sector":"IT - Services","weight":1.31,"val":"\u20b92,689","overlap":"Across 2 funds"},{"name":"Delhivery","sector":"Transport Services","weight":1.25,"val":"\u20b92,566","overlap":"Across 5 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":1.22,"val":"\u20b92,505","overlap":"Across 9 funds"}]},"150141":{"name":"HDFC Silver","count":"1 Positions","weight":"1.2%","val":"\u20b91.14L","top10":"100.0%","assets":{"equity":0.0,"debt":0.0,"cash":0.0,"arb":0.0,"commodity":100.0},"tiers":{"large":0.0,"mid":0.0,"small":0.0},"stocks":[{"name":"Physical Silver / Silver ETF","sector":"Precious Metals","weight":100.0,"val":"\u20b91,13,637","overlap":"Exclusive"}]}};
+
+    function onSchemeSelectChange(code) {
+      renderSchemeHoldings(code);
+    }
+
+    function renderSchemeHoldings(code) {
+      const data = SCHEME_HOLDINGS_DB[code] || SCHEME_HOLDINGS_DB['OVERALL'];
+      document.getElementById('schHoldingsCount').textContent = data.count;
+      document.getElementById('schWeightVal').textContent = data.weight;
+      document.getElementById('schPortVal').textContent = data.val;
+      document.getElementById('schTop10Val').textContent = data.top10;
+
+      // Reset search filter on fund change
+      const searchInput = document.getElementById('schemeStockSearch');
+      if (searchInput) searchInput.value = '';
+
+      // 1. RENDER ASSET ALLOCATION (SINGLE CLEAN LEGEND BELOW, NO DUPLICATE ABOVE)
+      const a = data.assets;
+      const assetBar = document.getElementById('schAssetBar');
+      const assetChips = document.getElementById('schAssetChips');
+      
+      let barHtml = '';
+      let chipsHtml = '';
+
+      if (a.equity > 0) {
+        barHtml += `<div class="bg-sky-400 h-full" style="width: ${a.equity}%"></div>`;
+        chipsHtml += `<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-400"></span> Eq: <b>${a.equity}%</b></span>`;
+      }
+      if (a.debt > 0) {
+        barHtml += `<div class="bg-emerald-400 h-full" style="width: ${a.debt}%"></div>`;
+        chipsHtml += `<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Debt: <b>${a.debt}%</b></span>`;
+      }
+      if (a.arb > 0) {
+        barHtml += `<div class="bg-amber-400 h-full" style="width: ${a.arb}%"></div>`;
+        chipsHtml += `<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Arb: <b>${a.arb}%</b></span>`;
+      }
+      if (a.cash > 0) {
+        barHtml += `<div class="bg-slate-400 h-full" style="width: ${a.cash}%"></div>`;
+        chipsHtml += `<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-slate-400"></span> Cash: <b>${a.cash}%</b></span>`;
+      }
+      if (a.commodity > 0) {
+        barHtml += `<div class="bg-yellow-400 h-full" style="width: ${a.commodity}%"></div>`;
+        chipsHtml += `<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-yellow-400"></span> Gold: <b>${a.commodity}%</b></span>`;
+      }
+
+      assetBar.innerHTML = barHtml || '<div class="bg-slate-700 h-full w-full"></div>';
+      assetChips.innerHTML = chipsHtml;
+
+      // 2. RENDER EQUITY TIERS (SINGLE CLEAN LEGEND BELOW, NO DUPLICATE ABOVE)
+      const t = data.tiers;
+      const tierBox = document.getElementById('schTierBox');
+      const tierBar = document.getElementById('schTierBar');
+      const tierChips = document.getElementById('schTierChips');
+
+      if (a.equity === 0) {
+        tierBox.style.display = 'none';
+      } else {
+        tierBox.style.display = 'block';
+        tierBar.innerHTML = `
+          <div class="bg-emerald-400 h-full" style="width: ${t.large}%"></div>
+          <div class="bg-amber-400 h-full" style="width: ${t.mid}%"></div>
+          <div class="bg-purple-400 h-full" style="width: ${t.small}%"></div>
+        `;
+        tierChips.innerHTML = `
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Large: <b>${t.large}%</b></span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Mid: <b>${t.mid}%</b></span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Small: <b>${t.small}%</b></span>
+        `;
+      }
+
+      // 3. RENDER STOCKS TABLE
+      const container = document.getElementById('schemeHoldingsList');
+      container.innerHTML = '';
+
+      data.stocks.forEach((s, idx) => {
+        const row = document.createElement('div');
+        row.className = 'p-3 flex justify-between items-center hover:bg-white/[0.02] transition-colors scheme-stock-row';
+        row.setAttribute('data-name', s.name.toLowerCase());
+        row.setAttribute('data-sector', s.sector.toLowerCase());
+
+        row.innerHTML = `
+          <div class="pr-2">
+            <div class="font-bold text-white flex items-center gap-1.5">
+              <span>${idx + 1}. ${s.name}</span>
+            </div>
+            <div class="text-[11px] text-slate-400 mt-0.5">${s.sector}</div>
+          </div>
+          <div class="text-right num whitespace-nowrap">
+            <div class="font-extrabold text-white text-xs">${s.weight}% <span class="text-slate-400 font-normal">(${s.val})</span></div>
+            <span class="text-[10px] px-1.5 py-0.2 rounded font-mono font-semibold ${s.overlap === 'Exclusive' ? 'bg-purple-500/20 text-purple-300' : 'bg-sky-500/15 text-sky-300'} mt-0.5 inline-block">${s.overlap}</span>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    const PORTFOLIO_MASTER_STOCKS = [{"name":"HDFC Bank","sector":"Banks","weight":2.75,"val":"\u20b92.71L","overlap":"Across 10 funds"},{"name":"ICICI Bank","sector":"Banks","weight":2.47,"val":"\u20b92.44L","overlap":"Across 10 funds"},{"name":"Reliance Industries","sector":"Petroleum Products","weight":1.89,"val":"\u20b91.87L","overlap":"Across 10 funds"},{"name":"Axis Bank","sector":"Banks","weight":1.66,"val":"\u20b91.64L","overlap":"Across 10 funds"},{"name":"Bharti Airtel","sector":"Telecom - Services","weight":1.38,"val":"\u20b91.36L","overlap":"Across 9 funds"},{"name":"State Bank of India","sector":"Banks","weight":1.38,"val":"\u20b91.36L","overlap":"Across 11 funds"},{"name":"Infosys","sector":"IT - Software","weight":1.26,"val":"\u20b91.25L","overlap":"Across 10 funds"},{"name":"ITC","sector":"Diversified FMCG","weight":1.23,"val":"\u20b91.21L","overlap":"Across 10 funds"},{"name":"Kotak Mahindra Bank","sector":"Banks","weight":1.17,"val":"\u20b91.15L","overlap":"Across 9 funds"},{"name":"Larsen & Toubro","sector":"Construction","weight":1.06,"val":"\u20b91.04L","overlap":"Across 9 funds"},{"name":"Coal India","sector":"Consumable Fuels","weight":0.8,"val":"\u20b90.79L","overlap":"Across 8 funds"},{"name":"NTPC","sector":"Power","weight":0.7,"val":"\u20b90.69L","overlap":"Across 8 funds"},{"name":"Mahindra & Mahindra","sector":"Automobiles","weight":0.62,"val":"\u20b90.61L","overlap":"Across 8 funds"},{"name":"Power Grid Corporation of India","sector":"Power","weight":0.6,"val":"\u20b90.59L","overlap":"Across 6 funds"},{"name":"Hindalco Industries","sector":"Non - Ferrous Metals","weight":0.59,"val":"\u20b90.58L","overlap":"Across 8 funds"},{"name":"Maruti Suzuki India","sector":"Automobiles","weight":0.53,"val":"\u20b90.52L","overlap":"Across 8 funds"},{"name":"Tata Consultancy Services","sector":"IT - Software","weight":0.53,"val":"\u20b90.52L","overlap":"Across 9 funds"},{"name":"Tata Steel","sector":"Ferrous Metals","weight":0.51,"val":"\u20b90.50L","overlap":"Across 9 funds"},{"name":"Bajaj Finance","sector":"Finance","weight":0.49,"val":"\u20b90.49L","overlap":"Across 7 funds"},{"name":"HCL Technologies","sector":"IT - Software","weight":0.46,"val":"\u20b90.45L","overlap":"Across 9 funds"},{"name":"Oil & Natural Gas Corporation","sector":"Oil","weight":0.45,"val":"\u20b90.44L","overlap":"Across 9 funds"},{"name":"Eternal","sector":"Retailing","weight":0.42,"val":"\u20b90.42L","overlap":"Across 7 funds"},{"name":"Tata Motors Passenger Vehicles","sector":"Automobiles","weight":0.42,"val":"\u20b90.41L","overlap":"Across 8 funds"},{"name":"Divis Laboratories","sector":"Pharmaceuticals and Biotechnology","weight":0.42,"val":"\u20b90.41L","overlap":"Across 5 funds"},{"name":"Grasim Industries","sector":"Cement & Cement Products","weight":0.41,"val":"\u20b90.41L","overlap":"Across 7 funds"},{"name":"Sun Pharmaceutical Industries","sector":"Pharmaceuticals & Biotechnology","weight":0.41,"val":"\u20b90.40L","overlap":"Across 8 funds"},{"name":"Hindustan UNILever","sector":"Diversified FMCG","weight":0.39,"val":"\u20b90.38L","overlap":"Across 7 funds"},{"name":"InterGlobe Aviation","sector":"Transport Services","weight":0.38,"val":"\u20b90.37L","overlap":"Across 6 funds"},{"name":"Bajaj Finserv","sector":"Finance","weight":0.37,"val":"\u20b90.37L","overlap":"Across 7 funds"},{"name":"BHARAT PETROLEUM CORPORATION","sector":"Petroleum Products","weight":0.37,"val":"\u20b90.36L","overlap":"Across 5 funds"},{"name":"Life Insurance Corporation Of India","sector":"Insurance","weight":0.36,"val":"\u20b90.36L","overlap":"Across 5 funds"},{"name":"The Federal Bank","sector":"Banks","weight":0.35,"val":"\u20b90.35L","overlap":"Across 4 funds"},{"name":"BANK OF BARODA","sector":"Banks","weight":0.35,"val":"\u20b90.34L","overlap":"Across 5 funds"},{"name":"INDIAN OIL CORPORATION","sector":"Petroleum Products","weight":0.35,"val":"\u20b90.34L","overlap":"Across 4 funds"},{"name":"ADANI POWER","sector":"Power","weight":0.33,"val":"\u20b90.32L","overlap":"Across 2 funds"},{"name":"VEDANTA","sector":"Diversified Metals","weight":0.33,"val":"\u20b90.32L","overlap":"Across 3 funds"},{"name":"TVS Motor Company","sector":"Automobiles","weight":0.32,"val":"\u20b90.32L","overlap":"Across 5 funds"},{"name":"Power Finance Corporation","sector":"Finance","weight":0.32,"val":"\u20b90.31L","overlap":"Across 5 funds"},{"name":"SAMVARDHANA MOTHERSON INTERNATIONAL","sector":"Auto Components","weight":0.31,"val":"\u20b90.30L","overlap":"Across 4 funds"},{"name":"Tech Mahindra","sector":"IT - Software","weight":0.31,"val":"\u20b90.30L","overlap":"Across 7 funds"},{"name":"GAIL (India)","sector":"Gas","weight":0.31,"val":"\u20b90.30L","overlap":"Across 5 funds"},{"name":"Bajaj Auto","sector":"Automobiles","weight":0.31,"val":"\u20b90.30L","overlap":"Across 7 funds"},{"name":"Cummins India","sector":"Industrial Products","weight":0.31,"val":"\u20b90.30L","overlap":"Across 4 funds"},{"name":"Bajaj Holdings and Investment","sector":"Finance","weight":0.3,"val":"\u20b90.30L","overlap":"Across 3 funds"},{"name":"Cipla","sector":"Pharmaceuticals & Biotechnology","weight":0.3,"val":"\u20b90.29L","overlap":"Across 9 funds"},{"name":"Aster DM Quality Care","sector":"Healthcare Services","weight":0.29,"val":"\u20b90.29L","overlap":"Across 6 funds"},{"name":"Hindustan Petroleum Corp","sector":"Petroleum Products","weight":0.29,"val":"\u20b90.29L","overlap":"Across 6 funds"},{"name":"Au Small Finance Bank","sector":"Banks","weight":0.28,"val":"\u20b90.28L","overlap":"Across 4 funds"},{"name":"Avenue Supermarts","sector":"Retailing","weight":0.28,"val":"\u20b90.28L","overlap":"Across 5 funds"},{"name":"JSW Steel","sector":"Ferrous Metals","weight":0.28,"val":"\u20b90.27L","overlap":"Across 7 funds"}];
+
+    function renderLtStocks() {
+      const container = document.getElementById('ltStocksMasterList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      PORTFOLIO_MASTER_STOCKS.forEach((s, idx) => {
+        const row = document.createElement('div');
+        row.className = 'p-3 flex justify-between items-center hover:bg-white/[0.02] transition-colors lt-stock-row';
+        row.setAttribute('data-name', s.name.toLowerCase());
+        row.setAttribute('data-sector', s.sector.toLowerCase());
+        row.setAttribute('data-overlap', s.overlap.toLowerCase());
+
+        row.innerHTML = `
+          <div class="pr-2">
+            <div class="font-bold text-white flex items-center gap-1.5">
+              <span>${idx + 1}. ${s.name}</span>
+            </div>
+            <div class="text-[11px] text-slate-400 mt-0.5">${s.sector}</div>
+          </div>
+          <div class="text-right num whitespace-nowrap">
+            <div class="font-extrabold text-white text-xs">${s.weight}% <span class="text-slate-400 font-normal">(${s.val})</span></div>
+            <span class="text-[10px] px-1.5 py-0.2 rounded font-mono font-semibold bg-sky-500/15 text-sky-300 mt-0.5 inline-block">${s.overlap}</span>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function filterLtStocks(query) {
+      const q = query.toLowerCase().trim();
+      const rows = document.querySelectorAll('.lt-stock-row');
+      rows.forEach(r => {
+        const name = r.getAttribute('data-name');
+        const sector = r.getAttribute('data-sector');
+        const overlap = r.getAttribute('data-overlap');
+        if (!q || name.includes(q) || sector.includes(q) || overlap.includes(q)) {
+          r.style.display = 'flex';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    }
+
+    function filterSchemeStocks(query) {
+      const q = query.toLowerCase().trim();
+      const rows = document.querySelectorAll('.scheme-stock-row');
+      rows.forEach(r => {
+        const name = r.getAttribute('data-name');
+        const sector = r.getAttribute('data-sector');
+        if (!q || name.includes(q) || sector.includes(q)) {
+          r.style.display = 'flex';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderLtStocks();
+      renderSchemeHoldings('119771');
+      renderMonthlyPurchases('OVERALL');
+    });
+    // Fallback immediate initialization
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      renderLtStocks();
+      renderSchemeHoldings('119771');
+      renderMonthlyPurchases('OVERALL');
+    }
+  </script>
+</body>
+</html>
