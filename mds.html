@@ -71,11 +71,11 @@
       <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">Total Portfolio</div>
       
       <div class="flex items-baseline justify-between gap-2">
-        <div class="text-3xl font-extrabold text-white num tracking-tight">
-          ₹98,48,624
+        <div id="heroMarketValue" class="text-3xl font-extrabold text-white num tracking-tight">
+          ₹98.78L
         </div>
-        <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-500/15 text-rose-400 border-rose-500/25 font-bold text-xs num border">
-          ▼ ₹51,517 <span class="opacity-75">(-0.52%)</span>
+        <div id="heroDayChange" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border-emerald-500/25 font-bold text-xs num border">
+          ▲ ₹20K <span class="opacity-75">(+0.21%)</span>
         </div>
       </div>
 
@@ -83,15 +83,15 @@
       <div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-white/5 text-center">
         <div>
           <div class="text-[10px] uppercase font-bold text-slate-400">True XIRR</div>
-          <div class="text-sm font-bold text-amber-400 num mt-0.5">7.3%</div>
+          <div id="heroXirr" class="text-sm font-bold text-amber-400 num mt-0.5">7.3%</div>
         </div>
         <div>
           <div class="text-[10px] uppercase font-bold text-slate-400">Total Profit</div>
-          <div class="text-sm font-bold text-emerald-400 num mt-0.5">+₹8.14L</div>
+          <div id="heroTotalProfit" class="text-sm font-bold text-emerald-400 num mt-0.5">+₹8.43L</div>
         </div>
         <div>
           <div class="text-[10px] uppercase font-bold text-slate-400">Net Invested</div>
-          <div class="text-sm font-bold text-slate-200 num mt-0.5">₹90.35L</div>
+          <div id="heroNetInvested" class="text-sm font-bold text-slate-200 num mt-0.5">₹90.35L</div>
         </div>
       </div>
 
@@ -289,28 +289,28 @@
           <!-- Fund Dropdown with Overall default and all funds kept -->
           <select id="purchaseFundSelect" onchange="renderMonthlyPurchases(this.value)" class="bg-[#111723] text-xs font-semibold text-white border border-white/10 rounded-xl px-2.5 py-1.5 focus:outline-hidden max-w-[210px] truncate">
             <option value="OVERALL" selected>Overall (All Funds)</option>
-            <option value="119771">Kotak Arbitrage (₹10.74L)</option>
-            <option value="119788">SBI Gold (₹9.64L)</option>
-            <option value="118551">Franklin US Opportunities (₹7.22L)</option>
-            <option value="120334">ICICI Prudential Multi-Asset (₹6.95L)</option>
+            <option value="119771">Kotak Arbitrage (₹10.75L)</option>
+            <option value="119788">SBI Gold (₹9.67L)</option>
+            <option value="118551">Franklin US Opportunities (₹7.19L)</option>
+            <option value="120334">ICICI Prudential Multi-Asset (₹7.01L)</option>
             <option value="148745">Kotak Nifty Next 50 (₹4.96L)</option>
-            <option value="141877">DSP Nifty 50 Equal Weight (₹4.34L)</option>
-            <option value="148485">Axis Global Equity Alpha (₹4.18L)</option>
+            <option value="141877">DSP Nifty 50 Equal Weight (₹4.40L)</option>
+            <option value="148485">Axis Global Equity Alpha (₹4.15L)</option>
             <option value="118989">HDFC Mid-Cap (₹4.13L)</option>
-            <option value="118650">Nippon India Multi Cap (₹4.01L)</option>
+            <option value="118482">Bandhan Nifty 50 - Regular (₹4.04L)</option>
+            <option value="118650">Nippon India Multi Cap (₹4.03L)</option>
+            <option value="152814">DSP Nifty Top 10 Equal Weight (₹4.02L)</option>
+            <option value="122639">Parag Parikh Flexi Cap (₹4.02L)</option>
             <option value="151739">UTI Nifty 500 Value 50 (₹3.99L)</option>
-            <option value="122639">Parag Parikh Flexi Cap (₹3.96L)</option>
-            <option value="118482">Bandhan Nifty 50 - Regular (₹3.94L)</option>
-            <option value="152814">DSP Nifty Top 10 Equal Weight (₹3.91L)</option>
-            <option value="118482">Bandhan Nifty 50 (₹3.89L)</option>
-            <option value="119779">Kotak Global Emerging (₹3.66L)</option>
-            <option value="152735">SBI Silver (₹3.58L)</option>
-            <option value="147622">Motilal Oswal Nifty Midcap 150 (₹3.52L)</option>
-            <option value="130503">HDFC Small Cap (₹3.33L)</option>
-            <option value="118968">HDFC Balanced Advantage (₹2.97L)</option>
-            <option value="147623">Motilal Oswal Nifty Smallcap 250 (₹2.38L)</option>
-            <option value="119835">SBI Contra (₹2.05L)</option>
-            <option value="150141">HDFC Silver (₹1.14L)</option>
+            <option value="118482">Bandhan Nifty 50 (₹3.98L)</option>
+            <option value="119779">Kotak Global Emerging (₹3.55L)</option>
+            <option value="152735">SBI Silver (₹3.53L)</option>
+            <option value="147622">Motilal Oswal Nifty Midcap 150 (₹3.51L)</option>
+            <option value="130503">HDFC Small Cap (₹3.31L)</option>
+            <option value="118968">HDFC Balanced Advantage (₹3.00L)</option>
+            <option value="147623">Motilal Oswal Nifty Smallcap 250 (₹2.35L)</option>
+            <option value="119835">SBI Contra (₹2.07L)</option>
+            <option value="150141">HDFC Silver (₹1.12L)</option>
           </select>
         </div>
 
@@ -356,90 +356,85 @@
         <span class="text-xs text-slate-500">Tap to inspect purchases</span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
+      <div id="fundsListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
       <!-- Fund Row: Kotak Arbitrage -->
-      <div onclick="openFundDetail('Kotak Arbitrage', '119771', '₹10.74L', '10.9%', '6.6%', '₹10.00L', 'Equity: Liquid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Kotak Arbitrage', '119771', '₹10.75L', '10.9%', '6.7%', '₹10.00L', 'Equity: Liquid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Kotak Arbitrage</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Liquid</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">6.6% XIRR</span>
+            <span class="text-slate-300 font-semibold num">6.7% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹10.74L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.74L (+7.4%)</div>
+          <div class="text-sm font-extrabold text-white">₹10.75L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.75L (+7.5%)</div>
         </div>
       </div>
       <!-- Fund Row: SBI Gold -->
-      <div onclick="openFundDetail('SBI Gold', '119788', '₹9.64L', '9.8%', '17.5%', '₹8.55L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('SBI Gold', '119788', '₹9.67L', '9.8%', '17.8%', '₹8.55L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>SBI Gold</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Commo: Gold/Silver</span>
             <span>•</span>
-            <span class="text-emerald-400 font-semibold num">17.5% XIRR</span>
+            <span class="text-emerald-400 font-semibold num">17.8% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹9.64L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹1.09L (+12.7%)</div>
+          <div class="text-sm font-extrabold text-white">₹9.67L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹1.12L (+13.1%)</div>
         </div>
       </div>
       <!-- Fund Row: Franklin US Opportunities -->
-      <div onclick="openFundDetail('Franklin US Opportunities', '118551', '₹7.22L', '7.3%', '15.9%', '₹6.35L', 'Equity: US')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Franklin US Opportunities', '118551', '₹7.19L', '7.3%', '15.4%', '₹6.35L', 'Equity: US')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Franklin US Opportunities</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: US</span>
             <span>•</span>
-            <span class="text-emerald-400 font-semibold num">15.9% XIRR</span>
+            <span class="text-emerald-400 font-semibold num">15.4% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹7.22L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.87L (+13.6%)</div>
+          <div class="text-sm font-extrabold text-white">₹7.19L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.84L (+13.2%)</div>
         </div>
       </div>
       <!-- Fund Row: ICICI Prudential Multi-Asset -->
-      <div onclick="openFundDetail('ICICI Prudential Multi-Asset', '120334', '₹6.95L', '7.1%', '2.0%', '₹6.85L', 'Equity: Hybrid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('ICICI Prudential Multi-Asset', '120334', '₹7.01L', '7.1%', '3.0%', '₹6.85L', 'Equity: Hybrid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>ICICI Prudential Multi-Asset</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Hybrid</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">2.0% XIRR</span>
+            <span class="text-slate-300 font-semibold num">3.0% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹6.95L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.10L (+1.5%)</div>
+          <div class="text-sm font-extrabold text-white">₹7.01L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.16L (+2.3%)</div>
         </div>
       </div>
       <!-- Fund Row: Kotak Nifty Next 50 -->
-      <div onclick="openFundDetail('Kotak Nifty Next 50', '148745', '₹4.96L', '5.0%', '4.1%', '₹4.80L', 'Equity: Largecap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Kotak Nifty Next 50', '148745', '₹4.96L', '5.0%', '4.0%', '₹4.80L', 'Equity: Largecap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Kotak Nifty Next 50</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Largecap</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">4.1% XIRR</span>
+            <span class="text-slate-300 font-semibold num">4.0% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
@@ -448,39 +443,37 @@
         </div>
       </div>
       <!-- Fund Row: DSP Nifty 50 Equal Weight -->
-      <div onclick="openFundDetail('DSP Nifty 50 Equal Weight', '141877', '₹4.34L', '4.4%', '0.8%', '₹4.30L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('DSP Nifty 50 Equal Weight', '141877', '₹4.40L', '4.5%', '1.9%', '₹4.30L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>DSP Nifty 50 Equal Weight</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: UltraLarge</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">0.8% XIRR</span>
+            <span class="text-slate-300 font-semibold num">1.9% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹4.34L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.04L (+0.9%)</div>
+          <div class="text-sm font-extrabold text-white">₹4.40L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.10L (+2.4%)</div>
         </div>
       </div>
       <!-- Fund Row: Axis Global Equity Alpha -->
-      <div onclick="openFundDetail('Axis Global Equity Alpha', '148485', '₹4.18L', '4.2%', '16.1%', '₹3.90L', 'Equity: Developed')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Axis Global Equity Alpha', '148485', '₹4.15L', '4.2%', '14.2%', '₹3.90L', 'Equity: Developed')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Axis Global Equity Alpha</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Developed</span>
             <span>•</span>
-            <span class="text-emerald-400 font-semibold num">16.1% XIRR</span>
+            <span class="text-amber-400 font-semibold num">14.2% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹4.18L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.28L (+7.2%)</div>
+          <div class="text-sm font-extrabold text-white">₹4.15L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.25L (+6.5%)</div>
         </div>
       </div>
       <!-- Fund Row: HDFC Mid-Cap -->
@@ -488,7 +481,6 @@
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>HDFC Mid-Cap</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Midcap</span>
@@ -498,259 +490,245 @@
         </div>
         <div class="text-right num">
           <div class="text-sm font-extrabold text-white">₹4.13L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.73L (+21.5%)</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.73L (+21.6%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Bandhan Nifty 50 - Regular -->
+      <div onclick="openFundDetail('Bandhan Nifty 50 - Regular', '118482', '₹4.04L', '4.1%', '11.8%', '₹1.63L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Bandhan Nifty 50 - Regular</span>
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: UltraLarge</span>
+            <span>•</span>
+            <span class="text-amber-400 font-semibold num">11.8% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.04L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹2.41L (+147.6%)</div>
         </div>
       </div>
       <!-- Fund Row: Nippon India Multi Cap -->
-      <div onclick="openFundDetail('Nippon India Multi Cap', '118650', '₹4.01L', '4.1%', '-1.1%', '₹4.05L', 'Equity: Flexi/Multi')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Nippon India Multi Cap', '118650', '₹4.03L', '4.1%', '-0.6%', '₹4.05L', 'Equity: Flexi/Multi')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Nippon India Multi Cap</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Flexi/Multi</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">-1.1% XIRR</span>
+            <span class="text-rose-400 font-semibold num">-0.6% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹4.01L</div>
-          <div class="text-xs text-rose-400 font-semibold mt-0.5">₹0.04L (-1.0%)</div>
+          <div class="text-sm font-extrabold text-white">₹4.03L</div>
+          <div class="text-xs text-rose-400 font-semibold mt-0.5">-₹0.02L (-0.6%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: DSP Nifty Top 10 Equal Weight -->
+      <div onclick="openFundDetail('DSP Nifty Top 10 Equal Weight', '152814', '₹4.02L', '4.1%', '-6.2%', '₹4.32L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>DSP Nifty Top 10 Equal Weight</span>
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: UltraLarge</span>
+            <span>•</span>
+            <span class="text-rose-400 font-semibold num">-6.2% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.02L</div>
+          <div class="text-xs text-rose-400 font-semibold mt-0.5">-₹0.30L (-6.8%)</div>
+        </div>
+      </div>
+      <!-- Fund Row: Parag Parikh Flexi Cap -->
+      <div onclick="openFundDetail('Parag Parikh Flexi Cap', '122639', '₹4.02L', '4.1%', '1.5%', '₹3.95L', 'Equity: Flexi/Multi')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>Parag Parikh Flexi Cap</span>
+          </div>
+          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <span>Equity: Flexi/Multi</span>
+            <span>•</span>
+            <span class="text-slate-300 font-semibold num">1.5% XIRR</span>
+          </div>
+        </div>
+        <div class="text-right num">
+          <div class="text-sm font-extrabold text-white">₹4.02L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.07L (+1.7%)</div>
         </div>
       </div>
       <!-- Fund Row: UTI Nifty 500 Value 50 -->
-      <div onclick="openFundDetail('UTI Nifty 500 Value 50', '151739', '₹3.99L', '4.1%', '2.5%', '₹3.92L', 'Equity: Value')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('UTI Nifty 500 Value 50', '151739', '₹3.99L', '4.0%', '2.4%', '₹3.92L', 'Equity: Value')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>UTI Nifty 500 Value 50</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Value</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">2.5% XIRR</span>
+            <span class="text-slate-300 font-semibold num">2.4% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
           <div class="text-sm font-extrabold text-white">₹3.99L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.07L (+1.9%)</div>
-        </div>
-      </div>
-      <!-- Fund Row: Parag Parikh Flexi Cap -->
-      <div onclick="openFundDetail('Parag Parikh Flexi Cap', '122639', '₹3.96L', '4.0%', '0.4%', '₹3.95L', 'Equity: Flexi/Multi')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
-        <div>
-          <div class="text-sm font-bold text-white flex items-center gap-1.5">
-            <span>Parag Parikh Flexi Cap</span>
-            
-          </div>
-          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
-            <span>Equity: Flexi/Multi</span>
-            <span>•</span>
-            <span class="text-slate-300 font-semibold num">0.4% XIRR</span>
-          </div>
-        </div>
-        <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.96L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.01L (+0.3%)</div>
-        </div>
-      </div>
-      <!-- Fund Row: Bandhan Nifty 50 - Regular -->
-      <div onclick="openFundDetail('Bandhan Nifty 50 - Regular', '118482', '₹3.94L', '4.0%', '11.4%', '₹1.63L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
-        <div>
-          <div class="text-sm font-bold text-white flex items-center gap-1.5">
-            <span>Bandhan Nifty 50 - Regular</span>
-            
-          </div>
-          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
-            <span>Equity: UltraLarge</span>
-            <span>•</span>
-            <span class="text-amber-400 font-semibold num">11.4% XIRR</span>
-          </div>
-        </div>
-        <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.94L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹2.31L (+142.0%)</div>
-        </div>
-      </div>
-      <!-- Fund Row: DSP Nifty Top 10 Equal Weight -->
-      <div onclick="openFundDetail('DSP Nifty Top 10 Equal Weight', '152814', '₹3.91L', '4.0%', '-8.7%', '₹4.32L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
-        <div>
-          <div class="text-sm font-bold text-white flex items-center gap-1.5">
-            <span>DSP Nifty Top 10 Equal Weight</span>
-            
-          </div>
-          <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
-            <span>Equity: UltraLarge</span>
-            <span>•</span>
-            <span class="text-slate-300 font-semibold num">-8.7% XIRR</span>
-          </div>
-        </div>
-        <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.91L</div>
-          <div class="text-xs text-rose-400 font-semibold mt-0.5">₹0.41L (-9.5%)</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.07L (+1.8%)</div>
         </div>
       </div>
       <!-- Fund Row: Bandhan Nifty 50 -->
-      <div onclick="openFundDetail('Bandhan Nifty 50', '118482', '₹3.89L', '4.0%', '0.5%', '₹3.85L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Bandhan Nifty 50', '118482', '₹3.98L', '4.0%', '1.6%', '₹3.85L', 'Equity: UltraLarge')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Bandhan Nifty 50</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: UltraLarge</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">0.5% XIRR</span>
+            <span class="text-slate-300 font-semibold num">1.6% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.89L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.04L (+1.1%)</div>
+          <div class="text-sm font-extrabold text-white">₹3.98L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.13L (+3.4%)</div>
         </div>
       </div>
       <!-- Fund Row: Kotak Global Emerging -->
-      <div onclick="openFundDetail('Kotak Global Emerging', '119779', '₹3.66L', '3.7%', '8.1%', '₹3.55L', 'Equity: Emerging')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Kotak Global Emerging', '119779', '₹3.55L', '3.6%', '0.2%', '₹3.55L', 'Equity: Emerging')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Kotak Global Emerging</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Emerging</span>
             <span>•</span>
-            <span class="text-amber-400 font-semibold num">8.1% XIRR</span>
+            <span class="text-slate-300 font-semibold num">0.2% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.66L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.11L (+3.1%)</div>
+          <div class="text-sm font-extrabold text-white">₹3.55L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.00L (+0.1%)</div>
         </div>
       </div>
       <!-- Fund Row: SBI Silver -->
-      <div onclick="openFundDetail('SBI Silver', '152735', '₹3.58L', '3.6%', '49.0%', '₹2.15L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-emerald-500/20 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('SBI Silver', '152735', '₹3.53L', '3.6%', '47.2%', '₹2.15L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>SBI Silver</span>
-            <span class='w-1.5 h-1.5 rounded-full bg-emerald-400'></span>
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Commo: Gold/Silver</span>
             <span>•</span>
-            <span class="text-emerald-400 font-semibold num">49.0% XIRR</span>
+            <span class="text-emerald-400 font-semibold num">47.2% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.58L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹1.43L (+66.6%)</div>
+          <div class="text-sm font-extrabold text-white">₹3.53L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹1.38L (+64.4%)</div>
         </div>
       </div>
       <!-- Fund Row: Motilal Oswal Nifty Midcap 150 -->
-      <div onclick="openFundDetail('Motilal Oswal Nifty Midcap 150', '147622', '₹3.52L', '3.6%', '2.2%', '₹3.45L', 'Equity: Midcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Motilal Oswal Nifty Midcap 150', '147622', '₹3.51L', '3.6%', '1.8%', '₹3.45L', 'Equity: Midcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Motilal Oswal Nifty Midcap 150</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Midcap</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">2.2% XIRR</span>
+            <span class="text-slate-300 font-semibold num">1.8% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.52L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.07L (+2.1%)</div>
+          <div class="text-sm font-extrabold text-white">₹3.51L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.06L (+1.7%)</div>
         </div>
       </div>
       <!-- Fund Row: HDFC Small Cap -->
-      <div onclick="openFundDetail('HDFC Small Cap', '130503', '₹3.33L', '3.4%', '5.1%', '₹3.03L', 'Equity: Smallcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('HDFC Small Cap', '130503', '₹3.31L', '3.3%', '4.7%', '₹3.03L', 'Equity: Smallcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>HDFC Small Cap</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Smallcap</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">5.1% XIRR</span>
+            <span class="text-slate-300 font-semibold num">4.7% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹3.33L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.30L (+9.8%)</div>
+          <div class="text-sm font-extrabold text-white">₹3.31L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.28L (+9.1%)</div>
         </div>
       </div>
       <!-- Fund Row: HDFC Balanced Advantage -->
-      <div onclick="openFundDetail('HDFC Balanced Advantage', '118968', '₹2.97L', '3.0%', '0.6%', '₹2.95L', 'Equity: Hybrid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('HDFC Balanced Advantage', '118968', '₹3.00L', '3.0%', '1.5%', '₹2.95L', 'Equity: Hybrid')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>HDFC Balanced Advantage</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Hybrid</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">0.6% XIRR</span>
+            <span class="text-slate-300 font-semibold num">1.5% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹2.97L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.02L (+0.7%)</div>
+          <div class="text-sm font-extrabold text-white">₹3.00L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.05L (+1.8%)</div>
         </div>
       </div>
       <!-- Fund Row: Motilal Oswal Nifty Smallcap 250 -->
-      <div onclick="openFundDetail('Motilal Oswal Nifty Smallcap 250', '147623', '₹2.38L', '2.4%', '3.7%', '₹2.25L', 'Equity: Smallcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('Motilal Oswal Nifty Smallcap 250', '147623', '₹2.35L', '2.4%', '2.9%', '₹2.25L', 'Equity: Smallcap')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>Motilal Oswal Nifty Smallcap 250</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Smallcap</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">3.7% XIRR</span>
+            <span class="text-slate-300 font-semibold num">2.9% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹2.38L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.13L (+5.6%)</div>
+          <div class="text-sm font-extrabold text-white">₹2.35L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.10L (+4.4%)</div>
         </div>
       </div>
       <!-- Fund Row: SBI Contra -->
-      <div onclick="openFundDetail('SBI Contra', '119835', '₹2.05L', '2.1%', '-2.5%', '₹2.10L', 'Equity: Value')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('SBI Contra', '119835', '₹2.07L', '2.1%', '-1.6%', '₹2.10L', 'Equity: Value')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>SBI Contra</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Equity: Value</span>
             <span>•</span>
-            <span class="text-slate-300 font-semibold num">-2.5% XIRR</span>
+            <span class="text-rose-400 font-semibold num">-1.6% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹2.05L</div>
-          <div class="text-xs text-rose-400 font-semibold mt-0.5">₹0.05L (-2.4%)</div>
+          <div class="text-sm font-extrabold text-white">₹2.07L</div>
+          <div class="text-xs text-rose-400 font-semibold mt-0.5">-₹0.03L (-1.6%)</div>
         </div>
       </div>
       <!-- Fund Row: HDFC Silver -->
-      <div onclick="openFundDetail('HDFC Silver', '150141', '₹1.14L', '1.2%', '13.6%', '₹1.00L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
+      <div onclick="openFundDetail('HDFC Silver', '150141', '₹1.12L', '1.1%', '12.1%', '₹1.00L', 'Commo: Gold/Silver')" class="tap-active bg-[#0e131d] hover:bg-[#131b29] border border-white/5 rounded-2xl p-3.5 transition-all cursor-pointer flex items-center justify-between shadow-sm">
         <div>
           <div class="text-sm font-bold text-white flex items-center gap-1.5">
             <span>HDFC Silver</span>
-            
           </div>
           <div class="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
             <span>Commo: Gold/Silver</span>
             <span>•</span>
-            <span class="text-amber-400 font-semibold num">13.6% XIRR</span>
+            <span class="text-amber-400 font-semibold num">12.1% XIRR</span>
           </div>
         </div>
         <div class="text-right num">
-          <div class="text-sm font-extrabold text-white">₹1.14L</div>
-          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.14L (+13.6%)</div>
+          <div class="text-sm font-extrabold text-white">₹1.12L</div>
+          <div class="text-xs text-emerald-400 font-semibold mt-0.5">+₹0.12L (+12.2%)</div>
         </div>
       </div>
       </div>
@@ -795,21 +773,22 @@
               <span>Actual vs Target (Drift)</span>
             </div>
             
+            <div id="segmentsListContainer" class="space-y-3.5">
             <div onclick="openSegmentDetail('Equity: UltraLarge')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
               <div class="flex justify-between items-center text-xs">
                 <div class="flex items-center gap-1.5">
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#4f86f7; color:#4f86f7; background:#4f86f715">Equity: UltraLarge</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹16.09L <span class="text-slate-400 font-normal text-[11px]">(16.3%)</span></span>
+                <span class="font-extrabold text-white num">₹16.44L <span class="text-slate-400 font-normal text-[11px]">(16.6%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
                 <div class="h-full rounded-full" style="width:100.0%; background:#4f86f7"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:92.0%; top:-2px; bottom:-2px; z-index:2;" title="Target: 15.0%"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:90.4%; top:-2px; bottom:-2px; z-index:2;" title="Target: 15.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">15.0%</b></span>
-                <span class="text-[10px] font-mono text-rose-400 font-semibold bg-rose-500/10 border border-rose-500/20 px-1.5 py-0.5 rounded">Over (+1.3%)</span>
+                <span class="text-[10px] font-mono text-rose-400 font-semibold bg-rose-500/10 border border-rose-500/20 px-1.5 py-0.5 rounded">Over (+1.6%)</span>
               </div>
             </div>
             <div onclick="openSegmentDetail('Commo: Gold/Silver')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
@@ -818,15 +797,15 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#34d399; color:#34d399; background:#34d39915">Commo: Gold/Silver</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹14.35L <span class="text-slate-400 font-normal text-[11px]">(14.6%)</span></span>
+                <span class="font-extrabold text-white num">₹14.32L <span class="text-slate-400 font-normal text-[11px]">(14.5%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:89.6%; background:#34d399"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:92.0%; top:-2px; bottom:-2px; z-index:2;" title="Target: 15.0%"></div>
+                <div class="h-full rounded-full" style="width:87.4%; background:#34d399"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:90.4%; top:-2px; bottom:-2px; z-index:2;" title="Target: 15.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">15.0%</b></span>
-                <span class="text-[10px] font-mono text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded">Balanced (-0.4%)</span>
+                <span class="text-[10px] font-mono text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded">Balanced (-0.5%)</span>
               </div>
             </div>
             <div onclick="openSegmentDetail('Equity: Liquid')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
@@ -835,11 +814,11 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#a78bfa; color:#a78bfa; background:#a78bfa15">Equity: Liquid</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹10.74L <span class="text-slate-400 font-normal text-[11px]">(10.9%)</span></span>
+                <span class="font-extrabold text-white num">₹10.75L <span class="text-slate-400 font-normal text-[11px]">(10.9%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:66.9%; background:#a78bfa"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:61.3%; top:-2px; bottom:-2px; z-index:2;" title="Target: 10.0%"></div>
+                <div class="h-full rounded-full" style="width:65.6%; background:#a78bfa"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:60.2%; top:-2px; bottom:-2px; z-index:2;" title="Target: 10.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">10.0%</b></span>
@@ -852,11 +831,11 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#f59e0b; color:#f59e0b; background:#f59e0b15">Equity: Hybrid</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹9.92L <span class="text-slate-400 font-normal text-[11px]">(10.1%)</span></span>
+                <span class="font-extrabold text-white num">₹10.01L <span class="text-slate-400 font-normal text-[11px]">(10.1%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:62.0%; background:#f59e0b"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:61.3%; top:-2px; bottom:-2px; z-index:2;" title="Target: 10.0%"></div>
+                <div class="h-full rounded-full" style="width:61.0%; background:#f59e0b"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:60.2%; top:-2px; bottom:-2px; z-index:2;" title="Target: 10.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">10.0%</b></span>
@@ -869,11 +848,11 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#f87171; color:#f87171; background:#f8717115">Equity: Flexi/Multi</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹7.97L <span class="text-slate-400 font-normal text-[11px]">(8.1%)</span></span>
+                <span class="font-extrabold text-white num">₹8.04L <span class="text-slate-400 font-normal text-[11px]">(8.1%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:49.7%; background:#f87171"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:49.1%; top:-2px; bottom:-2px; z-index:2;" title="Target: 8.0%"></div>
+                <div class="h-full rounded-full" style="width:49.1%; background:#f87171"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:48.2%; top:-2px; bottom:-2px; z-index:2;" title="Target: 8.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">8.0%</b></span>
@@ -886,15 +865,15 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#38bdf8; color:#38bdf8; background:#38bdf815">Equity: Midcap</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹7.65L <span class="text-slate-400 font-normal text-[11px]">(7.8%)</span></span>
+                <span class="font-extrabold text-white num">₹7.64L <span class="text-slate-400 font-normal text-[11px]">(7.7%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:47.9%; background:#38bdf8"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:61.3%; top:-2px; bottom:-2px; z-index:2;" title="Target: 10.0%"></div>
+                <div class="h-full rounded-full" style="width:46.6%; background:#38bdf8"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:60.2%; top:-2px; bottom:-2px; z-index:2;" title="Target: 10.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">10.0%</b></span>
-                <span class="text-[10px] font-mono text-amber-400 font-semibold bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">Under (-2.2%)</span>
+                <span class="text-[10px] font-mono text-amber-400 font-semibold bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">Under (-2.3%)</span>
               </div>
             </div>
             <div onclick="openSegmentDetail('Equity: US')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
@@ -903,11 +882,11 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#fbbf24; color:#fbbf24; background:#fbbf2415">Equity: US</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹7.22L <span class="text-slate-400 font-normal text-[11px]">(7.3%)</span></span>
+                <span class="font-extrabold text-white num">₹7.19L <span class="text-slate-400 font-normal text-[11px]">(7.3%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:44.8%; background:#fbbf24"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:42.9%; top:-2px; bottom:-2px; z-index:2;" title="Target: 7.0%"></div>
+                <div class="h-full rounded-full" style="width:43.9%; background:#fbbf24"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:42.2%; top:-2px; bottom:-2px; z-index:2;" title="Target: 7.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">7.0%</b></span>
@@ -920,11 +899,11 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#818cf8; color:#818cf8; background:#818cf815">Equity: Value</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹6.04L <span class="text-slate-400 font-normal text-[11px]">(6.1%)</span></span>
+                <span class="font-extrabold text-white num">₹6.06L <span class="text-slate-400 font-normal text-[11px]">(6.1%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:37.4%; background:#818cf8"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:36.8%; top:-2px; bottom:-2px; z-index:2;" title="Target: 6.0%"></div>
+                <div class="h-full rounded-full" style="width:36.9%; background:#818cf8"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:36.1%; top:-2px; bottom:-2px; z-index:2;" title="Target: 6.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">6.0%</b></span>
@@ -937,15 +916,15 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#2dd4bf; color:#2dd4bf; background:#2dd4bf15">Equity: Smallcap</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹5.70L <span class="text-slate-400 font-normal text-[11px]">(5.8%)</span></span>
+                <span class="font-extrabold text-white num">₹5.66L <span class="text-slate-400 font-normal text-[11px]">(5.7%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:35.6%; background:#2dd4bf"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:30.7%; top:-2px; bottom:-2px; z-index:2;" title="Target: 5.0%"></div>
+                <div class="h-full rounded-full" style="width:34.5%; background:#2dd4bf"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:30.1%; top:-2px; bottom:-2px; z-index:2;" title="Target: 5.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">5.0%</b></span>
-                <span class="text-[10px] font-mono text-rose-400 font-semibold bg-rose-500/10 border border-rose-500/20 px-1.5 py-0.5 rounded">Over (+0.8%)</span>
+                <span class="text-[10px] font-mono text-rose-400 font-semibold bg-rose-500/10 border border-rose-500/20 px-1.5 py-0.5 rounded">Over (+0.7%)</span>
               </div>
             </div>
             <div onclick="openSegmentDetail('Equity: Largecap')" class="space-y-1.5 pt-2 border-b border-white/5 pb-2.5 last:border-b-0 last:pb-0 cursor-pointer hover:bg-white/[0.04] active:scale-[0.99] transition-all rounded-xl p-2 -mx-2">
@@ -957,8 +936,8 @@
                 <span class="font-extrabold text-white num">₹4.96L <span class="text-slate-400 font-normal text-[11px]">(5.0%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:30.7%; background:#fb923c"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:30.7%; top:-2px; bottom:-2px; z-index:2;" title="Target: 5.0%"></div>
+                <div class="h-full rounded-full" style="width:30.2%; background:#fb923c"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:30.1%; top:-2px; bottom:-2px; z-index:2;" title="Target: 5.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">5.0%</b></span>
@@ -971,11 +950,11 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#60a5fa; color:#60a5fa; background:#60a5fa15">Equity: Developed</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹4.18L <span class="text-slate-400 font-normal text-[11px]">(4.2%)</span></span>
+                <span class="font-extrabold text-white num">₹4.15L <span class="text-slate-400 font-normal text-[11px]">(4.2%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:25.8%; background:#60a5fa"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:24.5%; top:-2px; bottom:-2px; z-index:2;" title="Target: 4.0%"></div>
+                <div class="h-full rounded-full" style="width:25.3%; background:#60a5fa"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:24.1%; top:-2px; bottom:-2px; z-index:2;" title="Target: 4.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">4.0%</b></span>
@@ -988,16 +967,17 @@
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold border" style="border-color:#c084fc; color:#c084fc; background:#c084fc15">Equity: Emerging</span>
                   <span class="text-[10px] text-slate-500 font-bold">›</span>
                 </div>
-                <span class="font-extrabold text-white num">₹3.66L <span class="text-slate-400 font-normal text-[11px]">(3.7%)</span></span>
+                <span class="font-extrabold text-white num">₹3.55L <span class="text-slate-400 font-normal text-[11px]">(3.6%)</span></span>
               </div>
               <div class="w-full h-2 bg-slate-800 rounded-full relative overflow-visible flex items-center my-1">
-                <div class="h-full rounded-full" style="width:22.7%; background:#c084fc"></div>
-                <div class="absolute w-1 bg-white rounded-full shadow" style="left:30.7%; top:-2px; bottom:-2px; z-index:2;" title="Target: 5.0%"></div>
+                <div class="h-full rounded-full" style="width:21.7%; background:#c084fc"></div>
+                <div class="absolute w-1 bg-white rounded-full shadow" style="left:30.1%; top:-2px; bottom:-2px; z-index:2;" title="Target: 5.0%"></div>
               </div>
               <div class="flex justify-between items-center text-[10px] text-slate-400">
                 <span>Target: <b class="text-slate-300 font-mono">5.0%</b></span>
-                <span class="text-[10px] font-mono text-amber-400 font-semibold bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">Under (-1.3%)</span>
+                <span class="text-[10px] font-mono text-amber-400 font-semibold bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">Under (-1.4%)</span>
               </div>
+            </div>
             </div>
           </div>
         </div>
@@ -1010,19 +990,19 @@
           </div>
 
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 shadow-sm">
-            <div class="w-full h-3 bg-slate-800 rounded-full flex overflow-hidden mb-3">
-              <div class="h-full" style="width:49.2%; background:#38bdf8" title="India Core Equity: 49.2%"></div><div class="h-full" style="width:21.0%; background:#34d399" title="India Defensive: 21.0%"></div><div class="h-full" style="width:15.3%; background:#818cf8" title="Global Equity: 15.3%"></div><div class="h-full" style="width:14.6%; background:#fbbf24" title="Gold/Silver: 14.6%"></div>
+            <div id="macroBucketsBar" class="w-full h-3 bg-slate-800 rounded-full flex overflow-hidden mb-3">
+              <div class="h-full" style="width:49%; background:#38bdf8" title="India Core Equity: 49%"></div><div class="h-full" style="width:21%; background:#34d399" title="India Defensive: 21%"></div><div class="h-full" style="width:15%; background:#818cf8" title="Global Equity: 15%"></div><div class="h-full" style="width:14%; background:#fbbf24" title="Gold/Silver: 14%"></div>
             </div>
 
             <!-- 2x2 Clean Macro Bucket Cards -->
-            <div class="grid grid-cols-2 gap-2 text-xs">
+            <div id="macroBucketsGrid" class="grid grid-cols-2 gap-2 text-xs">
               
               <div onclick="openBucketDetail('India Core Equity')" class="bg-[#131b29] hover:bg-[#182234] active:scale-[0.99] p-2.5 rounded-xl border border-white/5 cursor-pointer transition-all">
                 <div class="flex items-center justify-between text-[11px] mb-1">
                   <span class="font-bold flex items-center gap-1" style="color:#38bdf8">India Core Equity <span class="text-[10px] text-slate-500">›</span></span>
                   <span class="text-[10px] font-mono text-slate-300 font-semibold bg-white/5 px-1.5 rounded">49%</span>
                 </div>
-                <div class="text-sm font-extrabold text-white num">49.2% <span class="text-[10px] text-slate-400 font-normal">/ ₹48.41L</span></div>
+                <div class="text-sm font-extrabold text-white num">49% <span class="text-[10px] text-slate-400 font-normal">/ ₹48.40L</span></div>
                 <div class="text-[10px] text-slate-400 mt-1 line-clamp-1 truncate" title="UltraLarge, Largecap, Midcap, Smallcap, Flexi/Multi, Value">UltraLarge, Largecap, Midcap, Smallcap, Flexi/Multi, Value</div>
               </div>
               <div onclick="openBucketDetail('India Defensive')" class="bg-[#131b29] hover:bg-[#182234] active:scale-[0.99] p-2.5 rounded-xl border border-white/5 cursor-pointer transition-all">
@@ -1030,7 +1010,7 @@
                   <span class="font-bold flex items-center gap-1" style="color:#34d399">India Defensive <span class="text-[10px] text-slate-500">›</span></span>
                   <span class="text-[10px] font-mono text-slate-300 font-semibold bg-white/5 px-1.5 rounded">21%</span>
                 </div>
-                <div class="text-sm font-extrabold text-white num">21.0% <span class="text-[10px] text-slate-400 font-normal">/ ₹20.66L</span></div>
+                <div class="text-sm font-extrabold text-white num">21% <span class="text-[10px] text-slate-400 font-normal">/ ₹20.74L</span></div>
                 <div class="text-[10px] text-slate-400 mt-1 line-clamp-1 truncate" title="Hybrid, Liquid">Hybrid, Liquid</div>
               </div>
               <div onclick="openBucketDetail('Global Equity')" class="bg-[#131b29] hover:bg-[#182234] active:scale-[0.99] p-2.5 rounded-xl border border-white/5 cursor-pointer transition-all">
@@ -1038,15 +1018,15 @@
                   <span class="font-bold flex items-center gap-1" style="color:#818cf8">Global Equity <span class="text-[10px] text-slate-500">›</span></span>
                   <span class="text-[10px] font-mono text-slate-300 font-semibold bg-white/5 px-1.5 rounded">15%</span>
                 </div>
-                <div class="text-sm font-extrabold text-white num">15.3% <span class="text-[10px] text-slate-400 font-normal">/ ₹15.06L</span></div>
+                <div class="text-sm font-extrabold text-white num">15% <span class="text-[10px] text-slate-400 font-normal">/ ₹14.82L</span></div>
                 <div class="text-[10px] text-slate-400 mt-1 line-clamp-1 truncate" title="US, Emerging, Developed">US, Emerging, Developed</div>
               </div>
               <div onclick="openBucketDetail('Gold/Silver')" class="bg-[#131b29] hover:bg-[#182234] active:scale-[0.99] p-2.5 rounded-xl border border-white/5 cursor-pointer transition-all">
                 <div class="flex items-center justify-between text-[11px] mb-1">
                   <span class="font-bold flex items-center gap-1" style="color:#fbbf24">Gold/Silver <span class="text-[10px] text-slate-500">›</span></span>
-                  <span class="text-[10px] font-mono text-slate-300 font-semibold bg-white/5 px-1.5 rounded">15%</span>
+                  <span class="text-[10px] font-mono text-slate-300 font-semibold bg-white/5 px-1.5 rounded">14%</span>
                 </div>
-                <div class="text-sm font-extrabold text-white num">14.6% <span class="text-[10px] text-slate-400 font-normal">/ ₹14.35L</span></div>
+                <div class="text-sm font-extrabold text-white num">14% <span class="text-[10px] text-slate-400 font-normal">/ ₹13.83L</span></div>
                 <div class="text-[10px] text-slate-400 mt-1 line-clamp-1 truncate" title="Gold/Silver">Gold/Silver</div>
               </div>
             </div>
@@ -1057,10 +1037,9 @@
         <div>
           <div class="flex justify-between items-baseline mb-2 px-1">
             <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Portfolio &amp; Strategy Lenses</h2>
-            
           </div>
 
-          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3 shadow-sm text-xs">
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 shadow-sm text-xs">
             <!-- By Strategy & By Portfolio in 2 columns -->
             <div class="grid grid-cols-2 gap-2.5">
               <!-- By Strategy -->
@@ -1069,17 +1048,17 @@
                 <div class="space-y-1.5 font-mono">
                   <div class="flex justify-between text-xs">
                     <span class="text-slate-300">Active</span>
-                    <span class="text-emerald-400 font-bold">54%</span>
+                    <span id="stratActivePct" class="text-emerald-400 font-bold">54%</span>
                   </div>
                   <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-emerald-400 rounded-full" style="width: 54%"></div>
+                    <div id="stratActiveBar" class="h-full bg-emerald-400 rounded-full" style="width: 54%"></div>
                   </div>
                   <div class="flex justify-between text-xs pt-1">
                     <span class="text-slate-300">Passive</span>
-                    <span class="text-sky-400 font-bold">46%</span>
+                    <span id="stratPassivePct" class="text-sky-400 font-bold">46%</span>
                   </div>
                   <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-sky-400 rounded-full" style="width: 46%"></div>
+                    <div id="stratPassiveBar" class="h-full bg-sky-400 rounded-full" style="width: 46%"></div>
                   </div>
                 </div>
               </div>
@@ -1090,50 +1069,134 @@
                 <div class="space-y-1.5 font-mono">
                   <div class="flex justify-between text-xs">
                     <span class="text-slate-300">Core</span>
-                    <span class="text-emerald-400 font-bold">59%</span>
+                    <span id="portCorePct" class="text-emerald-400 font-bold">59%</span>
                   </div>
                   <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-emerald-400 rounded-full" style="width: 59%"></div>
+                    <div id="portCoreBar" class="h-full bg-emerald-400 rounded-full" style="width: 59%"></div>
                   </div>
                   <div class="flex justify-between text-xs pt-1">
                     <span class="text-slate-300">Satellite</span>
-                    <span class="text-sky-400 font-bold">41%</span>
+                    <span id="portSatPct" class="text-sky-400 font-bold">41%</span>
                   </div>
                   <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-sky-400 rounded-full" style="width: 41%"></div>
+                    <div id="portSatBar" class="h-full bg-sky-400 rounded-full" style="width: 41%"></div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- By RTA & Top AMCs -->
-            <div class="pt-2 border-t border-white/5 space-y-2 text-[11px]">
-              <div class="flex justify-between items-center">
-                <span class="text-slate-400">By RTA Custody:</span>
-                <span class="font-mono text-white font-semibold">CAMS: <b class="text-sky-400">74%</b> · KFIN: <b class="text-amber-400">26%</b></span>
-              </div>
-              <div class="flex justify-between items-baseline gap-2">
-                <span class="text-slate-400 flex-shrink-0">Top AMCs:</span>
-                <span class="font-mono text-slate-300 text-right truncate text-[10px]">Kotak (20%), SBI (16%), HDFC (12%), DSP (8%), Bandhan (8%), Franklin (7%)</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 4. EQUITY SECTORS (CLEAN, SCANNABLE BARS FROM LOOKTHROUGH) -->
+        <!-- 4. RTA CUSTODY CARD -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2 px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">RTA Custody</h2>
+            <span class="text-[11px] text-slate-500 font-mono">Registrars</span>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3 shadow-sm text-xs">
+            <div id="rtaSplitBar" class="w-full h-2 bg-slate-800 rounded-full flex overflow-hidden">
+              <div class="bg-sky-400 h-full" style="width: 74%" title="CAMS: 74%"></div>
+              <div class="bg-amber-400 h-full" style="width: 26%" title="KFintech: 26%"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 pt-1">
+              <div class="bg-[#131b29] p-2.5 rounded-xl border border-white/5">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-sky-400"></span> CAMS
+                  </span>
+                  <span id="rtaCamsPct" class="font-mono font-bold text-sky-400 text-xs">74%</span>
+                </div>
+                <div id="rtaCamsVal" class="text-[11px] text-slate-400 font-mono mt-1">₹73.59L</div>
+              </div>
+
+              <div class="bg-[#131b29] p-2.5 rounded-xl border border-white/5">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span> KFintech
+                  </span>
+                  <span id="rtaKfinPct" class="font-mono font-bold text-amber-400 text-xs">26%</span>
+                </div>
+                <div id="rtaKfinVal" class="text-[11px] text-slate-400 font-mono mt-1">₹25.19L</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. TOP AMCs CARD -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2 px-1">
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Top AMCs</h2>
+            <span class="text-[11px] text-slate-500 font-mono">12 Fund Houses</span>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3 shadow-sm text-xs">
+            <!-- Top 3 AMC Rows -->
+            <div id="topAmcRowsContainer" class="space-y-2.5">
+              <!-- #1 Kotak -->
+              <div class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all" onclick="openAmcModal()">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-[10px] font-mono font-bold">1</span>
+                    Kotak Mahindra AMC
+                  </span>
+                  <span class="font-mono font-extrabold text-white text-xs">20% <span class="text-slate-400 font-normal text-[11px]">(₹19.26L)</span></span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-sky-400 rounded-full" style="width: 100%"></div>
+                </div>
+              </div>
+              <!-- #2 SBI -->
+              <div class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all" onclick="openAmcModal()">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-mono font-bold">2</span>
+                    SBI Mutual Fund
+                  </span>
+                  <span class="font-mono font-extrabold text-white text-xs">16% <span class="text-slate-400 font-normal text-[11px]">(₹15.31L)</span></span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-emerald-400 rounded-full" style="width: 79%"></div>
+                </div>
+              </div>
+              <!-- #3 HDFC -->
+              <div class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all" onclick="openAmcModal()">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-[10px] font-mono font-bold">3</span>
+                    HDFC Mutual Fund
+                  </span>
+                  <span class="font-mono font-extrabold text-white text-xs">12% <span class="text-slate-400 font-normal text-[11px]">(₹11.56L)</span></span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-amber-400 rounded-full" style="width: 60%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tap action to open all 12 AMCs -->
+            <button onclick="openAmcModal()" class="w-full py-2 bg-[#131b29] hover:bg-white/10 active:scale-[0.99] rounded-xl text-center text-xs font-bold text-sky-400 border border-white/5 transition-all flex items-center justify-center gap-1.5 mt-1">
+              <span>View all 12 AMCs</span>
+              <span class="text-sm">›</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. EQUITY SECTORS (CLICK TO DRILL DOWN INTO SECURITIES) -->
         <div>
           <div class="flex justify-between items-baseline mb-2 px-1">
             <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Equity Sectors</h2>
-            
+            <span class="text-[11px] text-slate-500 font-mono">Tap for stocks</span>
           </div>
 
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3 shadow-sm text-xs">
             
-            <div>
+            <div onclick="openSectorDetail('Banks')" class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all active:scale-[0.99]" title="Click to view bank holdings">
               <div class="flex justify-between items-center mb-1.5">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full" style="background:#38bdf8"></span>
-                  <span class="font-bold text-white">Banks</span>
+                  <span class="font-bold text-white flex items-center gap-1">Banks <span class="text-[10px] text-sky-400">›</span></span>
                 </div>
                 <span class="font-extrabold text-white num">10.8% <span class="text-slate-400 font-normal text-[11px]">(₹10.62L)</span></span>
               </div>
@@ -1141,11 +1204,12 @@
                 <div class="h-full rounded-full" style="width: 26.9%; background:#38bdf8"></div>
               </div>
             </div>
-            <div>
+
+            <div onclick="openSectorDetail('Pharma & Healthcare')" class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all active:scale-[0.99]" title="Click to view pharma holdings">
               <div class="flex justify-between items-center mb-1.5">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full" style="background:#34d399"></span>
-                  <span class="font-bold text-white">Pharma & Healthcare</span>
+                  <span class="font-bold text-white flex items-center gap-1">Pharma &amp; Healthcare <span class="text-[10px] text-emerald-400">›</span></span>
                 </div>
                 <span class="font-extrabold text-white num">4.2% <span class="text-slate-400 font-normal text-[11px]">(₹4.11L)</span></span>
               </div>
@@ -1153,11 +1217,12 @@
                 <div class="h-full rounded-full" style="width: 10.4%; background:#34d399"></div>
               </div>
             </div>
-            <div>
+
+            <div onclick="openSectorDetail('Oil, Gas & Petroleum')" class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all active:scale-[0.99]" title="Click to view oil & gas holdings">
               <div class="flex justify-between items-center mb-1.5">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full" style="background:#fbbf24"></span>
-                  <span class="font-bold text-white">Oil, Gas & Petroleum</span>
+                  <span class="font-bold text-white flex items-center gap-1">Oil, Gas &amp; Petroleum <span class="text-[10px] text-amber-400">›</span></span>
                 </div>
                 <span class="font-extrabold text-white num">4.2% <span class="text-slate-400 font-normal text-[11px]">(₹4.11L)</span></span>
               </div>
@@ -1165,11 +1230,12 @@
                 <div class="h-full rounded-full" style="width: 10.4%; background:#fbbf24"></div>
               </div>
             </div>
-            <div>
+
+            <div onclick="openSectorDetail('Automobiles & Components')" class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all active:scale-[0.99]" title="Click to view auto holdings">
               <div class="flex justify-between items-center mb-1.5">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full" style="background:#c084fc"></span>
-                  <span class="font-bold text-white">Automobiles & Components</span>
+                  <span class="font-bold text-white flex items-center gap-1">Automobiles &amp; Components <span class="text-[10px] text-purple-400">›</span></span>
                 </div>
                 <span class="font-extrabold text-white num">4.0% <span class="text-slate-400 font-normal text-[11px]">(₹3.92L)</span></span>
               </div>
@@ -1177,11 +1243,12 @@
                 <div class="h-full rounded-full" style="width: 9.9%; background:#c084fc"></div>
               </div>
             </div>
-            <div>
+
+            <div onclick="openSectorDetail('Finance & Capital Markets')" class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all active:scale-[0.99]" title="Click to view finance holdings">
               <div class="flex justify-between items-center mb-1.5">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full" style="background:#f87171"></span>
-                  <span class="font-bold text-white">Finance & Capital Markets</span>
+                  <span class="font-bold text-white flex items-center gap-1">Finance &amp; Capital Markets <span class="text-[10px] text-rose-400">›</span></span>
                 </div>
                 <span class="font-extrabold text-white num">3.9% <span class="text-slate-400 font-normal text-[11px]">(₹3.85L)</span></span>
               </div>
@@ -1189,11 +1256,12 @@
                 <div class="h-full rounded-full" style="width: 9.8%; background:#f87171"></div>
               </div>
             </div>
-            <div>
+
+            <div onclick="openSectorDetail('IT & Software')" class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all active:scale-[0.99]" title="Click to view IT holdings">
               <div class="flex justify-between items-center mb-1.5">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full" style="background:#818cf8"></span>
-                  <span class="font-bold text-white">IT & Software</span>
+                  <span class="font-bold text-white flex items-center gap-1">IT &amp; Software <span class="text-[10px] text-indigo-400">›</span></span>
                 </div>
                 <span class="font-extrabold text-white num">3.6% <span class="text-slate-400 font-normal text-[11px]">(₹3.55L)</span></span>
               </div>
@@ -1262,42 +1330,41 @@
         <div>
           <div class="flex justify-between items-baseline mb-2 px-1">
             <h2 class="text-xs uppercase font-bold tracking-wider text-sky-400">Scheme Holdings</h2>
-            <span class="text-xs text-slate-500">Scheme Lookthrough</span>
           </div>
 
           <!-- Scheme Selector Bar -->
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 mb-3 shadow-sm">
             <label for="schemeSelect" class="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Select Scheme to Inspect:</label>
             <select id="schemeSelect" onchange="onSchemeSelectChange(this.value)" class="w-full bg-[#131b29] text-xs font-bold text-white border border-white/10 rounded-xl px-3 py-2.5 focus:outline-hidden">
-              <option value="119771">Kotak Arbitrage (₹10.74L)</option>
-              <option value="119788">SBI Gold (₹9.64L)</option>
-              <option value="118551">Franklin US Opportunities (₹7.22L)</option>
-              <option value="120334">ICICI Prudential Multi-Asset (₹6.95L)</option>
+              <option value="119771">Kotak Arbitrage (₹10.75L)</option>
+              <option value="119788">SBI Gold (₹9.67L)</option>
+              <option value="118551">Franklin US Opportunities (₹7.19L)</option>
+              <option value="120334">ICICI Prudential Multi-Asset (₹7.01L)</option>
               <option value="148745">Kotak Nifty Next 50 (₹4.96L)</option>
-              <option value="141877">DSP Nifty 50 Equal Weight (₹4.34L)</option>
-              <option value="148485">Axis Global Equity Alpha (₹4.18L)</option>
+              <option value="141877">DSP Nifty 50 Equal Weight (₹4.40L)</option>
+              <option value="148485">Axis Global Equity Alpha (₹4.15L)</option>
               <option value="118989">HDFC Mid-Cap (₹4.13L)</option>
-              <option value="118650">Nippon India Multi Cap (₹4.01L)</option>
+              <option value="118482">Bandhan Nifty 50 - Regular (₹4.04L)</option>
+              <option value="118650">Nippon India Multi Cap (₹4.03L)</option>
+              <option value="152814">DSP Nifty Top 10 Equal Weight (₹4.02L)</option>
+              <option value="122639">Parag Parikh Flexi Cap (₹4.02L)</option>
               <option value="151739">UTI Nifty 500 Value 50 (₹3.99L)</option>
-              <option value="122639">Parag Parikh Flexi Cap (₹3.96L)</option>
-              <option value="118482">Bandhan Nifty 50 - Regular (₹3.94L)</option>
-              <option value="152814">DSP Nifty Top 10 Equal Weight (₹3.91L)</option>
-              <option value="118482">Bandhan Nifty 50 (₹3.89L)</option>
-              <option value="119779">Kotak Global Emerging (₹3.66L)</option>
-              <option value="152735">SBI Silver (₹3.58L)</option>
-              <option value="147622">Motilal Oswal Nifty Midcap 150 (₹3.52L)</option>
-              <option value="130503">HDFC Small Cap (₹3.33L)</option>
-              <option value="118968">HDFC Balanced Advantage (₹2.97L)</option>
-              <option value="147623">Motilal Oswal Nifty Smallcap 250 (₹2.38L)</option>
-              <option value="119835">SBI Contra (₹2.05L)</option>
-              <option value="150141">HDFC Silver (₹1.14L)</option>
+              <option value="118482">Bandhan Nifty 50 (₹3.98L)</option>
+              <option value="119779">Kotak Global Emerging (₹3.55L)</option>
+              <option value="152735">SBI Silver (₹3.53L)</option>
+              <option value="147622">Motilal Oswal Nifty Midcap 150 (₹3.51L)</option>
+              <option value="130503">HDFC Small Cap (₹3.31L)</option>
+              <option value="118968">HDFC Balanced Advantage (₹3.00L)</option>
+              <option value="147623">Motilal Oswal Nifty Smallcap 250 (₹2.35L)</option>
+              <option value="119835">SBI Contra (₹2.07L)</option>
+              <option value="150141">HDFC Silver (₹1.12L)</option>
             </select>
 
             <!-- Fund Snapshot Strip (4 stats inline: Positions, Weight, Port Value, Top 10 Wt) -->
             <div class="grid grid-cols-4 gap-1.5 mt-3 pt-3 border-t border-white/5 text-center text-xs">
               <div class="bg-white/[0.02] p-1.5 rounded-xl border border-white/5">
                 <div class="text-[9px] text-slate-400 uppercase">Positions</div>
-                <div id="schHoldingsCount" class="font-bold text-sky-400 num mt-0.5 text-xs truncate">216 Pos</div>
+                <div id="schHoldingsCount" class="font-bold text-sky-400 num mt-0.5 text-xs truncate">216</div>
               </div>
               <div class="bg-white/[0.02] p-1.5 rounded-xl border border-white/5">
                 <div class="text-[9px] text-slate-400 uppercase">Weight</div>
@@ -1359,7 +1426,7 @@
         <span style="color: #fbbf24; font-style: normal;">◈</span> CapitalView
       </span>
       <span class="mx-2 opacity-40">·</span>
-      <span>As of 17 Oct 2026</span>
+      <span id="footerAsOf">As of 16 Oct 2026</span>
     </footer>
   </main>
 
@@ -1532,6 +1599,106 @@
 
       <!-- Close Button -->
       <button onclick="closeBucketDetail()" class="w-full py-2.5 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 transition-all">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- ALL AMCs MODAL (12 ASSET MANAGEMENT COMPANIES) -->
+  <!-- ========================================================================= -->
+  <div id="amcModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4">
+    <div class="bg-[#0e131d] border border-white/10 rounded-3xl max-w-md w-full p-4 sm:p-5 space-y-4 shadow-2xl relative max-h-[90vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-start border-b border-white/5 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold border border-sky-500/30 text-sky-400 bg-sky-500/10">By AMC Custody</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1.5">12 Asset Management Companies across portfolio</p>
+        </div>
+        <button onclick="closeAmcModal()" class="text-slate-400 hover:text-white p-1 rounded-lg text-lg leading-none font-bold">
+          ✕
+        </button>
+      </div>
+
+      <!-- AMC Totals Strip -->
+      <div class="grid grid-cols-3 gap-2 bg-[#131b29] p-3 rounded-2xl border border-white/5 text-center text-xs">
+        <div>
+          <span class="text-[10px] text-slate-400 uppercase block">AMCs</span>
+          <span class="font-bold text-white text-sm num mt-0.5 block">12</span>
+        </div>
+        <div class="border-l border-white/10 pl-2">
+          <span class="text-[10px] text-slate-400 uppercase block">Top 3 Share</span>
+          <span class="font-bold text-sky-400 text-sm num mt-0.5 block">48.0%</span>
+        </div>
+        <div class="border-l border-white/10 pl-2">
+          <span class="text-[10px] text-slate-400 uppercase block">Other 9 AMCs</span>
+          <span class="font-bold text-slate-300 text-sm num mt-0.5 block">52.0%</span>
+        </div>
+      </div>
+
+      <!-- AMC List -->
+      <div class="flex-1 overflow-y-auto space-y-2">
+        <div class="text-[11px] font-semibold text-slate-400 px-1 flex justify-between">
+          <span>Fund House (Ranked)</span>
+          <span>Share · Port Value</span>
+        </div>
+        <div class="bg-[#131b29] border border-white/5 rounded-2xl overflow-hidden divide-y divide-white/5 text-xs" id="amcModalList">
+          <!-- Dynamically populated AMC rows -->
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <button onclick="closeAmcModal()" class="w-full py-2.5 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 transition-all">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- EQUITY SECTOR CONSTITUENTS MODAL -->
+  <!-- ========================================================================= -->
+  <div id="sectorModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4">
+    <div class="bg-[#0e131d] border border-white/10 rounded-3xl max-w-md w-full p-4 sm:p-5 space-y-4 shadow-2xl relative max-h-[90vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-start border-b border-white/5 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="sectorModalBadge" class="px-2.5 py-1 rounded-lg text-xs font-bold border">Sector</span>
+          </div>
+          <p id="sectorModalSubtitle" class="text-[11px] text-slate-400 mt-1.5">Constituent equities in this sector</p>
+        </div>
+        <button onclick="closeSectorDetail()" class="text-slate-400 hover:text-white p-1 rounded-lg text-lg leading-none font-bold">
+          ✕
+        </button>
+      </div>
+
+      <!-- Sector Totals Strip -->
+      <div class="grid grid-cols-2 gap-2 bg-[#131b29] p-3 rounded-2xl border border-white/5 text-center text-xs">
+        <div>
+          <span class="text-[10px] text-slate-400 uppercase block">Portfolio Share</span>
+          <span id="sectorModalWeight" class="font-bold text-sky-400 text-sm num mt-0.5 block">0.0%</span>
+        </div>
+        <div class="border-l border-white/10 pl-2">
+          <span class="text-[10px] text-slate-400 uppercase block">Total Value</span>
+          <span id="sectorModalValue" class="font-bold text-white text-sm num mt-0.5 block">₹0.00L</span>
+        </div>
+      </div>
+
+      <!-- Constituent Stocks Table -->
+      <div class="flex-1 overflow-y-auto space-y-2">
+        <div class="text-[11px] font-semibold text-slate-400 px-1 flex justify-between">
+          <span>Security / Stock (<span id="sectorModalStockCount">0</span>)</span>
+          <span>Weight · Overlap</span>
+        </div>
+        <div class="bg-[#131b29] border border-white/5 rounded-2xl overflow-hidden divide-y divide-white/5 text-xs" id="sectorModalStockList">
+          <!-- Dynamically populated stock rows -->
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <button onclick="closeSectorDetail()" class="w-full py-2.5 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 transition-all">
         Done
       </button>
     </div>
@@ -1785,7 +1952,7 @@
     let currentModalFundCode = '119771';
 
     // Fund Recent 5 Purchases DB
-    const FUND_PURCHASES_DB = {"119771": [{"date": "10 Apr 26", "type": "Dip", "nav": "\u20b942.10", "units": "9499.7", "amount": "\u20b93,99,980"}, {"date": "08 Sep 25", "type": "Dip", "nav": "\u20b940.48", "units": "2470.1", "amount": "\u20b91,00,000"}, {"date": "22 Apr 25", "type": "Dip", "nav": "\u20b939.57", "units": "2527.2", "amount": "\u20b91,00,000"}, {"date": "15 Apr 25", "type": "Dip", "nav": "\u20b939.50", "units": "5062.9", "amount": "\u20b91,99,990"}, {"date": "28 Mar 25", "type": "Dip", "nav": "\u20b939.35", "units": "2541.5", "amount": "\u20b91,00,000"}], "119788": [{"date": "14 Oct 26", "type": "Dip", "nav": "\u20b944.22", "units": "339.2", "amount": "\u20b915,000"}, {"date": "01 Oct 26", "type": "SIP", "nav": "\u20b944.87", "units": "222.9", "amount": "\u20b910,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b946.48", "units": "1291.0", "amount": "\u20b960,000"}, {"date": "24 Jul 26", "type": "Dip", "nav": "\u20b943.55", "units": "574.0", "amount": "\u20b925,000"}, {"date": "08 Jun 26", "type": "Dip", "nav": "\u20b945.89", "units": "4358.1", "amount": "\u20b91,99,990"}], "118551": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9108.14", "units": "138.7", "amount": "\u20b915,000"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b9102.24", "units": "146.7", "amount": "\u20b915,000"}, {"date": "03 Aug 26", "type": "SIP", "nav": "\u20b9103.11", "units": "145.5", "amount": "\u20b915,000"}, {"date": "01 Jul 26", "type": "SIP", "nav": "\u20b9105.52", "units": "142.2", "amount": "\u20b915,000"}, {"date": "01 Jun 26", "type": "SIP", "nav": "\u20b9106.65", "units": "140.7", "amount": "\u20b915,000"}], "120334": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9863.92", "units": "28.9", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b9892.50", "units": "235.3", "amount": "\u20b92,09,990"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b9903.75", "units": "27.7", "amount": "\u20b925,000"}, {"date": "03 Aug 26", "type": "SIP", "nav": "\u20b9913.24", "units": "27.4", "amount": "\u20b925,000"}, {"date": "24 Jul 26", "type": "Dip", "nav": "\u20b9887.96", "units": "28.2", "amount": "\u20b925,000"}], "148745": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b920.24", "units": "1234.9", "amount": "\u20b925,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b920.63", "units": "484.7", "amount": "\u20b910,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b921.39", "units": "2337.3", "amount": "\u20b950,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b920.07", "units": "996.7", "amount": "\u20b920,000"}, {"date": "11 May 26", "type": "Dip", "nav": "\u20b920.57", "units": "972.5", "amount": "\u20b920,000"}], "141877": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b925.58", "units": "781.9", "amount": "\u20b920,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b926.43", "units": "189.2", "amount": "\u20b95,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b927.49", "units": "909.4", "amount": "\u20b925,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b926.49", "units": "377.5", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b926.75", "units": "373.9", "amount": "\u20b910,000"}], "148485": [{"date": "05 May 26", "type": "Dip", "nav": "\u20b925.25", "units": "11879.5", "amount": "\u20b92,99,980"}, {"date": "23 Apr 26", "type": "Dip", "nav": "\u20b924.81", "units": "1007.5", "amount": "\u20b925,000"}, {"date": "02 Apr 26", "type": "Dip", "nav": "\u20b922.45", "units": "668.1", "amount": "\u20b915,000"}, {"date": "23 Mar 26", "type": "Dip", "nav": "\u20b923.19", "units": "646.7", "amount": "\u20b915,000"}, {"date": "19 Mar 26", "type": "Dip", "nav": "\u20b922.79", "units": "438.8", "amount": "\u20b910,000"}], "118989": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9219.44", "units": "45.6", "amount": "\u20b910,000"}, {"date": "28 Sep 26", "type": "Dip", "nav": "\u20b9223.17", "units": "67.2", "amount": "\u20b915,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b9236.39", "units": "105.8", "amount": "\u20b925,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9210.94", "units": "23.7", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b9218.09", "units": "22.9", "amount": "\u20b95,000"}], "118650": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9316.88", "units": "78.9", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b9330.45", "units": "272.4", "amount": "\u20b990,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9321.47", "units": "31.1", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b9326.04", "units": "30.7", "amount": "\u20b910,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9312.01", "units": "32.0", "amount": "\u20b910,000"}], "151739": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b920.86", "units": "1198.7", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b922.14", "units": "6323.2", "amount": "\u20b91,39,990"}, {"date": "19 Mar 26", "type": "Dip", "nav": "\u20b921.17", "units": "944.6", "amount": "\u20b920,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b921.89", "units": "913.8", "amount": "\u20b920,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b921.35", "units": "468.3", "amount": "\u20b910,000"}], "122639": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b988.26", "units": "226.6", "amount": "\u20b920,000"}, {"date": "11 Sep 26", "type": "Dip", "nav": "\u20b989.57", "units": "223.3", "amount": "\u20b920,000"}, {"date": "25 Jun 26", "type": "SIP", "nav": "\u20b989.71", "units": "55.7", "amount": "\u20b95,000"}, {"date": "25 May 26", "type": "SIP", "nav": "\u20b991.15", "units": "54.9", "amount": "\u20b95,000"}, {"date": "27 Apr 26", "type": "SIP", "nav": "\u20b991.04", "units": "54.9", "amount": "\u20b95,000"}], "118482": [{"date": "26 Sep 25", "type": "Dip", "nav": "\u20b954.74", "units": "182.7", "amount": "\u20b910,000"}, {"date": "28 Aug 25", "type": "Dip", "nav": "\u20b954.39", "units": "183.9", "amount": "\u20b910,000"}, {"date": "25 Jul 25", "type": "Dip", "nav": "\u20b955.04", "units": "181.7", "amount": "\u20b910,000"}, {"date": "11 Jul 25", "type": "Dip", "nav": "\u20b955.67", "units": "179.6", "amount": "\u20b910,000"}, {"date": "13 Jun 25", "type": "Dip", "nav": "\u20b954.61", "units": "91.6", "amount": "\u20b95,000"}], "152814": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b98.44", "units": "1185.0", "amount": "\u20b910,000"}, {"date": "10 Sep 26", "type": "Dip", "nav": "\u20b98.75", "units": "4573.2", "amount": "\u20b940,000"}, {"date": "03 Jun 26", "type": "Dip", "nav": "\u20b98.78", "units": "2277.3", "amount": "\u20b920,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b98.74", "units": "1144.6", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b99.00", "units": "1334.0", "amount": "\u20b912,000"}], "119779": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b943.71", "units": "571.9", "amount": "\u20b925,000"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b943.39", "units": "576.2", "amount": "\u20b925,000"}, {"date": "04 Aug 26", "type": "SIP", "nav": "\u20b941.74", "units": "599.0", "amount": "\u20b925,000"}, {"date": "02 Jul 26", "type": "SIP", "nav": "\u20b943.29", "units": "577.5", "amount": "\u20b925,000"}, {"date": "01 Jun 26", "type": "SIP", "nav": "\u20b945.70", "units": "547.1", "amount": "\u20b925,000"}], "152735": [{"date": "30 Dec 25", "type": "Dip", "nav": "\u20b924.39", "units": "1024.8", "amount": "\u20b925,000"}, {"date": "19 Dec 25", "type": "Dip", "nav": "\u20b921.47", "units": "1164.5", "amount": "\u20b925,000"}, {"date": "10 Oct 25", "type": "Dip", "nav": "\u20b917.07", "units": "1464.5", "amount": "\u20b925,000"}, {"date": "08 Oct 25", "type": "Dip", "nav": "\u20b916.68", "units": "2998.3", "amount": "\u20b950,000"}, {"date": "15 May 25", "type": "Dip", "nav": "\u20b910.16", "units": "984.5", "amount": "\u20b910,000"}], "147622": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b939.29", "units": "636.3", "amount": "\u20b925,000"}, {"date": "28 Sep 26", "type": "Dip", "nav": "\u20b940.07", "units": "873.4", "amount": "\u20b935,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b940.60", "units": "246.3", "amount": "\u20b910,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b942.21", "units": "1184.5", "amount": "\u20b950,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b939.77", "units": "251.5", "amount": "\u20b910,000"}], "130503": [{"date": "11 Sep 26", "type": "Dip", "nav": "\u20b9159.56", "units": "125.3", "amount": "\u20b920,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9151.94", "units": "32.9", "amount": "\u20b95,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9143.64", "units": "34.8", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b9148.81", "units": "33.6", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b9156.69", "units": "31.9", "amount": "\u20b95,000"}], "118968": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9546.11", "units": "45.8", "amount": "\u20b925,000"}, {"date": "11 Sep 26", "type": "Dip", "nav": "\u20b9561.38", "units": "53.4", "amount": "\u20b930,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9548.67", "units": "36.5", "amount": "\u20b920,000"}, {"date": "13 Mar 26", "type": "Dip", "nav": "\u20b9540.98", "units": "18.5", "amount": "\u20b910,000"}, {"date": "23 Jan 26", "type": "Dip", "nav": "\u20b9563.34", "units": "8.9", "amount": "\u20b95,000"}], "147623": [{"date": "15 Sep 26", "type": "Dip", "nav": "\u20b940.12", "units": "249.3", "amount": "\u20b910,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b933.73", "units": "148.2", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b934.65", "units": "144.3", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b936.91", "units": "135.5", "amount": "\u20b95,000"}, {"date": "08 Dec 25", "type": "Dip", "nav": "\u20b936.09", "units": "277.1", "amount": "\u20b910,000"}], "119835": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9394.32", "units": "63.4", "amount": "\u20b925,000"}, {"date": "10 Sep 26", "type": "Dip", "nav": "\u20b9409.21", "units": "73.3", "amount": "\u20b930,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9408.29", "units": "12.2", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b9430.91", "units": "23.2", "amount": "\u20b910,000"}, {"date": "08 Dec 25", "type": "Dip", "nav": "\u20b9429.00", "units": "23.3", "amount": "\u20b910,000"}], "150141": [{"date": "14 Oct 25", "type": "Dip", "nav": "\u20b930.77", "units": "3250.1", "amount": "\u20b91,00,000"}]};
+    const FUND_PURCHASES_DB = {"119771": [{"date": "10 Apr 26", "type": "Dip", "nav": "\u20b942.10", "units": "9499.7", "amount": "\u20b93,99,980"}, {"date": "08 Sep 25", "type": "Dip", "nav": "\u20b940.48", "units": "2470.1", "amount": "\u20b91,00,000"}, {"date": "22 Apr 25", "type": "Dip", "nav": "\u20b939.57", "units": "2527.2", "amount": "\u20b91,00,000"}, {"date": "15 Apr 25", "type": "Dip", "nav": "\u20b939.50", "units": "5062.9", "amount": "\u20b91,99,990"}, {"date": "28 Mar 25", "type": "Dip", "nav": "\u20b939.35", "units": "2541.5", "amount": "\u20b91,00,000"}], "119788": [{"date": "14 Oct 26", "type": "Dip", "nav": "\u20b944.22", "units": "339.2", "amount": "\u20b915,000"}, {"date": "01 Oct 26", "type": "SIP", "nav": "\u20b944.87", "units": "222.9", "amount": "\u20b910,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b946.48", "units": "1291.0", "amount": "\u20b960,000"}, {"date": "24 Jul 26", "type": "Dip", "nav": "\u20b943.55", "units": "574.0", "amount": "\u20b925,000"}, {"date": "08 Jun 26", "type": "Dip", "nav": "\u20b945.89", "units": "4358.1", "amount": "\u20b91,99,990"}], "118551": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9108.14", "units": "138.7", "amount": "\u20b915,000"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b9102.24", "units": "146.7", "amount": "\u20b915,000"}, {"date": "03 Aug 26", "type": "SIP", "nav": "\u20b9103.11", "units": "145.5", "amount": "\u20b915,000"}, {"date": "01 Jul 26", "type": "SIP", "nav": "\u20b9105.52", "units": "142.2", "amount": "\u20b915,000"}, {"date": "01 Jun 26", "type": "SIP", "nav": "\u20b9106.65", "units": "140.7", "amount": "\u20b915,000"}], "120334": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9863.92", "units": "28.9", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b9892.50", "units": "235.3", "amount": "\u20b92,09,990"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b9903.75", "units": "27.7", "amount": "\u20b925,000"}, {"date": "03 Aug 26", "type": "SIP", "nav": "\u20b9913.24", "units": "27.4", "amount": "\u20b925,000"}, {"date": "24 Jul 26", "type": "Dip", "nav": "\u20b9887.96", "units": "28.2", "amount": "\u20b925,000"}], "148745": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b920.24", "units": "1234.9", "amount": "\u20b925,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b920.63", "units": "484.7", "amount": "\u20b910,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b921.39", "units": "2337.3", "amount": "\u20b950,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b920.07", "units": "996.7", "amount": "\u20b920,000"}, {"date": "11 May 26", "type": "Dip", "nav": "\u20b920.57", "units": "972.5", "amount": "\u20b920,000"}], "141877": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b925.58", "units": "781.9", "amount": "\u20b920,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b926.43", "units": "189.2", "amount": "\u20b95,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b927.49", "units": "909.4", "amount": "\u20b925,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b926.49", "units": "377.5", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b926.75", "units": "373.9", "amount": "\u20b910,000"}], "148485": [{"date": "05 May 26", "type": "Dip", "nav": "\u20b925.25", "units": "11879.5", "amount": "\u20b92,99,980"}, {"date": "23 Apr 26", "type": "Dip", "nav": "\u20b924.81", "units": "1007.5", "amount": "\u20b925,000"}, {"date": "02 Apr 26", "type": "Dip", "nav": "\u20b922.45", "units": "668.1", "amount": "\u20b915,000"}, {"date": "23 Mar 26", "type": "Dip", "nav": "\u20b923.19", "units": "646.7", "amount": "\u20b915,000"}, {"date": "19 Mar 26", "type": "Dip", "nav": "\u20b922.79", "units": "438.8", "amount": "\u20b910,000"}], "118989": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b9219.44", "units": "45.6", "amount": "\u20b910,000"}, {"date": "28 Sep 26", "type": "Dip", "nav": "\u20b9223.17", "units": "67.2", "amount": "\u20b915,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b9236.39", "units": "105.8", "amount": "\u20b925,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9210.94", "units": "23.7", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b9218.09", "units": "22.9", "amount": "\u20b95,000"}], "118482": [{"date": "26 Sep 25", "type": "Dip", "nav": "\u20b954.74", "units": "182.7", "amount": "\u20b910,000"}, {"date": "28 Aug 25", "type": "Dip", "nav": "\u20b954.39", "units": "183.9", "amount": "\u20b910,000"}, {"date": "25 Jul 25", "type": "Dip", "nav": "\u20b955.04", "units": "181.7", "amount": "\u20b910,000"}, {"date": "11 Jul 25", "type": "Dip", "nav": "\u20b955.67", "units": "179.6", "amount": "\u20b910,000"}, {"date": "13 Jun 25", "type": "Dip", "nav": "\u20b954.61", "units": "91.6", "amount": "\u20b95,000"}], "118650": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9316.88", "units": "78.9", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b9330.45", "units": "272.4", "amount": "\u20b990,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9321.47", "units": "31.1", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b9326.04", "units": "30.7", "amount": "\u20b910,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9312.01", "units": "32.0", "amount": "\u20b910,000"}], "152814": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b98.44", "units": "1185.0", "amount": "\u20b910,000"}, {"date": "10 Sep 26", "type": "Dip", "nav": "\u20b98.75", "units": "4573.2", "amount": "\u20b940,000"}, {"date": "03 Jun 26", "type": "Dip", "nav": "\u20b98.78", "units": "2277.3", "amount": "\u20b920,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b98.74", "units": "1144.6", "amount": "\u20b910,000"}, {"date": "24 Apr 26", "type": "Dip", "nav": "\u20b99.00", "units": "1334.0", "amount": "\u20b912,000"}], "122639": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b988.26", "units": "226.6", "amount": "\u20b920,000"}, {"date": "11 Sep 26", "type": "Dip", "nav": "\u20b989.57", "units": "223.3", "amount": "\u20b920,000"}, {"date": "25 Jun 26", "type": "SIP", "nav": "\u20b989.71", "units": "55.7", "amount": "\u20b95,000"}, {"date": "25 May 26", "type": "SIP", "nav": "\u20b991.15", "units": "54.9", "amount": "\u20b95,000"}, {"date": "27 Apr 26", "type": "SIP", "nav": "\u20b991.04", "units": "54.9", "amount": "\u20b95,000"}], "151739": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b920.86", "units": "1198.7", "amount": "\u20b925,000"}, {"date": "09 Sep 26", "type": "Dip", "nav": "\u20b922.14", "units": "6323.2", "amount": "\u20b91,39,990"}, {"date": "19 Mar 26", "type": "Dip", "nav": "\u20b921.17", "units": "944.6", "amount": "\u20b920,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b921.89", "units": "913.8", "amount": "\u20b920,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b921.35", "units": "468.3", "amount": "\u20b910,000"}], "119779": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b943.71", "units": "571.9", "amount": "\u20b925,000"}, {"date": "01 Sep 26", "type": "SIP", "nav": "\u20b943.39", "units": "576.2", "amount": "\u20b925,000"}, {"date": "04 Aug 26", "type": "SIP", "nav": "\u20b941.74", "units": "599.0", "amount": "\u20b925,000"}, {"date": "02 Jul 26", "type": "SIP", "nav": "\u20b943.29", "units": "577.5", "amount": "\u20b925,000"}, {"date": "01 Jun 26", "type": "SIP", "nav": "\u20b945.70", "units": "547.1", "amount": "\u20b925,000"}], "152735": [{"date": "30 Dec 25", "type": "Dip", "nav": "\u20b924.39", "units": "1024.8", "amount": "\u20b925,000"}, {"date": "19 Dec 25", "type": "Dip", "nav": "\u20b921.47", "units": "1164.5", "amount": "\u20b925,000"}, {"date": "10 Oct 25", "type": "Dip", "nav": "\u20b917.07", "units": "1464.5", "amount": "\u20b925,000"}, {"date": "08 Oct 25", "type": "Dip", "nav": "\u20b916.68", "units": "2998.3", "amount": "\u20b950,000"}, {"date": "15 May 25", "type": "Dip", "nav": "\u20b910.16", "units": "984.5", "amount": "\u20b910,000"}], "147622": [{"date": "01 Oct 26", "type": "SIP", "nav": "\u20b939.29", "units": "636.3", "amount": "\u20b925,000"}, {"date": "28 Sep 26", "type": "Dip", "nav": "\u20b940.07", "units": "873.4", "amount": "\u20b935,000"}, {"date": "15 Sep 26", "type": "Dip", "nav": "\u20b940.60", "units": "246.3", "amount": "\u20b910,000"}, {"date": "01 Sep 26", "type": "Dip", "nav": "\u20b942.21", "units": "1184.5", "amount": "\u20b950,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b939.77", "units": "251.5", "amount": "\u20b910,000"}], "130503": [{"date": "11 Sep 26", "type": "Dip", "nav": "\u20b9159.56", "units": "125.3", "amount": "\u20b920,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9151.94", "units": "32.9", "amount": "\u20b95,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9143.64", "units": "34.8", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b9148.81", "units": "33.6", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b9156.69", "units": "31.9", "amount": "\u20b95,000"}], "118968": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9546.11", "units": "45.8", "amount": "\u20b925,000"}, {"date": "11 Sep 26", "type": "Dip", "nav": "\u20b9561.38", "units": "53.4", "amount": "\u20b930,000"}, {"date": "12 May 26", "type": "Dip", "nav": "\u20b9548.67", "units": "36.5", "amount": "\u20b920,000"}, {"date": "13 Mar 26", "type": "Dip", "nav": "\u20b9540.98", "units": "18.5", "amount": "\u20b910,000"}, {"date": "23 Jan 26", "type": "Dip", "nav": "\u20b9563.34", "units": "8.9", "amount": "\u20b95,000"}], "147623": [{"date": "15 Sep 26", "type": "Dip", "nav": "\u20b940.12", "units": "249.3", "amount": "\u20b910,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b933.73", "units": "148.2", "amount": "\u20b95,000"}, {"date": "21 Jan 26", "type": "Dip", "nav": "\u20b934.65", "units": "144.3", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b936.91", "units": "135.5", "amount": "\u20b95,000"}, {"date": "08 Dec 25", "type": "Dip", "nav": "\u20b936.09", "units": "277.1", "amount": "\u20b910,000"}], "119835": [{"date": "01 Oct 26", "type": "Dip", "nav": "\u20b9394.32", "units": "63.4", "amount": "\u20b925,000"}, {"date": "10 Sep 26", "type": "Dip", "nav": "\u20b9409.21", "units": "73.3", "amount": "\u20b930,000"}, {"date": "09 Mar 26", "type": "Dip", "nav": "\u20b9408.29", "units": "12.2", "amount": "\u20b95,000"}, {"date": "08 Jan 26", "type": "Dip", "nav": "\u20b9430.91", "units": "23.2", "amount": "\u20b910,000"}, {"date": "08 Dec 25", "type": "Dip", "nav": "\u20b9429.00", "units": "23.3", "amount": "\u20b910,000"}], "150141": [{"date": "14 Oct 25", "type": "Dip", "nav": "\u20b930.77", "units": "3250.1", "amount": "\u20b91,00,000"}]};
 
     function openFundDetail(name, code, val, wt, xirr, cost, category) {
       currentModalFundCode = code;
@@ -1845,7 +2012,7 @@
 
     function renderSchemeHoldings(code) {
       const data = SCHEME_HOLDINGS_DB[code] || SCHEME_HOLDINGS_DB['OVERALL'];
-      document.getElementById('schHoldingsCount').textContent = data.count;
+      document.getElementById('schHoldingsCount').textContent = (data.count || '').replace(/\s*(Positions|Stocks|Pos)/i, '').trim();
       document.getElementById('schWeightVal').textContent = data.weight;
       document.getElementById('schPortVal').textContent = data.val;
       document.getElementById('schTop10Val').textContent = data.top10;
@@ -2143,6 +2310,289 @@
 
     function closeSegmentDetail() {
       const modal = document.getElementById('segmentModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // All 12 AMCs Database
+    const ALL_AMCS_DB = [
+      {
+            "name": "Kotak Mahindra AMC",
+            "pct": 20,
+            "val": "\u20b919.26L",
+            "color": "#38bdf8"
+      },
+      {
+            "name": "SBI Mutual Fund",
+            "pct": 16,
+            "val": "\u20b915.31L",
+            "color": "#34d399"
+      },
+      {
+            "name": "HDFC Mutual Fund",
+            "pct": 12,
+            "val": "\u20b911.56L",
+            "color": "#fbbf24"
+      },
+      {
+            "name": "DSP Mutual Fund",
+            "pct": 8,
+            "val": "\u20b98.40L",
+            "color": "#a78bfa"
+      },
+      {
+            "name": "Bandhan Mutual Fund",
+            "pct": 8,
+            "val": "\u20b98.00L",
+            "color": "#f87171"
+      },
+      {
+            "name": "Franklin Templeton",
+            "pct": 7,
+            "val": "\u20b97.21L",
+            "color": "#818cf8"
+      },
+      {
+            "name": "ICICI Prudential AMC",
+            "pct": 7,
+            "val": "\u20b97.01L",
+            "color": "#fb923c"
+      },
+      {
+            "name": "Motilal Oswal AMC",
+            "pct": 6,
+            "val": "\u20b95.83L",
+            "color": "#2dd4bf"
+      },
+      {
+            "name": "Axis Mutual Fund",
+            "pct": 4,
+            "val": "\u20b94.15L",
+            "color": "#e879f9"
+      },
+      {
+            "name": "Nippon India Mutual Fund",
+            "pct": 4,
+            "val": "\u20b94.05L",
+            "color": "#38bdf8"
+      },
+      {
+            "name": "PPFAS Mutual Fund",
+            "pct": 4,
+            "val": "\u20b94.05L",
+            "color": "#34d399"
+      },
+      {
+            "name": "UTI Mutual Fund",
+            "pct": 4,
+            "val": "\u20b93.95L",
+            "color": "#fbbf24"
+      }
+];
+
+    function openAmcModal() {
+      const listContainer = document.getElementById('amcModalList');
+      if (listContainer) {
+        listContainer.innerHTML = '';
+        ALL_AMCS_DB.forEach((amc, idx) => {
+          const row = document.createElement('div');
+          row.className = 'p-3 flex justify-between items-center hover:bg-white/[0.04] transition-colors';
+          const barW = (amc.pct / 20) * 100;
+          row.innerHTML = `
+            <div class="pr-2 flex-1">
+              <div class="font-bold text-white text-xs flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center text-[10px] font-mono">${idx + 1}</span>
+                <span>${amc.name}</span>
+              </div>
+              <div class="w-28 sm:w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-1.5 ml-6">
+                <div class="h-full rounded-full" style="width: ${barW}%; background: ${amc.color}"></div>
+              </div>
+            </div>
+            <div class="text-right num whitespace-nowrap">
+              <div class="font-extrabold text-white text-xs">${amc.pct}%</div>
+              <div class="text-[10px] font-mono text-slate-400 mt-0.5">${amc.val}</div>
+            </div>
+          `;
+          listContainer.appendChild(row);
+        });
+      }
+
+      const modal = document.getElementById('amcModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeAmcModal() {
+      const modal = document.getElementById('amcModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // Equity Sector Constituents Database
+    const SECTOR_CONSTITUENTS_DB = {
+      "Banks": {
+        "name": "Banks",
+        "weight": "10.8%",
+        "val": "₹10.62L",
+        "color": "#38bdf8",
+        "stocks": [
+          { "name": "HDFC Bank", "weight": "2.75%", "val": "₹2.71L", "overlap": "Across 10 funds" },
+          { "name": "ICICI Bank", "weight": "2.47%", "val": "₹2.44L", "overlap": "Across 10 funds" },
+          { "name": "Axis Bank", "weight": "1.66%", "val": "₹1.64L", "overlap": "Across 10 funds" },
+          { "name": "State Bank of India", "weight": "1.38%", "val": "₹1.36L", "overlap": "Across 11 funds" },
+          { "name": "Kotak Mahindra Bank", "weight": "1.17%", "val": "₹1.15L", "overlap": "Across 9 funds" },
+          { "name": "The Federal Bank", "weight": "0.35%", "val": "₹0.35L", "overlap": "Across 4 funds" },
+          { "name": "Bank of Baroda", "weight": "0.35%", "val": "₹0.34L", "overlap": "Across 5 funds" },
+          { "name": "AU Small Finance Bank", "weight": "0.28%", "val": "₹0.28L", "overlap": "Across 4 funds" },
+          { "name": "Indian Bank", "weight": "0.22%", "val": "₹0.22L", "overlap": "Across 5 funds" },
+          { "name": "IndusInd Bank", "weight": "0.21%", "val": "₹0.21L", "overlap": "Across 7 funds" }
+        ]
+      },
+      "Pharma & Healthcare": {
+        "name": "Pharma & Healthcare",
+        "weight": "4.2%",
+        "val": "₹4.11L",
+        "color": "#34d399",
+        "stocks": [
+          { "name": "Divi's Laboratories", "weight": "0.42%", "val": "₹0.41L", "overlap": "Across 5 funds" },
+          { "name": "Sun Pharmaceutical Industries", "weight": "0.41%", "val": "₹0.40L", "overlap": "Across 8 funds" },
+          { "name": "Cipla", "weight": "0.30%", "val": "₹0.29L", "overlap": "Across 9 funds" },
+          { "name": "Aster DM Quality Care", "weight": "0.29%", "val": "₹0.29L", "overlap": "Across 6 funds" },
+          { "name": "Dr. Reddy's Laboratories", "weight": "0.28%", "val": "₹0.28L", "overlap": "Across 6 funds" },
+          { "name": "Torrent Pharmaceuticals", "weight": "0.26%", "val": "₹0.26L", "overlap": "Across 2 funds" },
+          { "name": "Ipca Laboratories", "weight": "0.25%", "val": "₹0.25L", "overlap": "Across 4 funds" },
+          { "name": "Fortis Healthcare", "weight": "0.22%", "val": "₹0.22L", "overlap": "Across 4 funds" },
+          { "name": "Glenmark Pharmaceuticals", "weight": "0.21%", "val": "₹0.21L", "overlap": "Across 4 funds" },
+          { "name": "Aurobindo Pharma", "weight": "0.20%", "val": "₹0.20L", "overlap": "Across 5 funds" }
+        ]
+      },
+      "Oil, Gas & Petroleum": {
+        "name": "Oil, Gas & Petroleum",
+        "weight": "4.2%",
+        "val": "₹4.11L",
+        "color": "#fbbf24",
+        "stocks": [
+          { "name": "Reliance Industries", "weight": "1.89%", "val": "₹1.87L", "overlap": "Across 10 funds" },
+          { "name": "Oil & Natural Gas Corp (ONGC)", "weight": "0.45%", "val": "₹0.44L", "overlap": "Across 9 funds" },
+          { "name": "Bharat Petroleum Corp (BPCL)", "weight": "0.37%", "val": "₹0.36L", "overlap": "Across 5 funds" },
+          { "name": "Indian Oil Corporation (IOC)", "weight": "0.35%", "val": "₹0.34L", "overlap": "Across 4 funds" },
+          { "name": "GAIL (India)", "weight": "0.31%", "val": "₹0.30L", "overlap": "Across 5 funds" },
+          { "name": "Hindustan Petroleum Corp (HPCL)", "weight": "0.29%", "val": "₹0.29L", "overlap": "Across 6 funds" }
+        ]
+      },
+      "Automobiles & Components": {
+        "name": "Automobiles & Components",
+        "weight": "4.0%",
+        "val": "₹3.92L",
+        "color": "#c084fc",
+        "stocks": [
+          { "name": "Mahindra & Mahindra", "weight": "0.62%", "val": "₹0.61L", "overlap": "Across 8 funds" },
+          { "name": "Maruti Suzuki India", "weight": "0.53%", "val": "₹0.52L", "overlap": "Across 8 funds" },
+          { "name": "Tata Motors Passenger Vehicles", "weight": "0.42%", "val": "₹0.41L", "overlap": "Across 8 funds" },
+          { "name": "TVS Motor Company", "weight": "0.32%", "val": "₹0.32L", "overlap": "Across 5 funds" },
+          { "name": "Samvardhana Motherson International", "weight": "0.31%", "val": "₹0.30L", "overlap": "Across 4 funds" },
+          { "name": "Bajaj Auto", "weight": "0.31%", "val": "₹0.30L", "overlap": "Across 7 funds" },
+          { "name": "Balkrishna Industries", "weight": "0.24%", "val": "₹0.24L", "overlap": "Across 4 funds" },
+          { "name": "Apollo Tyres", "weight": "0.19%", "val": "₹0.19L", "overlap": "Across 3 funds" }
+        ]
+      },
+      "Finance & Capital Markets": {
+        "name": "Finance & Capital Markets",
+        "weight": "3.9%",
+        "val": "₹3.85L",
+        "color": "#f87171",
+        "stocks": [
+          { "name": "Bajaj Finance", "weight": "0.49%", "val": "₹0.49L", "overlap": "Across 7 funds" },
+          { "name": "Bajaj Finserv", "weight": "0.37%", "val": "₹0.37L", "overlap": "Across 7 funds" },
+          { "name": "Life Insurance Corporation (LIC)", "weight": "0.36%", "val": "₹0.36L", "overlap": "Across 5 funds" },
+          { "name": "Power Finance Corporation", "weight": "0.32%", "val": "₹0.31L", "overlap": "Across 5 funds" },
+          { "name": "Bajaj Holdings and Investment", "weight": "0.30%", "val": "₹0.30L", "overlap": "Across 3 funds" },
+          { "name": "Cholamandalam Inv & Finance", "weight": "0.29%", "val": "₹0.29L", "overlap": "Across 4 funds" },
+          { "name": "Shriram Finance", "weight": "0.28%", "val": "₹0.28L", "overlap": "Across 5 funds" },
+          { "name": "HDFC Life Insurance", "weight": "0.26%", "val": "₹0.26L", "overlap": "Across 6 funds" },
+          { "name": "REC Limited", "weight": "0.24%", "val": "₹0.24L", "overlap": "Across 3 funds" },
+          { "name": "HDFC AMC", "weight": "0.22%", "val": "₹0.22L", "overlap": "Across 3 funds" }
+        ]
+      },
+      "IT & Software": {
+        "name": "IT & Software",
+        "weight": "3.6%",
+        "val": "₹3.55L",
+        "color": "#818cf8",
+        "stocks": [
+          { "name": "Infosys", "weight": "1.26%", "val": "₹1.25L", "overlap": "Across 10 funds" },
+          { "name": "Tata Consultancy Services", "weight": "0.53%", "val": "₹0.52L", "overlap": "Across 9 funds" },
+          { "name": "HCL Technologies", "weight": "0.46%", "val": "₹0.45L", "overlap": "Across 9 funds" },
+          { "name": "Tech Mahindra", "weight": "0.31%", "val": "₹0.30L", "overlap": "Across 7 funds" },
+          { "name": "Wipro", "weight": "0.26%", "val": "₹0.26L", "overlap": "Across 6 funds" },
+          { "name": "Coforge", "weight": "0.24%", "val": "₹0.24L", "overlap": "Across 3 funds" },
+          { "name": "Persistent Systems", "weight": "0.21%", "val": "₹0.21L", "overlap": "Across 4 funds" },
+          { "name": "Mphasis", "weight": "0.18%", "val": "₹0.18L", "overlap": "Across 4 funds" }
+        ]
+      }
+    };
+
+    function openSectorDetail(sectorName) {
+      const data = SECTOR_CONSTITUENTS_DB[sectorName];
+      if (!data) return;
+
+      const badge = document.getElementById('sectorModalBadge');
+      if (badge) {
+        badge.textContent = data.name;
+        badge.style.borderColor = data.color;
+        badge.style.color = data.color;
+        badge.style.backgroundColor = data.color + '18';
+      }
+
+      const wtEl = document.getElementById('sectorModalWeight');
+      if (wtEl) wtEl.textContent = data.weight;
+
+      const valEl = document.getElementById('sectorModalValue');
+      if (valEl) valEl.textContent = data.val;
+
+      const countEl = document.getElementById('sectorModalStockCount');
+      if (countEl) countEl.textContent = data.stocks.length;
+
+      const listContainer = document.getElementById('sectorModalStockList');
+      if (listContainer) {
+        listContainer.innerHTML = '';
+        data.stocks.forEach((s, idx) => {
+          const row = document.createElement('div');
+          row.className = 'p-3 flex justify-between items-center hover:bg-white/[0.04] transition-colors';
+          row.innerHTML = `
+            <div class="pr-2">
+              <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center text-[10px] font-mono">${idx + 1}</span>
+                <span>${s.name}</span>
+              </div>
+              <div class="text-[10px] text-slate-400 mt-0.5 ml-6">
+                <span class="px-1.5 py-0.2 rounded font-mono font-semibold bg-sky-500/15 text-sky-300 inline-block">${s.overlap}</span>
+              </div>
+            </div>
+            <div class="text-right num whitespace-nowrap">
+              <div class="font-extrabold text-white text-xs">${s.weight}</div>
+              <div class="text-[10px] font-mono text-slate-400 mt-0.5">${s.val}</div>
+            </div>
+          `;
+          listContainer.appendChild(row);
+        });
+      }
+
+      const modal = document.getElementById('sectorModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeSectorDetail() {
+      const modal = document.getElementById('sectorModal');
       if (modal) {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
