@@ -208,8 +208,7 @@
         <!-- 1C. TAB 3: ROLLING XIRR PLOT -->
         <div id="panel-perf-rolling" class="space-y-2">
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-3.5 shadow-sm">
-            <div class="flex justify-between items-center text-xs mb-2">
-              <span class="text-[11px] text-slate-400 font-medium">Inception → End of Year</span>
+            <div class="flex justify-end items-center text-xs mb-2">
               <div class="flex items-center gap-1.5 text-[10px] text-sky-400 font-mono">
                 <span class="w-2 h-2 rounded-full bg-sky-400"></span> Cumulative Rolling XIRR
               </div>
@@ -1155,8 +1154,8 @@
         <!-- 5. TOP AMCs CARD -->
         <div>
           <div class="flex justify-between items-baseline mb-2 px-1">
-            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Top AMCs</h2>
-            <span class="text-[11px] text-slate-500 font-mono">12 Fund Houses</span>
+            <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">AMCs</h2>
+            <span class="text-[11px] text-slate-400 font-mono">Top 5: <b class="text-sky-400 font-bold">64%</b> · 12 Houses</span>
           </div>
 
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 space-y-3 shadow-sm text-xs">
@@ -1167,7 +1166,8 @@
                 <div class="flex justify-between items-center mb-1">
                   <span class="font-bold text-white flex items-center gap-1.5">
                     <span class="w-4 h-4 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-[10px] font-mono font-bold">1</span>
-                    Kotak Mahindra AMC
+                    <span>Kotak Mahindra</span>
+                    <span class="text-[10px] text-slate-500 font-mono font-normal">· 3 funds</span>
                   </span>
                   <span class="font-mono font-extrabold text-white text-xs">20% <span class="text-slate-400 font-normal text-[11px]">(₹19.26L)</span></span>
                 </div>
@@ -1180,7 +1180,8 @@
                 <div class="flex justify-between items-center mb-1">
                   <span class="font-bold text-white flex items-center gap-1.5">
                     <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-mono font-bold">2</span>
-                    SBI Mutual Fund
+                    <span>SBI</span>
+                    <span class="text-[10px] text-slate-500 font-mono font-normal">· 3 funds</span>
                   </span>
                   <span class="font-mono font-extrabold text-white text-xs">16% <span class="text-slate-400 font-normal text-[11px]">(₹15.31L)</span></span>
                 </div>
@@ -1193,12 +1194,41 @@
                 <div class="flex justify-between items-center mb-1">
                   <span class="font-bold text-white flex items-center gap-1.5">
                     <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-[10px] font-mono font-bold">3</span>
-                    HDFC Mutual Fund
+                    <span>HDFC</span>
+                    <span class="text-[10px] text-slate-500 font-mono font-normal">· 4 funds</span>
                   </span>
                   <span class="font-mono font-extrabold text-white text-xs">12% <span class="text-slate-400 font-normal text-[11px]">(₹11.56L)</span></span>
                 </div>
                 <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                   <div class="h-full bg-amber-400 rounded-full" style="width: 60%"></div>
+                </div>
+              </div>
+              <!-- #4 DSP -->
+              <div class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all" onclick="openAmcModal()">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px] font-mono font-bold">4</span>
+                    <span>DSP</span>
+                    <span class="text-[10px] text-slate-500 font-mono font-normal">· 2 funds</span>
+                  </span>
+                  <span class="font-mono font-extrabold text-white text-xs">8% <span class="text-slate-400 font-normal text-[11px]">(₹8.40L)</span></span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-purple-400 rounded-full" style="width: 44%"></div>
+                </div>
+              </div>
+              <!-- #5 Bandhan -->
+              <div class="cursor-pointer hover:bg-white/[0.04] p-1.5 -mx-1.5 rounded-xl transition-all" onclick="openAmcModal()">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center text-[10px] font-mono font-bold">5</span>
+                    <span>Bandhan</span>
+                    <span class="text-[10px] text-slate-500 font-mono font-normal">· 2 funds</span>
+                  </span>
+                  <span class="font-mono font-extrabold text-white text-xs">8% <span class="text-slate-400 font-normal text-[11px]">(₹8.00L)</span></span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-rose-400 rounded-full" style="width: 42%"></div>
                 </div>
               </div>
             </div>
@@ -1362,30 +1392,30 @@
 
           <!-- Scheme Selector Bar -->
           <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-4 mb-3 shadow-sm">
-            <label for="schemeSelect" class="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Select Scheme to Inspect:</label>
+            <label for="schemeSelect" class="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Select Scheme:</label>
             <select id="schemeSelect" onchange="onSchemeSelectChange(this.value)" class="w-full bg-[#131b29] text-xs font-bold text-white border border-white/10 rounded-xl px-3 py-2.5 focus:outline-hidden">
-              <option value="119771">Kotak Arbitrage (₹10.75L)</option>
-              <option value="119788">SBI Gold (₹9.67L)</option>
-              <option value="118551">Franklin US Opportunities (₹7.19L)</option>
-              <option value="120334">ICICI Prudential Multi-Asset (₹7.01L)</option>
-              <option value="148745">Kotak Nifty Next 50 (₹4.96L)</option>
-              <option value="141877">DSP Nifty 50 Equal Weight (₹4.40L)</option>
-              <option value="148485">Axis Global Equity Alpha (₹4.15L)</option>
-              <option value="118989">HDFC Mid-Cap (₹4.13L)</option>
-              <option value="118482">Bandhan Nifty 50 - Regular (₹4.04L)</option>
-              <option value="118650">Nippon India Multi Cap (₹4.03L)</option>
-              <option value="152814">DSP Nifty Top 10 Equal Weight (₹4.02L)</option>
-              <option value="122639">Parag Parikh Flexi Cap (₹4.02L)</option>
-              <option value="151739">UTI Nifty 500 Value 50 (₹3.99L)</option>
-              <option value="118482">Bandhan Nifty 50 (₹3.98L)</option>
-              <option value="119779">Kotak Global Emerging (₹3.55L)</option>
-              <option value="152735">SBI Silver (₹3.53L)</option>
-              <option value="147622">Motilal Oswal Nifty Midcap 150 (₹3.51L)</option>
-              <option value="130503">HDFC Small Cap (₹3.31L)</option>
-              <option value="118968">HDFC Balanced Advantage (₹3.00L)</option>
-              <option value="147623">Motilal Oswal Nifty Smallcap 250 (₹2.35L)</option>
-              <option value="119835">SBI Contra (₹2.07L)</option>
-              <option value="150141">HDFC Silver (₹1.12L)</option>
+              <option value="119771">Kotak Arbitrage</option>
+              <option value="119788">SBI Gold</option>
+              <option value="118551">Franklin US Opportunities</option>
+              <option value="120334">ICICI Prudential Multi-Asset</option>
+              <option value="148745">Kotak Nifty Next 50</option>
+              <option value="141877">DSP Nifty 50 Equal Weight</option>
+              <option value="148485">Axis Global Equity Alpha</option>
+              <option value="118989">HDFC Mid-Cap</option>
+              <option value="118482">Bandhan Nifty 50 - Regular</option>
+              <option value="118650">Nippon India Multi Cap</option>
+              <option value="152814">DSP Nifty Top 10 Equal Weight</option>
+              <option value="122639">Parag Parikh Flexi Cap</option>
+              <option value="151739">UTI Nifty 500 Value 50</option>
+              <option value="118482">Bandhan Nifty 50</option>
+              <option value="119779">Kotak Global Emerging</option>
+              <option value="152735">SBI Silver</option>
+              <option value="147622">Motilal Oswal Nifty Midcap 150</option>
+              <option value="130503">HDFC Small Cap</option>
+              <option value="118968">HDFC Balanced Advantage</option>
+              <option value="147623">Motilal Oswal Nifty Smallcap 250</option>
+              <option value="119835">SBI Contra</option>
+              <option value="150141">HDFC Silver</option>
             </select>
 
             <!-- Fund Snapshot Strip (4 stats inline: Positions, Weight, Port Value, Top 10 Wt) -->
@@ -1662,19 +1692,19 @@
           <span class="font-bold text-white text-sm num mt-0.5 block">12</span>
         </div>
         <div class="border-l border-white/10 pl-2">
-          <span class="text-[10px] text-slate-400 uppercase block">Top 3 Share</span>
-          <span class="font-bold text-sky-400 text-sm num mt-0.5 block">48.0%</span>
+          <span class="text-[10px] text-slate-400 uppercase block">Top 5 Cum Share</span>
+          <span class="font-bold text-sky-400 text-sm num mt-0.5 block">64.0%</span>
         </div>
         <div class="border-l border-white/10 pl-2">
-          <span class="text-[10px] text-slate-400 uppercase block">Other 9 AMCs</span>
-          <span class="font-bold text-slate-300 text-sm num mt-0.5 block">52.0%</span>
+          <span class="text-[10px] text-slate-400 uppercase block">Other 7 AMCs</span>
+          <span class="font-bold text-slate-300 text-sm num mt-0.5 block">36.0%</span>
         </div>
       </div>
 
       <!-- AMC List -->
       <div class="flex-1 overflow-y-auto space-y-2">
         <div class="text-[11px] font-semibold text-slate-400 px-1 flex justify-between">
-          <span>Fund House (Ranked)</span>
+          <span>Fund House · Schemes</span>
           <span>Share · Port Value</span>
         </div>
         <div class="bg-[#131b29] border border-white/5 rounded-2xl overflow-hidden divide-y divide-white/5 text-xs" id="amcModalList">
@@ -2382,78 +2412,295 @@
     // All 12 AMCs Database
     const ALL_AMCS_DB = [
       {
-            "name": "Kotak Mahindra AMC",
+            "name": "Kotak Mahindra",
             "pct": 20,
             "val": "\u20b919.26L",
-            "color": "#38bdf8"
+            "color": "#38bdf8",
+            "fundCount": 3,
+            "funds": [
+                  {
+                        "name": "Kotak Arbitrage",
+                        "code": "119771",
+                        "val": "\u20b910.75L",
+                        "val_num": 1074838.0,
+                        "pct": "10.9%"
+                  },
+                  {
+                        "name": "Kotak Nifty Next 50",
+                        "code": "148745",
+                        "val": "\u20b94.96L",
+                        "val_num": 495738.0,
+                        "pct": "5.0%"
+                  },
+                  {
+                        "name": "Kotak Global Emerging",
+                        "code": "119779",
+                        "val": "\u20b93.55L",
+                        "val_num": 355206.0,
+                        "pct": "3.6%"
+                  }
+            ]
       },
       {
-            "name": "SBI Mutual Fund",
+            "name": "SBI",
             "pct": 16,
             "val": "\u20b915.31L",
-            "color": "#34d399"
+            "color": "#34d399",
+            "fundCount": 3,
+            "funds": [
+                  {
+                        "name": "SBI Gold",
+                        "code": "119788",
+                        "val": "\u20b99.67L",
+                        "val_num": 966897.0,
+                        "pct": "9.8%"
+                  },
+                  {
+                        "name": "SBI Silver",
+                        "code": "152735",
+                        "val": "\u20b93.53L",
+                        "val_num": 353235.0,
+                        "pct": "3.6%"
+                  },
+                  {
+                        "name": "SBI Contra",
+                        "code": "119835",
+                        "val": "\u20b92.07L",
+                        "val_num": 206659.0,
+                        "pct": "2.1%"
+                  }
+            ]
       },
       {
-            "name": "HDFC Mutual Fund",
+            "name": "HDFC",
             "pct": 12,
             "val": "\u20b911.56L",
-            "color": "#fbbf24"
+            "color": "#fbbf24",
+            "fundCount": 4,
+            "funds": [
+                  {
+                        "name": "HDFC Mid-Cap",
+                        "code": "118989",
+                        "val": "\u20b94.13L",
+                        "val_num": 413271.0,
+                        "pct": "4.2%"
+                  },
+                  {
+                        "name": "HDFC Small Cap",
+                        "code": "130503",
+                        "val": "\u20b93.31L",
+                        "val_num": 330650.0,
+                        "pct": "3.3%"
+                  },
+                  {
+                        "name": "HDFC Balanced Advantage",
+                        "code": "118968",
+                        "val": "\u20b93.00L",
+                        "val_num": 300224.0,
+                        "pct": "3.0%"
+                  },
+                  {
+                        "name": "HDFC Silver",
+                        "code": "150141",
+                        "val": "\u20b91.12L",
+                        "val_num": 112170.0,
+                        "pct": "1.1%"
+                  }
+            ]
       },
       {
-            "name": "DSP Mutual Fund",
+            "name": "DSP",
             "pct": 8,
             "val": "\u20b98.40L",
-            "color": "#a78bfa"
+            "color": "#a78bfa",
+            "fundCount": 2,
+            "funds": [
+                  {
+                        "name": "DSP Nifty 50 Equal Weight",
+                        "code": "141877",
+                        "val": "\u20b94.40L",
+                        "val_num": 440413.0,
+                        "pct": "4.5%"
+                  },
+                  {
+                        "name": "DSP Nifty Top 10 Equal Weight",
+                        "code": "152814",
+                        "val": "\u20b94.02L",
+                        "val_num": 402276.0,
+                        "pct": "4.1%"
+                  }
+            ]
       },
       {
-            "name": "Bandhan Mutual Fund",
+            "name": "Bandhan",
             "pct": 8,
             "val": "\u20b98.00L",
-            "color": "#f87171"
+            "color": "#f87171",
+            "fundCount": 2,
+            "funds": [
+                  {
+                        "name": "Bandhan Nifty 50 - Regular",
+                        "code": "118482",
+                        "val": "\u20b94.04L",
+                        "val_num": 403543.0,
+                        "pct": "4.1%"
+                  },
+                  {
+                        "name": "Bandhan Nifty 50",
+                        "code": "118482",
+                        "val": "\u20b93.98L",
+                        "val_num": 398155.0,
+                        "pct": "4.0%"
+                  }
+            ]
       },
       {
             "name": "Franklin Templeton",
             "pct": 7,
             "val": "\u20b97.21L",
-            "color": "#818cf8"
+            "color": "#818cf8",
+            "fundCount": 1,
+            "funds": [
+                  {
+                        "name": "Franklin US Opportunities",
+                        "code": "118551",
+                        "val": "\u20b97.19L",
+                        "val_num": 719118.0,
+                        "pct": "7.3%"
+                  }
+            ]
       },
       {
-            "name": "ICICI Prudential AMC",
+            "name": "ICICI Prudential",
             "pct": 7,
             "val": "\u20b97.01L",
-            "color": "#fb923c"
+            "color": "#fb923c",
+            "fundCount": 1,
+            "funds": [
+                  {
+                        "name": "ICICI Prudential Multi-Asset",
+                        "code": "120334",
+                        "val": "\u20b97.01L",
+                        "val_num": 700593.0,
+                        "pct": "7.1%"
+                  }
+            ]
       },
       {
-            "name": "Motilal Oswal AMC",
+            "name": "Motilal Oswal",
             "pct": 6,
             "val": "\u20b95.83L",
-            "color": "#2dd4bf"
+            "color": "#2dd4bf",
+            "fundCount": 2,
+            "funds": [
+                  {
+                        "name": "Motilal Oswal Nifty Midcap 150",
+                        "code": "147622",
+                        "val": "\u20b93.51L",
+                        "val_num": 350979.0,
+                        "pct": "3.6%"
+                  },
+                  {
+                        "name": "Motilal Oswal Nifty Smallcap 250",
+                        "code": "147623",
+                        "val": "\u20b92.35L",
+                        "val_num": 234907.0,
+                        "pct": "2.4%"
+                  }
+            ]
       },
       {
-            "name": "Axis Mutual Fund",
+            "name": "Axis",
             "pct": 4,
             "val": "\u20b94.15L",
-            "color": "#e879f9"
+            "color": "#e879f9",
+            "fundCount": 1,
+            "funds": [
+                  {
+                        "name": "Axis Global Equity Alpha",
+                        "code": "148485",
+                        "val": "\u20b94.15L",
+                        "val_num": 415198.0,
+                        "pct": "4.2%"
+                  }
+            ]
       },
       {
-            "name": "Nippon India Mutual Fund",
+            "name": "Nippon India",
             "pct": 4,
             "val": "\u20b94.05L",
-            "color": "#38bdf8"
+            "color": "#38bdf8",
+            "fundCount": 1,
+            "funds": [
+                  {
+                        "name": "Nippon India Multi Cap",
+                        "code": "118650",
+                        "val": "\u20b94.03L",
+                        "val_num": 402575.0,
+                        "pct": "4.1%"
+                  }
+            ]
       },
       {
-            "name": "PPFAS Mutual Fund",
+            "name": "PPFAS",
             "pct": 4,
             "val": "\u20b94.05L",
-            "color": "#34d399"
+            "color": "#34d399",
+            "fundCount": 1,
+            "funds": [
+                  {
+                        "name": "Parag Parikh Flexi Cap",
+                        "code": "122639",
+                        "val": "\u20b94.02L",
+                        "val_num": 401832.0,
+                        "pct": "4.1%"
+                  }
+            ]
       },
       {
-            "name": "UTI Mutual Fund",
+            "name": "UTI",
             "pct": 4,
             "val": "\u20b93.95L",
-            "color": "#fbbf24"
+            "color": "#fbbf24",
+            "fundCount": 1,
+            "funds": [
+                  {
+                        "name": "UTI Nifty 500 Value 50",
+                        "code": "151739",
+                        "val": "\u20b93.99L",
+                        "val_num": 399087.0,
+                        "pct": "4.0%"
+                  }
+            ]
       }
 ];
+
+    function toggleAmcFunds(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const isHidden = el.classList.contains('hidden');
+      el.classList.toggle('hidden');
+      const arr = document.getElementById(id.replace('amc-funds-', 'amc-arr-'));
+      if (arr) {
+        arr.textContent = isHidden ? '▲' : '▼';
+      }
+    }
+
+    function openFundFromAmc(code, name) {
+      if (code) {
+        const card = document.querySelector(`[onclick*="'${code}'"]`);
+        if (card) {
+          card.click();
+          return;
+        }
+      }
+      const cardByName = document.querySelector(`[onclick*="'${name}'"]`);
+      if (cardByName) {
+        cardByName.click();
+        return;
+      }
+      switchTab('funds');
+    }
 
     function openAmcModal() {
       const listContainer = document.getElementById('amcModalList');
@@ -2461,21 +2708,53 @@
         listContainer.innerHTML = '';
         ALL_AMCS_DB.forEach((amc, idx) => {
           const row = document.createElement('div');
-          row.className = 'p-3 flex justify-between items-center hover:bg-white/[0.04] transition-colors';
+          row.className = 'border-b border-white/5 last:border-b-0';
           const barW = (amc.pct / 20) * 100;
+          const fundCount = amc.fundCount || (amc.funds ? amc.funds.length : 1);
+          const fundText = `${fundCount} ${fundCount === 1 ? 'fund' : 'funds'}`;
+
+          let fundsHtml = '';
+          if (amc.funds && amc.funds.length > 0) {
+            fundsHtml = amc.funds.map(f => `
+              <div class="flex justify-between items-center py-2 px-2.5 bg-white/[0.03] hover:bg-white/[0.08] active:scale-[0.99] rounded-xl transition-all cursor-pointer text-xs" onclick="event.stopPropagation(); closeAmcModal(); openFundFromAmc('${f.code || ''}', '${f.name}')">
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full" style="background: ${amc.color}"></span>
+                  <span class="text-white font-medium">${f.name}</span>
+                </div>
+                <div class="text-right num whitespace-nowrap">
+                  <span class="text-white font-bold">${f.val}</span>
+                  <span class="text-slate-400 text-[10px] ml-1">(${f.pct})</span>
+                </div>
+              </div>
+            `).join('');
+          }
+
           row.innerHTML = `
-            <div class="pr-2 flex-1">
-              <div class="font-bold text-white text-xs flex items-center gap-2">
-                <span class="w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center text-[10px] font-mono">${idx + 1}</span>
-                <span>${amc.name}</span>
+            <div class="p-3 hover:bg-white/[0.04] transition-colors cursor-pointer" onclick="toggleAmcFunds('amc-funds-${idx}')">
+              <div class="flex justify-between items-center">
+                <div class="pr-2 flex-1">
+                  <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center text-[10px] font-mono">${idx + 1}</span>
+                    <span>${amc.name}</span>
+                    <span class="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 text-sky-400">${fundText}</span>
+                    <span id="amc-arr-${idx}" class="text-[10px] text-slate-400 ml-0.5">▼</span>
+                  </div>
+                  <div class="w-28 sm:w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-1.5 ml-6">
+                    <div class="h-full rounded-full" style="width: ${barW}%; background: ${amc.color}"></div>
+                  </div>
+                </div>
+                <div class="text-right num whitespace-nowrap">
+                  <div class="font-extrabold text-white text-xs">${amc.pct}%</div>
+                  <div class="text-[10px] font-mono text-slate-400 mt-0.5">${amc.val}</div>
+                </div>
               </div>
-              <div class="w-28 sm:w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-1.5 ml-6">
-                <div class="h-full rounded-full" style="width: ${barW}%; background: ${amc.color}"></div>
+              <div id="amc-funds-${idx}" class="hidden mt-2.5 pt-2 border-t border-white/5 space-y-1.5 ml-6">
+                <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1 flex items-center justify-between">
+                  <span>Constituent Schemes (${fundText}):</span>
+                  <span class="text-slate-500 lowercase font-normal">tap to inspect</span>
+                </div>
+                ${fundsHtml}
               </div>
-            </div>
-            <div class="text-right num whitespace-nowrap">
-              <div class="font-extrabold text-white text-xs">${amc.pct}%</div>
-              <div class="text-[10px] font-mono text-slate-400 mt-0.5">${amc.val}</div>
             </div>
           `;
           listContainer.appendChild(row);
