@@ -72,7 +72,7 @@
         <!-- CLEAN BRAND HEADER WITH SIGNATURE INSTRUMENT SERIF TYPOGRAPHY & FONT RESIZE SLIDER -->
     <header class="px-4 py-2.5 sm:px-6 sm:py-3 flex items-center justify-between border-b border-white/5 bg-[#0e131d]/90 backdrop-blur-md sticky top-0 z-30">
       <div class="flex items-center gap-2">
-        <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(1.45rem, 3.2vw, 1.85rem); line-height: 1; color: #f8fafc; letter-spacing: -0.01em; display: inline-flex; align-items: center;">
+        <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(calc(1.45rem - 2px), 3.2vw, calc(1.85rem - 2px)); line-height: 1; color: #f8fafc; letter-spacing: -0.01em; display: inline-flex; align-items: center;">
           <span style="color: #fbbf24; font-style: normal; margin-right: 5px;">◈</span>CapitalView
         </span>
       </div>
@@ -1060,6 +1060,278 @@
           </div>
         </div>
 
+        <!-- ACTUAL HOLDINGS ALLOCATION FLOW (LOOK-THROUGH) -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2 px-1">
+            <div>
+              <h2 class="text-xs uppercase font-bold tracking-wider text-slate-400">Actual Holdings Allocation</h2>
+              <span class="text-[10px] text-slate-500">Underlying flow by asset class &amp; market cap</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">Dom Eq: ₹53.80L (54.5%)</span>
+            </div>
+          </div>
+
+          <div class="bg-[#0e131d] border border-white/5 rounded-2xl p-3.5 sm:p-4 shadow-sm text-xs space-y-3.5">
+            <!-- 1. Macro Allocation Multi-Bar Flow -->
+            <div>
+              <div class="flex justify-between items-center text-[11px] mb-1.5 font-mono">
+                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Macro Asset Flow</span>
+                <span class="text-white font-extrabold">₹98.78L <span class="text-slate-500 font-normal">Total</span></span>
+              </div>
+              
+              <!-- Multi-Segmented Proportional Bar -->
+              <div class="w-full h-3 bg-slate-800 rounded-full flex overflow-hidden mb-2">
+                <div class="h-full bg-emerald-500" style="width: 54.5%" title="Domestic Equities: 54.5% (₹53.80L)"></div>
+                <div class="h-full bg-amber-400" style="width: 15.3%" title="Precious Metals: 15.3% (₹15.08L)"></div>
+                <div class="h-full bg-indigo-400" style="width: 15.2%" title="Global Equities: 15.2% (₹15.02L)"></div>
+                <div class="h-full bg-cyan-400" style="width: 15.1%" title="Liquid, Arbitrage & Debt: 15.1% (₹14.87L)"></div>
+              </div>
+
+              <!-- Quick 4-Badge Legend Grid -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10px] font-mono">
+                <div class="flex items-center gap-1.5 bg-[#131b29] px-2 py-1 rounded-lg border border-white/5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                  <span class="text-slate-300 truncate">Dom Eq:</span>
+                  <span class="text-emerald-400 font-bold ml-auto">54.5%</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-[#131b29] px-2 py-1 rounded-lg border border-white/5">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>
+                  <span class="text-slate-300 truncate">Metals:</span>
+                  <span class="text-amber-400 font-bold ml-auto">15.3%</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-[#131b29] px-2 py-1 rounded-lg border border-white/5">
+                  <span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>
+                  <span class="text-slate-300 truncate">Global:</span>
+                  <span class="text-indigo-400 font-bold ml-auto">15.2%</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-[#131b29] px-2 py-1 rounded-lg border border-white/5">
+                  <span class="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></span>
+                  <span class="text-slate-300 truncate">Defensive:</span>
+                  <span class="text-cyan-400 font-bold ml-auto">15.1%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Primary Deep Dive Card: Domestic Equities (5 Market-Cap Tiers) -->
+            <div class="bg-[#131b29] p-3 rounded-xl border border-white/5 space-y-2.5">
+              <div class="flex justify-between items-center pb-2 border-b border-white/5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <div>
+                    <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                      <span>Domestic Equities</span>
+                      <span class="text-[9px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 px-1.5 py-0.2 rounded font-mono font-semibold">5 Tiers</span>
+                    </div>
+                    <div class="text-[10px] text-slate-400">100% of Equity Pool · 650 unique stocks</div>
+                  </div>
+                </div>
+                <div class="text-right num">
+                  <div class="text-xs font-extrabold text-white">₹53.80L</div>
+                  <div class="text-[10px] font-mono text-emerald-400 font-semibold">54.5% of Port</div>
+                </div>
+              </div>
+
+              <!-- 5 Market-Cap Tier Rows -->
+              <div class="space-y-2 pt-0.5">
+                <!-- Tier 1: Ultra-Large (Top 50) -->
+                <div class="cursor-pointer hover:bg-white/[0.03] p-1.5 -mx-1.5 rounded-lg transition-all" onclick="openActualHoldingsTierModal('Ultra-Large (Top 50)')">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span>
+                      <span class="font-bold text-white text-[11px]">Ultra-Large <span class="text-slate-500 font-normal text-[10px]">(Top 50)</span></span>
+                      <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 rounded">50 stocks · 12 funds</span>
+                    </div>
+                    <div class="text-right num">
+                      <span class="font-extrabold text-white text-xs">₹26.70L</span>
+                      <span class="text-[10px] text-sky-400 font-mono font-bold ml-1">49.6%</span>
+                    </div>
+                  </div>
+                  <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#3b82f6] rounded-full" style="width: 49.6%" title="49.6% of Equity · 27.0% of Portfolio"></div>
+                  </div>
+                  <div class="flex justify-between items-center text-[9px] text-slate-500 font-mono mt-0.5">
+                    <span>HDFC Bank, ICICI Bank, RIL, Infy, ITC</span>
+                    <span class="text-slate-400">27.0% of Port</span>
+                  </div>
+                </div>
+
+                <!-- Tier 2: Large Cap (51-100) -->
+                <div class="cursor-pointer hover:bg-white/[0.03] p-1.5 -mx-1.5 rounded-lg transition-all" onclick="openActualHoldingsTierModal('Large Cap (51-100)')">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-[#06b6d4]"></span>
+                      <span class="font-bold text-white text-[11px]">Large Cap <span class="text-slate-500 font-normal text-[10px]">(51–100)</span></span>
+                      <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 rounded">50 stocks · 9 funds</span>
+                    </div>
+                    <div class="text-right num">
+                      <span class="font-extrabold text-white text-xs">₹7.72L</span>
+                      <span class="text-[10px] text-cyan-400 font-mono font-bold ml-1">14.4%</span>
+                    </div>
+                  </div>
+                  <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#06b6d4] rounded-full" style="width: 14.4%" title="14.4% of Equity · 7.8% of Portfolio"></div>
+                  </div>
+                  <div class="flex justify-between items-center text-[9px] text-slate-500 font-mono mt-0.5">
+                    <span>Divi's Lab, TVS Motor, HAL, Torrent Pharma</span>
+                    <span class="text-slate-400">7.8% of Port</span>
+                  </div>
+                </div>
+
+                <!-- Tier 3: Mid Cap (101-250) -->
+                <div class="cursor-pointer hover:bg-white/[0.03] p-1.5 -mx-1.5 rounded-lg transition-all" onclick="openActualHoldingsTierModal('Mid Cap (101-250)')">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-[#f59e0b]"></span>
+                      <span class="font-bold text-white text-[11px]">Mid Cap <span class="text-slate-500 font-normal text-[10px]">(101–250)</span></span>
+                      <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 rounded">150 stocks · 9 funds</span>
+                    </div>
+                    <div class="text-right num">
+                      <span class="font-extrabold text-white text-xs">₹10.83L</span>
+                      <span class="text-[10px] text-amber-400 font-mono font-bold ml-1">20.1%</span>
+                    </div>
+                  </div>
+                  <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#f59e0b] rounded-full" style="width: 20.1%" title="20.1% of Equity · 11.0% of Portfolio"></div>
+                  </div>
+                  <div class="flex justify-between items-center text-[9px] text-slate-500 font-mono mt-0.5">
+                    <span>Federal Bank, AU Small Bank, Coforge, MCX</span>
+                    <span class="text-slate-400">11.0% of Port</span>
+                  </div>
+                </div>
+
+                <!-- Tier 4: Small Cap (251-500) -->
+                <div class="cursor-pointer hover:bg-white/[0.03] p-1.5 -mx-1.5 rounded-lg transition-all" onclick="openActualHoldingsTierModal('Small Cap (251-500)')">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-[#ec4899]"></span>
+                      <span class="font-bold text-white text-[11px]">Small Cap <span class="text-slate-500 font-normal text-[10px]">(251–500)</span></span>
+                      <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 rounded">252 stocks · 9 funds</span>
+                    </div>
+                    <div class="text-right num">
+                      <span class="font-extrabold text-white text-xs">₹6.00L</span>
+                      <span class="text-[10px] text-pink-400 font-mono font-bold ml-1">11.2%</span>
+                    </div>
+                  </div>
+                  <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#ec4899] rounded-full" style="width: 11.2%" title="11.2% of Equity · 6.1% of Portfolio"></div>
+                  </div>
+                  <div class="flex justify-between items-center text-[9px] text-slate-500 font-mono mt-0.5">
+                    <span>Firstsource, Aster DM, Gabriel, eClerx</span>
+                    <span class="text-slate-400">6.1% of Port</span>
+                  </div>
+                </div>
+
+                <!-- Tier 5: Micro Cap (500+) -->
+                <div class="cursor-pointer hover:bg-white/[0.03] p-1.5 -mx-1.5 rounded-lg transition-all" onclick="openActualHoldingsTierModal('Micro Cap (500+)')">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-[#a855f7]"></span>
+                      <span class="font-bold text-white text-[11px]">Micro Cap <span class="text-slate-500 font-normal text-[10px]">(500+)</span></span>
+                      <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 rounded">149 stocks · 7 funds</span>
+                    </div>
+                    <div class="text-right num">
+                      <span class="font-extrabold text-white text-xs">₹2.54L</span>
+                      <span class="text-[10px] text-purple-400 font-mono font-bold ml-1">4.7%</span>
+                    </div>
+                  </div>
+                  <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#a855f7] rounded-full" style="width: 4.7%" title="4.7% of Equity · 2.6% of Portfolio"></div>
+                  </div>
+                  <div class="flex justify-between items-center text-[9px] text-slate-500 font-mono mt-0.5">
+                    <span>Pearl Global, Apar Ind, Sudarshan Chem</span>
+                    <span class="text-slate-400">2.6% of Port</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Other 3 Asset Classes (Grid of Cards) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              
+              <!-- Precious Metals -->
+              <div class="bg-[#131b29] p-3 rounded-xl border border-white/5 space-y-2">
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                    <span class="font-bold text-white text-xs">Precious Metals</span>
+                  </div>
+                  <span class="font-extrabold text-amber-400 num text-xs">15.3% <span class="text-slate-400 font-normal text-[10px]">(₹15.08L)</span></span>
+                </div>
+                <div class="space-y-1.5 pt-1 text-[11px] font-mono">
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-amber-300">🟡 Gold Bullion</span>
+                    </div>
+                    <span class="font-bold text-white text-[10px]">₹10.42L <span class="text-amber-400 font-semibold">(10.5%)</span></span>
+                  </div>
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-slate-300">⚪ Silver Bullion</span>
+                    </div>
+                    <span class="font-bold text-white text-[10px]">₹4.66L <span class="text-slate-300 font-semibold">(4.7%)</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Global Equities -->
+              <div class="bg-[#131b29] p-3 rounded-xl border border-white/5 space-y-2">
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+                    <span class="font-bold text-white text-xs">Global Equities</span>
+                  </div>
+                  <span class="font-extrabold text-indigo-400 num text-xs">15.2% <span class="text-slate-400 font-normal text-[10px]">(₹15.02L)</span></span>
+                </div>
+                <div class="space-y-1.5 pt-1 text-[11px] font-mono">
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-indigo-300">🌐 Global FoFs</span>
+                    </div>
+                    <span class="font-bold text-white text-[10px]">₹14.48L <span class="text-indigo-400 font-semibold">(14.7%)</span></span>
+                  </div>
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-slate-300">🇺🇸 US Direct</span>
+                    </div>
+                    <span class="font-bold text-white text-[10px]">₹0.54L <span class="text-slate-400 font-semibold">(0.5%)</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Liquid, Arbitrage & Debt -->
+              <div class="bg-[#131b29] p-3 rounded-xl border border-white/5 space-y-2">
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                    <span class="font-bold text-white text-xs">Liquid &amp; Debt</span>
+                  </div>
+                  <span class="font-extrabold text-cyan-400 num text-xs">15.1% <span class="text-slate-400 font-normal text-[10px]">(₹14.87L)</span></span>
+                </div>
+                <div class="space-y-1.5 pt-1 text-[11px] font-mono">
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <span class="text-purple-300 truncate">Hedged Arbitrage</span>
+                    <span class="font-bold text-white text-[10px] whitespace-nowrap">₹8.31L <span class="text-purple-400">(8.4%)</span></span>
+                  </div>
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <span class="text-cyan-300 truncate">Cash &amp; TREPS</span>
+                    <span class="font-bold text-white text-[10px] whitespace-nowrap">₹2.63L <span class="text-cyan-400">(2.7%)</span></span>
+                  </div>
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <span class="text-sky-300 truncate">T-Bills &amp; CDs</span>
+                    <span class="font-bold text-white text-[10px] whitespace-nowrap">₹2.48L <span class="text-sky-400">(2.5%)</span></span>
+                  </div>
+                  <div class="flex justify-between items-center bg-white/[0.02] p-1.5 rounded-lg border border-white/5">
+                    <span class="text-teal-300 truncate">Bonds &amp; G-Secs</span>
+                    <span class="font-bold text-white text-[10px] whitespace-nowrap">₹1.45L <span class="text-teal-400">(1.5%)</span></span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
         <!-- 3. STRATEGY & PORTFOLIO MULTI-LENS -->
         <div>
           <div class="flex justify-between items-baseline mb-2 px-1">
@@ -1762,6 +2034,58 @@
 
       <!-- Close Button -->
       <button onclick="closeSectorDetail()" class="w-full py-2.5 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 transition-all">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- ACTUAL HOLDINGS MCAP TIER MODAL -->
+  <!-- ========================================================================= -->
+  <div id="actualHoldingsTierModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4">
+    <div class="bg-[#0e131d] border border-white/10 rounded-3xl max-w-md w-full p-4 sm:p-5 space-y-4 shadow-2xl relative max-h-[90vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-start border-b border-white/5 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="tierModalBadge" class="px-2.5 py-1 rounded-lg text-xs font-bold border">Market Cap Tier</span>
+          </div>
+          <p id="tierModalSubtitle" class="text-[11px] text-slate-400 mt-1.5"></p>
+        </div>
+        <button onclick="closeActualHoldingsTierModal()" class="text-slate-400 hover:text-white p-1 rounded-lg text-lg leading-none font-bold">
+          ✕
+        </button>
+      </div>
+
+      <!-- Tier Totals Strip (3 Columns: Tier Val, Eq Weight, Port Weight) -->
+      <div class="grid grid-cols-3 gap-2 bg-[#131b29] p-3 rounded-2xl border border-white/5 text-center text-xs">
+        <div>
+          <span class="text-[10px] text-slate-400 uppercase block">Total Value</span>
+          <span id="tierModalValue" class="font-bold text-white text-sm num mt-0.5 block">₹0.00L</span>
+        </div>
+        <div class="border-l border-white/10 pl-2">
+          <span class="text-[10px] text-slate-400 uppercase block">Equity Share</span>
+          <span id="tierModalEqWeight" class="font-bold text-emerald-400 text-sm num mt-0.5 block">0.0%</span>
+        </div>
+        <div class="border-l border-white/10 pl-2">
+          <span class="text-[10px] text-slate-400 uppercase block">Port Share</span>
+          <span id="tierModalPortWeight" class="font-bold text-sky-400 text-sm num mt-0.5 block">0.0%</span>
+        </div>
+      </div>
+
+      <!-- Constituent Stocks Table -->
+      <div class="flex-1 overflow-y-auto space-y-2">
+        <div class="text-[11px] font-semibold text-slate-400 px-1 flex justify-between">
+          <span>Top Held Stocks (<span id="tierModalStockCount">0</span>)</span>
+          <span>Weight · Overlap</span>
+        </div>
+        <div class="bg-[#131b29] border border-white/5 rounded-2xl overflow-hidden divide-y divide-white/5 text-xs" id="tierModalStockList">
+          <!-- Dynamically populated stock rows -->
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <button onclick="closeActualHoldingsTierModal()" class="w-full py-2.5 rounded-xl bg-slate-800 text-white font-semibold text-xs hover:bg-slate-700 transition-all">
         Done
       </button>
     </div>
@@ -2935,6 +3259,195 @@
 
     function closeSectorDetail() {
       const modal = document.getElementById('sectorModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // =========================================================================
+    // ACTUAL HOLDINGS MARKET-CAP TIERS DATABASE (SECTION 13 LOOK-THROUGH)
+    // =========================================================================
+    const ACTUAL_HOLDINGS_TIERS_DB = {
+      "Ultra-Large (Top 50)": {
+        name: "Ultra-Large Cap (Top 50)",
+        val: "₹26.70L",
+        eqWeight: "49.6%",
+        portWeight: "27.0%",
+        stocksCount: "50 stocks · 12 funds",
+        color: "#3b82f6",
+        desc: "India's top 50 mega-cap bluechips across banking, energy & tech giants",
+        stocks: [
+          { name: "HDFC Bank", weight: "2.75%", val: "₹2.71L", overlap: "Across 10 funds" },
+          { name: "ICICI Bank", weight: "2.47%", val: "₹2.44L", overlap: "Across 10 funds" },
+          { name: "Reliance Industries", weight: "1.89%", val: "₹1.87L", overlap: "Across 10 funds" },
+          { name: "Axis Bank", weight: "1.66%", val: "₹1.64L", overlap: "Across 10 funds" },
+          { name: "Bharti Airtel", weight: "1.38%", val: "₹1.36L", overlap: "Across 9 funds" },
+          { name: "State Bank of India", weight: "1.38%", val: "₹1.36L", overlap: "Across 11 funds" },
+          { name: "Infosys", weight: "1.26%", val: "₹1.25L", overlap: "Across 10 funds" },
+          { name: "ITC", weight: "1.23%", val: "₹1.21L", overlap: "Across 10 funds" },
+          { name: "Kotak Mahindra Bank", weight: "1.17%", val: "₹1.15L", overlap: "Across 9 funds" },
+          { name: "Larsen & Toubro", weight: "1.06%", val: "₹1.04L", overlap: "Across 9 funds" },
+          { name: "Coal India", weight: "0.80%", val: "₹0.79L", overlap: "Across 8 funds" },
+          { name: "NTPC", weight: "0.70%", val: "₹0.69L", overlap: "Across 8 funds" },
+          { name: "Mahindra & Mahindra", weight: "0.62%", val: "₹0.61L", overlap: "Across 8 funds" },
+          { name: "Power Grid Corp", weight: "0.60%", val: "₹0.59L", overlap: "Across 6 funds" },
+          { name: "Hindalco Industries", weight: "0.59%", val: "₹0.58L", overlap: "Across 8 funds" }
+        ]
+      },
+      "Large Cap (51-100)": {
+        name: "Large Cap (Rank 51–100)",
+        val: "₹7.72L",
+        eqWeight: "14.4%",
+        portWeight: "7.8%",
+        stocksCount: "50 stocks · 9 funds",
+        color: "#06b6d4",
+        desc: "Established industry leaders ranked 51–100 by market capitalization",
+        stocks: [
+          { name: "Divi's Laboratories", weight: "0.42%", val: "₹0.41L", overlap: "Across 5 funds" },
+          { name: "TVS Motor Company", weight: "0.32%", val: "₹0.32L", overlap: "Across 5 funds" },
+          { name: "Hindustan Aeronautics (HAL)", weight: "0.31%", val: "₹0.31L", overlap: "Across 4 funds" },
+          { name: "Torrent Pharmaceuticals", weight: "0.26%", val: "₹0.26L", overlap: "Across 2 funds" },
+          { name: "Cholamandalam Inv & Fin", weight: "0.29%", val: "₹0.29L", overlap: "Across 4 funds" },
+          { name: "Vedanta Aluminium Metal", weight: "0.25%", val: "₹0.25L", overlap: "Across 3 funds" },
+          { name: "Cummins India", weight: "0.23%", val: "₹0.23L", overlap: "Across 4 funds" },
+          { name: "Avenue Supermarts (DMart)", weight: "0.33%", val: "₹0.32L", overlap: "Across 5 funds" },
+          { name: "Bharat Petroleum (BPCL)", weight: "0.37%", val: "₹0.36L", overlap: "Across 5 funds" },
+          { name: "Tata Power Company", weight: "0.21%", val: "₹0.21L", overlap: "Across 3 funds" },
+          { name: "Varun Beverages", weight: "0.21%", val: "₹0.21L", overlap: "Across 3 funds" },
+          { name: "Britannia Industries", weight: "0.20%", val: "₹0.20L", overlap: "Across 4 funds" }
+        ]
+      },
+      "Mid Cap (101-250)": {
+        name: "Mid Cap (Rank 101–250)",
+        val: "₹10.83L",
+        eqWeight: "20.1%",
+        portWeight: "11.0%",
+        stocksCount: "150 stocks · 9 funds",
+        color: "#f59e0b",
+        desc: "High-growth mid-sized companies ranked 101–250 by market cap",
+        stocks: [
+          { name: "The Federal Bank", weight: "0.35%", val: "₹0.35L", overlap: "Across 4 funds" },
+          { name: "AU Small Finance Bank", weight: "0.28%", val: "₹0.28L", overlap: "Across 4 funds" },
+          { name: "Max Financial Services", weight: "0.25%", val: "₹0.25L", overlap: "Across 4 funds" },
+          { name: "Ipca Laboratories", weight: "0.25%", val: "₹0.25L", overlap: "Across 4 funds" },
+          { name: "Glenmark Pharmaceuticals", weight: "0.21%", val: "₹0.21L", overlap: "Across 4 funds" },
+          { name: "Balkrishna Industries", weight: "0.24%", val: "₹0.24L", overlap: "Across 4 funds" },
+          { name: "Indian Bank", weight: "0.22%", val: "₹0.22L", overlap: "Across 5 funds" },
+          { name: "Coforge", weight: "0.24%", val: "₹0.24L", overlap: "Across 3 funds" },
+          { name: "Fortis Healthcare", weight: "0.22%", val: "₹0.22L", overlap: "Across 4 funds" },
+          { name: "MCX India", weight: "0.18%", val: "₹0.18L", overlap: "Across 2 funds" },
+          { name: "Persistent Systems", weight: "0.21%", val: "₹0.21L", overlap: "Across 4 funds" },
+          { name: "Bharat Forge", weight: "0.17%", val: "₹0.17L", overlap: "Across 4 funds" }
+        ]
+      },
+      "Small Cap (251-500)": {
+        name: "Small Cap (Rank 251–500)",
+        val: "₹6.00L",
+        eqWeight: "11.2%",
+        portWeight: "6.1%",
+        stocksCount: "252 stocks · 9 funds",
+        color: "#ec4899",
+        desc: "Emerging small-cap innovators ranked 251–500 in Indian equities",
+        stocks: [
+          { name: "Firstsource Solutions", weight: "0.15%", val: "₹0.15L", overlap: "Across 2 funds" },
+          { name: "Aster DM Quality Care", weight: "0.29%", val: "₹0.29L", overlap: "Across 6 funds" },
+          { name: "Gabriel India", weight: "0.13%", val: "₹0.13L", overlap: "Across 2 funds" },
+          { name: "eClerx Services", weight: "0.12%", val: "₹0.12L", overlap: "Across 2 funds" },
+          { name: "Bank of Baroda", weight: "0.35%", val: "₹0.34L", overlap: "Across 5 funds" },
+          { name: "Krishna Institute of Medical Sciences", weight: "0.09%", val: "₹0.09L", overlap: "Across 2 funds" },
+          { name: "Apar Industries", weight: "0.09%", val: "₹0.09L", overlap: "Across 4 funds" },
+          { name: "Pearl Global Industries", weight: "0.08%", val: "₹0.08L", overlap: "Exclusive" },
+          { name: "Eris Lifesciences", weight: "0.08%", val: "₹0.08L", overlap: "Exclusive" },
+          { name: "Home First Finance", weight: "0.08%", val: "₹0.07L", overlap: "Across 3 funds" },
+          { name: "PVR INOX", weight: "0.08%", val: "₹0.07L", overlap: "Across 4 funds" },
+          { name: "Great Eastern Shipping", weight: "0.07%", val: "₹0.07L", overlap: "Across 3 funds" }
+        ]
+      },
+      "Micro Cap (500+)": {
+        name: "Micro Cap (Rank 500+)",
+        val: "₹2.54L",
+        eqWeight: "4.7%",
+        portWeight: "2.6%",
+        stocksCount: "149 stocks · 7 funds",
+        color: "#a855f7",
+        desc: "Niche micro-cap and specialized small enterprises ranked beyond top 500",
+        stocks: [
+          { name: "Sudarshan Chemical Industries", weight: "0.07%", val: "₹0.07L", overlap: "Exclusive" },
+          { name: "Vijaya Diagnostic Centre", weight: "0.07%", val: "₹0.07L", overlap: "Across 3 funds" },
+          { name: "Chalet Hotels", weight: "0.07%", val: "₹0.07L", overlap: "Exclusive" },
+          { name: "Suprajit Engineering", weight: "0.06%", val: "₹0.06L", overlap: "Exclusive" },
+          { name: "Power Mech Projects", weight: "0.06%", val: "₹0.06L", overlap: "Exclusive" },
+          { name: "Timken India", weight: "0.06%", val: "₹0.06L", overlap: "Across 5 funds" },
+          { name: "JSW Dulux", weight: "0.05%", val: "₹0.05L", overlap: "Across 2 funds" },
+          { name: "Arvind Fashions", weight: "0.05%", val: "₹0.05L", overlap: "Across 2 funds" },
+          { name: "Redington", weight: "0.06%", val: "₹0.06L", overlap: "Across 4 funds" },
+          { name: "Kalpataru Projects", weight: "0.06%", val: "₹0.06L", overlap: "Across 5 funds" }
+        ]
+      }
+    };
+
+    function openActualHoldingsTierModal(tierKey) {
+      const data = ACTUAL_HOLDINGS_TIERS_DB[tierKey];
+      if (!data) return;
+
+      const badge = document.getElementById('tierModalBadge');
+      if (badge) {
+        badge.textContent = data.name;
+        badge.style.borderColor = data.color;
+        badge.style.color = data.color;
+        badge.style.backgroundColor = data.color + '18';
+      }
+
+      const sub = document.getElementById('tierModalSubtitle');
+      if (sub) sub.textContent = data.desc;
+
+      const valEl = document.getElementById('tierModalValue');
+      if (valEl) valEl.textContent = data.val;
+
+      const eqEl = document.getElementById('tierModalEqWeight');
+      if (eqEl) eqEl.textContent = data.eqWeight;
+
+      const portEl = document.getElementById('tierModalPortWeight');
+      if (portEl) portEl.textContent = data.portWeight;
+
+      const countEl = document.getElementById('tierModalStockCount');
+      if (countEl) countEl.textContent = data.stocks.length;
+
+      const listContainer = document.getElementById('tierModalStockList');
+      if (listContainer) {
+        listContainer.innerHTML = '';
+        data.stocks.forEach((s, idx) => {
+          const row = document.createElement('div');
+          row.className = 'p-3 flex justify-between items-center hover:bg-white/[0.04] transition-colors';
+          row.innerHTML = `
+            <div class="pr-2">
+              <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center text-[10px] font-mono">${idx + 1}</span>
+                <span>${s.name}</span>
+              </div>
+              <div class="text-[10px] text-slate-400 mt-0.5 ml-6">
+                <span class="px-1.5 py-0.2 rounded font-mono font-semibold bg-sky-500/15 text-sky-300 inline-block">${s.overlap}</span>
+              </div>
+            </div>
+            <div class="text-right num whitespace-nowrap">
+              <div class="font-extrabold text-white text-xs">${s.weight}</div>
+              <div class="text-[10px] font-mono text-slate-400 mt-0.5">${s.val}</div>
+            </div>
+          `;
+          listContainer.appendChild(row);
+        });
+      }
+
+      const modal = document.getElementById('actualHoldingsTierModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeActualHoldingsTierModal() {
+      const modal = document.getElementById('actualHoldingsTierModal');
       if (modal) {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
