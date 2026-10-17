@@ -50,7 +50,6 @@
         <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(23px, 3.2vw, 29px); line-height: 1; color: #f8fafc; letter-spacing: -0.01em; display: inline-flex; align-items: center;">
           <span style="color: #fbbf24; font-style: normal; margin-right: 5px;">◈</span>CapitalView
         </span>
-        <span id="headerAsOf" class="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-slate-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">As of 16 Oct 2026</span>
       </div>
 
       <!-- FONT INCREASE/DECREASE SLIDER (5% STEPS WITH + AND -) -->
@@ -1426,12 +1425,12 @@
 
         <!-- TASTEFUL FOOTER WITH DISCLAIMER -->
     <footer class="mt-auto px-4 py-6 sm:px-6 border-t border-white/5 text-center text-xs text-slate-500 space-y-2.5">
-      <div class="flex items-center justify-center font-mono">
+      <div class="flex items-center justify-center gap-1.5">
         <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 16px; color: #94a3b8;">
-          <span style="color: #fbbf24; font-style: normal;">◈</span> CapitalView
+          <span style="color: #fbbf24; font-style: normal; margin-right: 4px;">◈</span>CapitalView
         </span>
-        <span class="mx-2 opacity-40">·</span>
-        <span id="footerAsOf">As of 16 Oct 2026</span>
+        <span class="text-slate-600 text-[10px] select-none translate-y-[1px]">·</span>
+        <span id="footerYear" style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 14px; color: #64748b;" class="translate-y-[1.5px]">2026</span>
       </div>
       <p class="text-[10px] text-slate-500 max-w-lg mx-auto leading-relaxed font-sans">
         <span class="font-semibold text-slate-400">Disclaimer:</span> Analytics are provided for informational purposes only and do not constitute investment, tax, or legal advice. Past performance does not guarantee future results.
