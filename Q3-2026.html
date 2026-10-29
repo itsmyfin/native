@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Thematic ETF Monitor &amp; Strategy Chartbook – Q3 2026</title>
+<style>
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--n:#0a2540;--g:#1a7f4b;--r:#b42318;--m:#64748b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:#eef1f5;font:14px/1.45 Georgia,"Times New Roman",serif;color:#1e293b;font-variant-numeric:tabular-nums}
+.p{max-width:960px;margin:0 auto;background:#fff;padding:0 28px 24px}
+header{background:var(--n);color:#fff;margin:0 -28px;padding:22px 28px}
+header h1{margin:0;font:700 24px Georgia,serif}header p{margin:4px 0 0;font:12px Arial,sans-serif;opacity:.8;letter-spacing:.04em;text-transform:uppercase}
+.note{font:11px Arial,sans-serif;background:#fff7e0;border:1px solid #e6c453;padding:6px 10px;margin:12px 0}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0}
+.k div{border:1px solid #cbd5e1;border-top:3px solid var(--n);padding:8px 10px}
+.k b{display:block;font:700 22px Arial,sans-serif;color:var(--n)}.k span{font:10px Arial,sans-serif;color:var(--m);text-transform:uppercase}
+section{margin:22px 0;break-inside:avoid;border-top:2px solid var(--n);padding-top:8px}
+h2{font:700 15px Arial,sans-serif;color:var(--n);margin:0 0 6px}
+svg{width:100%;height:auto;display:block;font:12px Arial,sans-serif}
+.s{font:10px Arial,sans-serif;color:var(--m);margin:2px 0 6px}
+ul{margin:4px 0 0;padding-left:18px}li{margin:3px 0}li b.t{font:700 10px Arial,sans-serif;color:#fff;background:var(--n);padding:1px 5px;margin-right:4px}
+li b.a{background:var(--g)}
+table{border-collapse:collapse;width:100%;font:11px Arial,sans-serif;margin-top:8px}th,td{border:1px solid #cbd5e1;padding:3px 6px;text-align:left}th{background:#e8edf3;color:var(--n)}.lg td:nth-child(n+2),.lg th:nth-child(n+2){text-align:right}
+footer{font:10px/1.4 Arial,sans-serif;color:var(--m);border-top:2px solid var(--n);margin-top:20px;padding-top:8px}
+@media print{body{background:#fff}.p{max-width:none;padding:0 10px}@page{size:A4;margin:10mm}}
+</style></head><body><div class="p">
+<header><p>ETF Desk Research · Equity Thematic Strategy · US ’40 Act &amp; Europe UCITS</p><h1>Thematic ETF Monitor &amp; Strategy Chartbook</h1><p>Q3 2026 (quarter ended 30 Sep 2026) · Realized data only · No forecasts</p></header>
+<div class="note"><b>Data notice:</b> All figures, tickers and issuers below are illustrative placeholders sized to the specified schema (Spreadsheets 1 &amp; 2, joined on ISIN). Replace the data arrays in the script with live feeds before distribution.</div>
+<div class="k"><div><b>$312.4B</b><span>Total Thematic AUM</span></div><div><b>$4.8B</b><span>Q3 Realized Net Flows</span></div><div><b>1,682</b><span>Median Benchmark HHI</span></div><div><b>17.4%</b><span>Max Single-Stock Float Ownership</span></div><div><b>43%</b><span>Active Share of Q3 Listings</span></div></div>
+<div id="ex"></div>
+<footer><b>Analyst Certification:</b> The research analyst(s) certify that the views expressed accurately reflect their personal views about the subject securities and that no part of their compensation was, is or will be directly or indirectly related to specific recommendations or views herein. <b>Disclosures:</b> For institutional/professional clients only (MiFID II professional / FINRA institutional investor). Not retail marketing. Past performance is not indicative of future results. Content is a retrospective analysis of realized data and contains no forecasts, price targets or investment advice. ETF returns exclude trading costs; UCITS figures may be FX-converted. HHI = Σwi²; Neff = 10,000/HHI. OGR = net flows ÷ opening AUM. Sharpe uses Rf = 4.25%. Sample data shown is illustrative. Source: ETF Desk Research, Bloomberg, FactSet, regulatory filings.</footer></div>
+<script>
+const N='#0a2540',G='#1a7f4b',R='#b42318',B='#7aa2c4',M='#64748b';
+const f=(v,d=1,u='%')=>v<0?`(${Math.abs(v).toFixed(d)}${u})`:v.toFixed(d)+u;
+const $m=v=>v<0?`($${Math.abs(v).toLocaleString()}M)`:`$${v.toLocaleString()}M`;
+const T=(x,y,s,o='')=>`<text x="${x}" y="${y}" ${o}>${s}</text>`;
+const L=(a,b,c,d,col='#e2e8f0',w=1)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${col}" stroke-width="${w}"/>`;
+const Rc=(x,y,w,h,fill,o='')=>`<rect x="${x}" y="${y}" width="${Math.max(w,0)}" height="${Math.max(h,0)}" fill="${fill}" ${o}/>`;
+const S=(h,H)=>`<svg viewBox="0 0 900 ${H}">${h}</svg>`;
+const out=[];
+const ex=(n,t,svg,b1,b2)=>out.push(`<section><h2>Exhibit ${n}: ${t}</h2>${svg}<div class="s">Source: ETF Desk Research, Bloomberg, FactSet, regulatory filings. Illustrative data.</div><ul><li><b class="t">DATA</b>${b1}</li><li><b class="t a">ACTION</b>${b2}</li></ul></section>`);
+
+// Ex1
+(()=>{const d=[["Thematic",1.6,7.9],["Core",2.4,9.8],["Smart Beta",-0.3,1.9],["Sectors",1.1,5.2],["Dividend",1.9,6.4],["ESG",-1.2,-4.6]];
+const l=50,t=30,ph=230,mn=-6,mx=12,y=v=>t+(mx-v)/(mx-mn)*ph;let s=Rc(l+10,8,12,12,B)+T(l+26,18,'Q3 OGR')+Rc(l+90,8,12,12,N)+T(l+106,18,'1Y OGR');
+[-6,0,6,12].forEach(v=>s+=L(l,y(v),880,y(v),v?'#e2e8f0':N)+T(l-6,y(v)+4,v+'%','text-anchor="end" fill="#64748b"'));
+d.forEach((r,i)=>{const x=l+22+i*136;[1,2].forEach(k=>{const v=r[k],bx=x+(k-1)*46;s+=Rc(bx,Math.min(y(0),y(v)),42,Math.abs(y(v)-y(0)),k==1?B:N)+T(bx+21,v<0?y(v)+14:y(v)-4,f(v),`text-anchor="middle" font-size="11" fill="${v<0?R:'#1e293b'}"`)});
+s+=T(x+44,292,r[0],`text-anchor="middle" font-weight="${i?400:700}"`)});
+ex(1,'Relative Organic Growth Rate: Q3 vs. 1Y (% of opening AUM)',S(s,305),
+'Thematic posted a Q3 OGR of <b>1.6%</b> and 1Y OGR of <b>7.9%</b>, trailing Core (<b>2.4% / 9.8%</b>); thematics are <b>not</b> growing faster than the broad market, while ESG sits at <b>(1.2%) / (4.6%)</b>. Thematics hold ~<b>9%</b> of ETF listings vs. ~<b>2.6%</b> of ETF AUM.',
+'Do not size thematics as a structural growth sleeve: cap the aggregate sleeve at 10% of the equity budget, funded from Sector exposure (1Y OGR 5.2%) rather than Core.')})();
+
+// Ex2
+(()=>{const d=[["Defense",1420],["AI &amp; Robotics",1180],["Nuclear/Uranium",640],["Cybersecurity",310],["Space",205],["Genomics",-270],["Metaverse",-160],["EVs",-395],["Battery/Lithium",-510],["Clean Energy",-880]].sort((a,b)=>b[1]-a[1]);
+const x=v=>140+(v+1000)/2500*720,t=24;let s='';
+[-1000,-500,0,500,1000,1500].forEach(v=>s+=L(x(v),t-6,x(v),t+10*28,v?'#e2e8f0':N,v?1:1.5)+T(x(v),t+10*28+14,v<0?`($${-v})`:'$'+v,'text-anchor="middle" fill="#64748b" font-size="10"'));
+d.forEach((r,i)=>{const v=r[1],yy=t+i*28;s+=Rc(Math.min(x(0),x(v)),yy+3,Math.abs(x(v)-x(0)),20,v<0?R:G)+T(6,yy+18,r[0])+T(v<0?x(v)-4:x(v)+4,yy+18,$m(v),`text-anchor="${v<0?'end':'start'}" font-size="11" font-weight="700"`)});
+ex(2,'Q3 Flow Polarization by Subsegment ($ Millions)',S(s,t+10*28+24),
+'Top-5 inflows summed to <b>$3,755M</b> (Defense <b>$1,420M</b>, AI <b>$1,180M</b>, Nuclear <b>$640M</b>) against top-5 outflows of <b>($2,215M)</b>, led by Clean Energy <b>($880M)</b> in its 6th consecutive quarter of net redemptions: gross rotation <b>$5,970M</b> (OGR: Defense <b>9.1%</b>, Clean Energy <b>(2.9%)</b>).',
+'Treat three consecutive quarters of net redemptions as a liquidity/closure watch flag; exclude Clean Energy and Battery funds below $100M AUM from new allocations.')})();
+
+// Ex3
+(()=>{const d=[["Defense",48,-11,18.2,G],["AI &amp; Robotics",41,-18,64.5,G],["Nuclear",36,-24,9.8,M],["Cybersecurity",19,-15,22,M],["Space",27,-29,6.1,M],["Genomics",-8,-33,14.3,M],["Clean Energy",-24,-41,31.2,R],["Battery",-19,-38,7.4,R],["EVs",-31,-28,5.2,R]];
+const l=60,t=16,w=800,h=330,X=v=>l+(v+45)/45*w,Y=v=>t+(55-v)/90*h;let s=Rc(X(-20),Y(55),X(0)-X(-20),Y(25)-Y(55),'#1a7f4b','opacity=".08"')+Rc(X(-45),Y(0),X(-30)-X(-45),Y(-35)-Y(0),'#b42318','opacity=".08"')+T(X(-1),Y(52),'SWEET SPOT','text-anchor="end" fill="#1a7f4b" font-weight="700" font-size="11"')+T(X(-44),Y(-32),'TAIL-RISK ZONE','fill="#b42318" font-weight="700" font-size="11"');
+[-30,-10,10,30,50].forEach(v=>s+=L(l,Y(v),l+w,Y(v))+T(l-6,Y(v)+4,f(v,0),'text-anchor="end" fill="#64748b"'));
+[-45,-30,-15,0].forEach(v=>s+=L(X(v),t,X(v),t+h)+T(X(v),t+h+16,f(v,0),'text-anchor="middle" fill="#64748b"'));
+s+=L(l,Y(0),l+w,Y(0),N,1.5);
+d.forEach(r=>{const rad=Math.sqrt(r[3])*3.2;s+=`<circle cx="${X(r[2])}" cy="${Y(r[1])}" r="${rad}" fill="${r[4]}" fill-opacity=".6" stroke="${r[4]}"/>`+T(X(r[2])+rad+4,Y(r[1])+4,`${r[0]} ${f(r[1],0)}`,'font-size="11"')});
+s+=T(l+w/2,t+h+34,'1Y Max Drawdown (bubble = AUM)','text-anchor="middle" font-weight="700"')+T(14,t+h/2,'1Y Total Return','transform="rotate(-90 14 '+(t+h/2)+')" text-anchor="middle" font-weight="700"');
+ex(3,'The Asymmetry Map: 1Y Total Return vs. 1Y Max Drawdown',S(s,t+h+44),
+'Defense returned <b>+48.0%</b> with a max drawdown of only <b>(11.0%)</b> (4.4x return/drawdown) while Clean Energy lost <b>(24.0%)</b> through a <b>(41.0%)</b> drawdown; Defense Sharpe <b>2.1</b> vs. MSCI ACWI <b>0.9</b>, Clean Energy <b>(0.8)</b>.',
+'Screen core thematic holdings for 1Y return/|max drawdown| ≥ 1.5x; cap any subsegment with drawdown worse than (35%) at 1% of the portfolio as a satellite.')})();
+
+// Ex4
+(()=>{const d=[["Uranium/Nuclear",38,2222],["AI Semis",30,1923],["Space",42,1724],["Defense",45,1639],["Clean Energy",100,1429],["Cybersecurity",60,1316],["S&amp;P 500",503,170],["MSCI World",1400,120]];
+const l=170,w=680,X=v=>l+(Math.log10(v)-Math.log10(3))/(Math.log10(2000)-Math.log10(3))*w,t=24,rh=34;let s='';
+[3,10,30,100,300,1000].forEach(v=>s+=L(X(v),t-8,X(v),t+8*rh)+T(X(v),t+8*rh+14,v,'text-anchor="middle" fill="#64748b" font-size="10"'));
+d.forEach((r,i)=>{const y=t+i*rh+14,ne=10000/r[2],c=i<6?R:G;s+=T(6,y+4,r[0],i<6?'':'font-weight="700"')+L(X(ne),y,X(r[1]),y,'#94a3b8',2)+`<circle cx="${X(r[1])}" cy="${y}" r="6" fill="#fff" stroke="${N}" stroke-width="2"/><circle cx="${X(ne)}" cy="${y}" r="6" fill="${c}"/>`+T(X(r[1])+12,y+4,`N=${r[1].toLocaleString()} → Neff ${ne.toFixed(1)} (HHI ${r[2].toLocaleString()})`,'font-size="11"')});
+s+=Rc(l,t+8*rh+24,10,10,'#fff','stroke="#0a2540" stroke-width="2"')+T(l+16,t+8*rh+33,'Nominal constituents N')+`<circle cx="${l+190}" cy="${t+8*rh+29}" r="5" fill="${R}"/>`+T(l+200,t+8*rh+33,'Effective constituents Neff (log scale)');
+ex(4,'The Concentration Mirage: Nominal vs. Effective Constituents',S(s,t+8*rh+44),
+'Thematic benchmarks collapse from <b>30–100</b> nominal names to <b>4.5–7.6</b> effective names (median HHI <b>1,682</b>; Uranium HHI <b>2,222</b>) versus S&amp;P 500 Neff <b>58.8</b> (HHI 170) and MSCI World <b>83.3</b> (HHI 120).',
+'Hard-code a Neff ≥ 8 filter for core thematic sleeves; run a look-through overlap audit against top-10 core holdings and limit any Neff &lt; 6 fund to a 2% position.')})();
+
+// Ex5
+(()=>{const d=[["Cameco (CCJ)",6.1,12.8],["SolarEdge (SEDG)",9.3,17.4],["Centrus (LEU)",11.8,14.6],["Rocket Lab (RKLB)",5.4,10.9],["EnerVenture (ENVX)",8.7,13.3],["Enphase (ENPH)",4.2,11.2],["FuelCell (FCEL)",7.5,9.2],["Albemarle (ALB)",2.3,6.1]];
+const l=60,t=16,w=800,h=310,X=v=>l+v/14*w,Y=v=>t+(20-v)/20*h;let s=Rc(X(5),Y(20),X(14)-X(5),Y(10)-Y(20),'#b42318','opacity=".1"')+T(X(14)-6,Y(20)+16,'SYSTEMIC REDEMPTION DANGER ZONE (&gt;10% float, &gt;5 days)','text-anchor="end" fill="#b42318" font-weight="700" font-size="11"');
+[0,5,10,15,20].forEach(v=>s+=L(l,Y(v),l+w,Y(v))+T(l-6,Y(v)+4,v+'%','text-anchor="end" fill="#64748b"'));
+[0,2,4,6,8,10,12,14].forEach(v=>s+=L(X(v),t,X(v),t+h)+T(X(v),t+h+16,v,'text-anchor="middle" fill="#64748b"'));
+s+=L(X(5),Y(20),X(5),Y(0),R,1.5)+L(X(0),Y(10),X(14),Y(10),R,1.5);
+d.forEach(r=>{const z=r[1]>5&&r[2]>10;s+=`<circle cx="${X(r[1])}" cy="${Y(r[2])}" r="7" fill="${z?R:M}" fill-opacity=".8"/>`+T(X(r[1])+11,Y(r[2])+4,r[0],'font-size="11"'+(z?' font-weight="700"':''))});
+s+=T(l+w/2,t+h+34,'Days-to-Liquidate (30D ADV, 20% participation)','text-anchor="middle" font-weight="700"')+T(14,t+h/2,'% Free Float Held by Thematic ETFs','transform="rotate(-90 14 '+(t+h/2)+')" text-anchor="middle" font-weight="700"');
+ex(5,'Liquidity Contagion Danger Zone: Float Ownership vs. Days-to-Liquidate',S(s,t+h+44),
+'<b>5 of 8</b> screened mid/small-caps sit in the Danger Zone; SolarEdge shows <b>17.4%</b> thematic float ownership and <b>9.3</b> days-to-liquidate, Cameco <b>12.8%</b> and <b>6.1</b> days.',
+'Add a pre-trade check: reject any thematic ETF whose top-10 holdings include a Danger Zone name above 5% weight; size positions so that look-through days-to-liquidate stays ≤ 5 days.')})();
+
+// Ex6
+(()=>{let s=T(6,14,'Launches vs. Liquidations (count)','font-weight="700"')+T(470,14,'Active Share (%)','font-weight="700"');
+const A=[["Q3 launches",9,5],["Q3 liquidations",8,3]],sc=22;
+A.forEach((r,i)=>{const y=34+i*50;s+=T(6,y+20,r[0])+Rc(130,y,r[1]*sc,30,N)+Rc(130+r[1]*sc,y,r[2]*sc,30,B)+T(130+r[1]*sc/2,y+20,'US '+r[1],'text-anchor="middle" fill="#fff"')+T(130+r[1]*sc+r[2]*sc/2,y+20,'UCITS '+r[2],'text-anchor="middle" font-size="11"')+T(134+(r[1]+r[2])*sc,y+20,'= '+(r[1]+r[2]),'font-weight="700"')});
+s+=Rc(130,142,10,10,N)+T(145,151,'US ’40 Act')+Rc(230,142,10,10,B)+T(245,151,'UCITS');
+const P=[["Of Q3 launches",44,36],["Of thematic AUM",12,6],["Of Q3 flows",17,9]];
+P.forEach((r,i)=>{const y=28+i*45;s+=T(470,y+22,r[0],'font-size="11"')+Rc(580,y,r[1]*5,18,N)+T(584+r[1]*5,y+14,r[1]+'%','font-size="11"')+Rc(580,y+20,r[2]*5,18,B)+T(584+r[2]*5,y+34,r[2]+'%','font-size="11"')});
+ex(6,'Product Lifecycle &amp; Active Thematic Migration: US vs. UCITS',S(s,170)+`<table><tr><th>Event</th><th>Ticker</th><th>Fund / Issuer</th><th>Subsegment</th><th>TER</th><th>Style / Final AUM</th><th>Lifespan</th></tr>
+<tr><td>Launch</td><td>DFNZ</td><td>Orbital Defense Active / Meridian AM</td><td>Defense</td><td>0.55%</td><td>Active</td><td>–</td></tr>
+<tr><td>Launch</td><td>AIQP</td><td>Edge AI Infrastructure / Northgate</td><td>AI</td><td>0.40%</td><td>Passive</td><td>–</td></tr>
+<tr><td>Launch</td><td>NUKL</td><td>Nuclear Fuel Cycle UCITS / Halden</td><td>Nuclear</td><td>0.49%</td><td>Passive</td><td>–</td></tr>
+<tr><td>Delist</td><td>SOLR</td><td>Solar Leaders / Brightline</td><td>Clean Energy</td><td>0.65%</td><td>Passive / $14M</td><td>3.8 yrs</td></tr>
+<tr><td>Delist</td><td>HYDX</td><td>Hydrogen Economy / Corvid</td><td>Clean Energy</td><td>0.70%</td><td>Passive / $9M</td><td>2.6 yrs</td></tr>
+<tr><td>Delist</td><td>MTVS</td><td>Metaverse Pioneers / Axion</td><td>Metaverse</td><td>0.60%</td><td>Passive / ($11M) net outflow</td><td>3.1 yrs</td></tr></table>`,
+'Q3 saw <b>14</b> launches vs. <b>11</b> liquidations (all Q3 closures under <b>$15M</b> AUM and <b>3.8</b> years old); active funds were <b>43%</b> of launches and captured <b>17.0%</b> of US flows vs. <b>9.0%</b> in UCITS.',
+'Apply a mortality screen: avoid funds under $50M AUM after 3 years; pay an active premium only where the TER gap is ≤ 25 bps, and note UCITS active supply is thinner (6% of AUM) for Defense/AI.')})();
+// Ex7
+(()=>{const d=[["Defense",48,39.5],["AI &amp; Robotics",41,33.2],["Nuclear",36,21.4],["Cybersecurity",19,15.8],["Space",27,12.1],["Genomics",-8,-17.6],["Clean Energy",-24,-31.5],["Battery",-19,-27.3],["EVs",-31,-36.9]];
+const l=170,w=620,X=v=>l+(v+40)/100*w,t=24,rh=30;let s='';
+[-40,-20,0,20,40,60].forEach(v=>s+=L(X(v),t-8,X(v),t+9*rh,v?'#e2e8f0':N,v?1:1.5)+T(X(v),t+9*rh+14,f(v,0),'text-anchor="middle" fill="#64748b" font-size="10"'));
+d.forEach((r,i)=>{const y=t+i*rh+14,g=r[2]-r[1];s+=T(6,y+4,r[0])+L(X(r[1]),y,X(r[2]),y,'#94a3b8',2)+`<circle cx="${X(r[1])}" cy="${y}" r="6" fill="#fff" stroke="${N}" stroke-width="2"/><circle cx="${X(r[2])}" cy="${y}" r="6" fill="${R}"/>`+T(X(r[1])+12,y+4,'gap '+f(g,1,' pp'),'font-size="11"')});
+s+=`<circle cx="${l}" cy="${t+9*rh+34}" r="5" fill="#fff" stroke="${N}" stroke-width="2"/>`+T(l+10,t+9*rh+38,'Time-weighted 1Y return (fund)')+`<circle cx="${l+230}" cy="${t+9*rh+34}" r="5" fill="${R}"/>`+T(l+240,t+9*rh+38,'Dollar-weighted investor return (flow-adjusted)');
+ex(7,'The Flow-Chasing Penalty: Time-Weighted vs. Dollar-Weighted 1Y Return',S(s,t+9*rh+52),
+'Investor (dollar-weighted) returns trailed fund returns in <b>all 9</b> subsegments by an average of <b>(8.9 pp)</b>; the gap was widest in Space <b>(14.9 pp)</b> and Nuclear <b>(14.6 pp)</b> and narrowest in Cybersecurity <b>(3.2 pp)</b>, with Defense at <b>48.0%</b> vs. <b>39.5%</b> realized by investors.',
+'Measure the thematic sleeve on dollar-weighted returns, and phase entries into any theme with a gap worse than (10 pp) (Space, Nuclear) over at least 3 tranches instead of lump-sum purchases after rallies.')})();
+
+// Ex8
+(()=>{const n=["DFNZ","AIQP","NUKL","CYBX","SPCX","CLNX"],m=[[100,6,3,4,22,1],[6,100,2,18,5,2],[3,2,100,1,4,17],[4,18,1,100,3,1],[22,5,4,3,100,2],[1,2,17,1,2,100]];
+const l=100,t=40,cw=100,ch=44;let s='';
+n.forEach((a,i)=>{s+=T(l+i*cw+cw/2,t-10,a,'text-anchor="middle" font-weight="700"')+T(l-8,t+i*ch+ch/2+4,a,'text-anchor="end" font-weight="700"');
+m[i].forEach((v,j)=>{const d=i==j;s+=Rc(l+j*cw,t+i*ch,cw-2,ch-2,d?'#e2e8f0':`rgba(10,37,64,${(Math.min(v/25,1)*.9+.04).toFixed(2)})`)+T(l+j*cw+cw/2,t+i*ch+ch/2+4,d?'–':v+'%',`text-anchor="middle" font-weight="700" fill="${!d&&v>12?'#fff':'#1e293b'}"`)})});
+s+=T(l,t+6*ch+18,'Weight overlap (%, sum of min constituent weights). DFNZ Defense · AIQP AI · NUKL Nuclear · CYBX Cyber · SPCX Space · CLNX Clean Energy','font-size="10" fill="#64748b"');
+ex(8,'Holdings Overlap Heatmap: Shared Weight Between Thematic ETFs',S(s,t+6*ch+30),
+'Median pairwise overlap was only <b>3.0%</b>, but <b>3 of 15</b> pairs exceed 15%: Defense–Space <b>22.0%</b>, AI–Cyber <b>18.0%</b> and Nuclear–Clean Energy <b>17.0%</b>.',
+'Treat any pair with overlap above 15% as a single position for sizing and apply one combined cap (e.g., 3%) to avoid paying two TERs for the same exposure.')})();
+
+// Ex9 correlation
+(()=>{const nm=["MSCI ACWI","Defense","AI &amp; Robotics","Nuclear","Cybersecurity","Space","Genomics","Clean Energy","Battery","EVs"],sh=["ACWI","DEF","AI","NUC","CYB","SPC","GEN","CLN","BAT","EVs"];
+const U=[[.42,.84,.51,.80,.62,.58,.64,.60,.66],[.38,.45,.40,.57,.20,.15,.18,.17],[.55,.83,.60,.52,.50,.55,.58],[.46,.50,.30,.62,.58,.44],[.55,.49,.40,.42,.50],[.48,.46,.47,.52],[.44,.46,.50],[.86,.79],[.81]];
+const m=Array.from({length:10},()=>Array(10).fill(1));U.forEach((r,i)=>r.forEach((v,k)=>{m[i][i+1+k]=m[i+1+k][i]=v}));
+const l=120,t=34,cw=64,ch=28;let s='';
+sh.forEach((a,j)=>s+=T(l+j*cw+cw/2,t-10,a,'text-anchor="middle" font-weight="700" font-size="11"'));
+m.forEach((r,i)=>{s+=T(l-8,t+i*ch+ch/2+4,nm[i],'text-anchor="end" font-weight="700" font-size="11"');r.forEach((v,j)=>{const d=i==j;s+=Rc(l+j*cw,t+i*ch,cw-2,ch-2,d?'#e2e8f0':`rgba(10,37,64,${(.08+.85*v).toFixed(2)})`)+T(l+j*cw+cw/2,t+i*ch+ch/2+4,d?'–':v.toFixed(2),`text-anchor="middle" font-size="11" font-weight="700" fill="${!d&&v>.55?'#fff':'#1e293b'}"`)})});
+s+=L(l,t+ch-1,l+10*cw,t+ch-1,R,1.5)+L(l+cw-1,t,l+cw-1,t+10*ch,R,1.5)+T(l,t+10*ch+18,'Pearson correlation of monthly total returns, trailing 12M (n = 12 observations; wide estimation error). Red lines separate MSCI ACWI.','font-size="10" fill="#64748b"');
+ex(9,'Realized Correlation Matrix: Thematic Subsegments vs. Each Other and MSCI ACWI',S(s,t+10*ch+28),
+'Average pairwise thematic correlation was <b>0.49</b> and average correlation to MSCI ACWI <b>0.63</b>; AI–Cybersecurity (<b>0.83</b>) and Clean Energy–Battery (<b>0.86</b>) move almost as one, while Defense had the lowest ACWI correlation (<b>0.42</b>) and averaged <b>0.31</b> against other themes.',
+'Treat clusters with correlation above 0.75 (AI/Cyber; Clean Energy/Battery/EVs) as one risk bucket under a single cap, and count only Defense (ACWI correlation below 0.5) as a true diversifier within the thematic sleeve.')})();
+
+// Ex10
+(()=>{const D=[["Defense",18.2,1420,9.1,48,-11,2.1,20.8,"1,639"],["AI &amp; Robotics",64.5,1180,2.0,41,-18,1.4,26.3,"1,923"],["Nuclear",9.8,640,8.0,36,-24,0.9,35.3,"2,222"],["Cybersecurity",22.0,310,1.5,19,-15,0.8,18.4,"1,316"],["Space",6.1,205,4.1,27,-29,0.6,37.9,"1,724"],["Genomics",14.3,-270,-1.8,-8,-33,-0.3,40.8,"–"],["Clean Energy",31.2,-880,-2.9,-24,-41,-0.8,35.3,"1,429"],["Battery",7.4,-510,-6.2,-19,-38,-0.6,38.8,"–"],["EVs",5.2,-395,-6.8,-31,-28,-0.8,44.1,"–"]];
+const tb=`<table class="lg"><tr><th>Subsegment</th><th>Sep AUM</th><th>Q3 Net Flows</th><th>Q3 OGR</th><th>1Y Return</th><th>1Y Max DD</th><th>1Y Sharpe</th><th>1Y Vol</th><th>Bench. HHI</th></tr>`+D.map(r=>`<tr><td>${r[0]}</td><td>$${r[1].toFixed(1)}B</td><td>${$m(r[2])}</td><td>${f(r[3])}</td><td>${f(r[4])}</td><td>${f(r[5])}</td><td>${f(r[6],1,'')}</td><td>${f(r[7])}</td><td>${r[8]}</td></tr>`).join('')+`<tr><td><i>MSCI ACWI (ref.)</i></td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>0.9</td><td>–</td><td>–</td></tr></table>`;
+ex(10,'Appendix: Subsegment League Table (Sharpe at Rf = 4.25%)',tb,
+ 'Only Defense (Sharpe <b>2.1</b>) and AI (<b>1.4</b>) beat MSCI ACWI (<b>0.9</b>) on 1Y Sharpe; <b>4 of 9</b> subsegments posted negative Sharpe ratios, each with a max drawdown worse than <b>(28.0%)</b>.',
+'Use Sharpe above the ACWI 0.9 level plus positive Q3 OGR as the joint admission test for thematic satellites (Defense and AI pass; Nuclear ties at 0.9 with an 8.0% OGR).')})();
+
+document.getElementById('ex').innerHTML=out.join('');
+</script></body></html>
